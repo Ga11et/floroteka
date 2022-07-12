@@ -6,21 +6,30 @@
             />
             <SvgIcons />
         </div>
+        <div class="plantsContainer">
+            <Plant name="Ландыш" description="Вид травянистых цветковых растений, распространённый в регионах с умеренным климатом Северного полушария." :img="plantPic" />
+            <Plant name="Ландыш" description="Вид травянистых цветковых растений, распространённый в регионах с умеренным климатом Северного полушария." :img="plantPic" />
+            <Plant name="Ландыш" description="Вид травянистых цветковых растений, распространённый в регионах с умеренным климатом Северного полушария." :img="plantPic" />
+        </div>
     </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import SvgIcons from '@/components/svgIcons.vue'
+import Plant from '../components/Plant.vue'
+import plantPic from '../assets/flower.jpg'
 
 export default Vue.extend({
   name: 'plants-filter',
   data: function () {
     return {
-      filterValue: ''
+      filterValue: '',
+      plantPic
     }
   },
   components: {
-    SvgIcons
+    SvgIcons,
+    Plant
   }
 })
 </script>
@@ -64,6 +73,10 @@ export default Vue.extend({
             right: 0px;
         }
     }
-
+    .plantsContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 20px;
+    }
 }
 </style>
