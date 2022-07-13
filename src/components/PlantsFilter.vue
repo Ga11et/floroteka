@@ -7,9 +7,7 @@
             <SvgIcons />
         </div>
         <div class="plantsContainer">
-            <Plant name="Ландыш" description="Вид травянистых цветковых растений, распространённый в регионах с умеренным климатом Северного полушария." :img="plantPic" />
-            <Plant name="Ландыш" description="Вид травянистых цветковых растений, распространённый в регионах с умеренным климатом Северного полушария." :img="plantPic" />
-            <Plant name="Ландыш" description="Вид травянистых цветковых растений, распространённый в регионах с умеренным климатом Северного полушария." :img="plantPic" />
+            <Plant v-for="item in plants" :content="item" :key="item.id" />
         </div>
     </section>
 </template>
@@ -17,14 +15,18 @@
 import Vue from 'vue'
 import SvgIcons from '@/components/svgIcons.vue'
 import Plant from '../components/Plant.vue'
-import plantPic from '../assets/flower.jpg'
+import store from '@/store'
 
 export default Vue.extend({
   name: 'plants-filter',
   data: function () {
     return {
-      filterValue: '',
-      plantPic
+      filterValue: ''
+    }
+  },
+  computed: {
+    plants () {
+      return store.state.plants
     }
   },
   components: {

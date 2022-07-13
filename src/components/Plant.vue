@@ -1,9 +1,9 @@
 <template>
     <div class="plant">
-        <img :src="img" alt="plant" />
+        <img :src="content.img" alt="plant" />
         <div class="content">
-            <h3 class="heading">{{ name }}</h3>
-            <p class="paragraph">{{ description }}</p>
+            <h3 class="heading">{{ content.name }}</h3>
+            <p class="paragraph">{{ content.description }}</p>
             <router-link class="link" to="/plant">Читать больше</router-link>
         </div>
     </div>
@@ -13,12 +13,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'plant-container',
-  props: {
-    name: String,
-    description: String,
-    img: String,
-    id: String
-  }
+  props: ['content']
 })
 </script>
 <style lang="scss">
