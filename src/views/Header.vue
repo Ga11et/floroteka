@@ -70,8 +70,40 @@ export default Vue.extend({
         position: absolute;
         top: 30%;
         .heading {
+            @include font(55px, 65px, 500);
+            width: 820px;
+        }
+
+        .paragraph {
+            @include font(20px, 34px, 500);
+            width: 700px;
+            padding: 20px 0 30px;
+        }
+
+        .link {
+            @include font(18px, 28px, 500);
+            padding: 16px 44px;
+            border: 1px solid $mainWhite;
+            border-radius: 25px;
+            text-transform: uppercase;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
+@media screen and (max-width: 1400px) {
+    .header{
+        .top{
+            width: 100%;
+            padding: 35px 50px;
+        }
+        .content {
+            width: 100%;
+            padding: 0 50px;
+        .heading {
             @include font(45px, 55px, 500);
-            width: 620px;
+            width: 720px;
         }
 
         .paragraph {
@@ -81,7 +113,7 @@ export default Vue.extend({
         }
 
         .link {
-            @include font(14px, 17px, 500);
+            @include font(14px, 18px, 500);
             padding: 14px 40px;
             border: 1px solid $mainWhite;
             border-radius: 25px;
@@ -90,6 +122,7 @@ export default Vue.extend({
                 cursor: pointer;
             }
         }
+    }
     }
 }
 </style>
