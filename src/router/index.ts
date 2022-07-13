@@ -11,9 +11,9 @@ const routes: Array<RouteConfig> = [
     component: CatalogView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/beforeAfter',
+    name: 'beforeAfter',
+    component: () => import(/* webpackChunkName: "about" */ '../views/BeforeAfterView.vue')
   }
 ]
 
