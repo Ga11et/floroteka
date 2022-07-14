@@ -10,6 +10,7 @@
                 <router-link class="link" to="/aboutus">О нас</router-link>
                 <router-link class="link" to="/contacts">Контакты</router-link>
             </nav>
+            <MobileMenu class="mobileMenu" />
         </div>
         <div class="content">
             <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
@@ -21,9 +22,13 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import MobileMenu from '@/components/MobileMenu.vue'
 
 export default Vue.extend({
-  name: 'header-component'
+  name: 'header-component',
+  components: {
+    MobileMenu
+  }
 })
 </script>
 <style lang="scss">
@@ -61,6 +66,9 @@ export default Vue.extend({
             .router-link-exact-active {
                 text-decoration: underline;
             }
+        }
+        .mobileMenu{
+            display: none;
         }
     }
 
@@ -123,6 +131,75 @@ export default Vue.extend({
             }
         }
     }
+    }
+}
+@media screen and (max-width: 1200px) {
+    .header{
+        .top {
+            .nav{
+                width: 60%;
+            }
+        }
+    }
+}
+@media screen and (max-width: 1000px) {
+    .header{
+        .top {
+            .nav{
+                display: none;
+            }
+            .mobileMenu{
+                display: flex;
+            }
+        }
+        .content {
+            .heading {
+                @include font(28px, 38px, 500);
+                width: 600px;
+            }
+
+            .paragraph {
+                @include font(14px, 24px, 500);
+                width: 500px;
+            }
+
+            .link {
+                @include font(14px, 24px, 500);
+                padding: 10px 30px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 750px) {
+    .header{
+        .top{
+            padding: 20px;
+        }
+        .image{
+            height: 500px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .content {
+            align-items: center;
+            top: 25%;
+            .heading {
+                @include font(20px, 30px, 500);
+                width: 80%;
+                text-align: center;
+            }
+
+            .paragraph {
+                @include font(14px, 24px, 500);
+                width: 100%;
+                text-align: center;
+                padding: 20px 0 0;
+            }
+
+            .link {
+                display: none;
+            }
+        }
     }
 }
 </style>

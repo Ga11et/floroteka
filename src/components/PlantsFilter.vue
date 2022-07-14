@@ -4,7 +4,7 @@
         <div class="inputContainer">
             <input v-model="filterValue" class="input" placeholder="Что вы ищете?"
             />
-            <SvgIcons />
+            <SvgIcons type="search" />
         </div>
         <div class="plantsContainer">
             <Plant v-for="item in plants" :content="item" :key="item.id" />
