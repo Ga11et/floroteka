@@ -7,6 +7,7 @@
 import Vue from 'vue'
 import BeforeAfterPost from '../components/BeforeAfterPost.vue'
 import store from '@/store'
+import { fetchBeforeAfterPostsData } from '@/store/api/api'
 
 export default Vue.extend({
   name: 'before-after-container',
@@ -17,6 +18,10 @@ export default Vue.extend({
     posts () {
       return store.state.beforeAfterPosts
     }
+  },
+  mounted: async function () {
+    const data = await fetchBeforeAfterPostsData()
+    store.commit('setBeforeAfterPosts', data)
   }
 })
 

@@ -16,6 +16,7 @@ import Vue from 'vue'
 import SvgIcons from '@/components/svgIcons.vue'
 import Plant from '../components/Plant.vue'
 import store from '@/store'
+import { fetchPlantsData } from '@/store/api/api'
 
 export default Vue.extend({
   name: 'plants-filter',
@@ -28,6 +29,10 @@ export default Vue.extend({
     plants () {
       return store.state.plants
     }
+  },
+  mounted: async function () {
+    const data = await fetchPlantsData()
+    store.commit('setPlants', data)
   },
   components: {
     SvgIcons,
