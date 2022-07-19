@@ -12,3 +12,28 @@ export type beforeAfterPostPropsType = {
     before: string
     after: string
 }
+export type plantAirtableContentType = {
+    fields: {
+        Name: string
+        image: [
+            { url: string }
+        ]
+        id: string
+        description: string
+    }
+}
+export type beboreAfterAirtableContentType = {
+    fields: {
+        Name: string
+        after: [
+            { url: string }
+        ]
+        before: [
+            { url: string }
+        ]
+        id: string
+        date: string
+        heading: string
+        text: string
+    }
+}
