@@ -14,6 +14,11 @@ const routes: Array<RouteConfig> = [
     path: '/beforeAfter',
     name: 'beforeAfter',
     component: () => import(/* webpackChunkName: "about" */ '../views/BeforeAfterView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PlantAddingForm.vue')
   }
 ]
 

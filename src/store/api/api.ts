@@ -31,3 +31,15 @@ export const fetchBeforeAfterPostsData = async () => {
     return formattedData
   })
 }
+
+export const postPlantData = async (name: string, description: string, imgUrl: string) => {
+  const urlResp = await fetch('http://localhost:3000/plants', { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: imgUrl }) })
+    .then(resp => resp.json())
+  const data = {
+    records: [
+      { fields: { id: '10', description: description, image: [{ url: urlResp }], Name: name } }
+    ]
+  }
+  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/images', { headers: { Authorization: process.env.VUE_APP_API_KEY, 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify(data) })
+  return response
+}
