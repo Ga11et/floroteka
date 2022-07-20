@@ -22,4 +22,17 @@ export default Vue.extend({
             @include font(20px, 30px, 500);
         }
     }
+    @media screen and (max-width: 1000px) {
+        .footer{
+            margin-top: 50px;
+        }
+    }
+    @media screen and (max-width: 750px) {
+        .footer{
+            margin-top: 50px;
+            .content{
+                @include font(14px, 24px, 500);
+            }
+        }
+    }
 </style>

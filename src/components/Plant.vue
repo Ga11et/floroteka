@@ -20,14 +20,19 @@ export default Vue.extend({
     @import '@/variables';
     .plant{
         position: relative;
+        height: 100%;
         img{
             display: block;
             width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .content{
             width: 100%;
+            min-height: 40%;
             position: absolute;
             background: rgba(0, 0, 0, 0.5);
+            @include flex(column, flex-start, space-between);
             backdrop-filter: blur(6px);
             bottom: 0;
             color: white;
