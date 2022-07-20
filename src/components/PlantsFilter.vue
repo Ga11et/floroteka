@@ -1,15 +1,14 @@
 <template>
-    <section class="filter">
-        <h2 class="heading">Попробуем найти что то конкретное?</h2>
-        <div class="inputContainer">
-            <input v-model="filterValue" class="input" placeholder="Что вы ищете?"
-            />
-            <SvgIcons type="search" />
-        </div>
-        <div class="plantsContainer">
-            <Plant v-for="item in plants" :content="item" :key="item.id" />
-        </div>
-    </section>
+  <section class="filter">
+    <h2 class="heading">Попробуем найти что то конкретное?</h2>
+    <div class="inputContainer">
+      <input v-model="filterValue" class="input" placeholder="Что вы ищете?" />
+      <SvgIcons type="search" />
+    </div>
+    <div class="plantsContainer">
+      <Plant v-for="item in plants" :content="item" :key="item.id" />
+    </div>
+  </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -44,46 +43,88 @@ export default Vue.extend({
 @import '@/variables';
 
 .filter {
-    width: 1280px;
-    padding: 100px 0;
-    align-self: center;
+  width: 1280px;
+  padding: 100px 0 0;
+  align-self: center;
 
-    .heading {
-        @include font(36px, 44px, 500);
+  .heading {
+    @include font(36px, 44px, 500);
+  }
+
+  .inputContainer {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 50px - 19px;
+    padding-bottom: 50px;
+    width: 717px;
+
+    .input {
+      outline: none;
+      border: none;
+      border-bottom: 2px solid #6D6D6D;
+      height: 29px + 38px;
+      width: 100%;
+      background-color: transparent;
+      @include font(24px, 30px, 500);
+
+      &:focus {
+        border-color: black;
+
+        &+svg {
+          path {
+            fill: black;
+          }
+        }
+      }
     }
 
-    .inputContainer {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        padding-top: 50px - 19px;
-        padding-bottom: 50px;
-        .input {
-            outline: none;
-            border: none;
-            border-bottom: 2px solid #6D6D6D;
-            height: 29px + 38px;
-            width: 717px;
-            background-color: transparent;
-            @include font(24px, 30px, 500);
-            &:focus{
-                border-color: black;
-                &+svg{
-                    path{
-                        fill: black;
-                }
-                }
-            }
-        }
-        svg {
-            position: absolute;
-            right: 0px;
-        }
+    svg {
+      position: absolute;
+      right: 0px;
     }
-    .plantsContainer{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 20px;
+  }
+
+  .plantsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .filter {
+    width: 100%;
+    padding: 100px 50px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .filter {
+    padding: 50px 50px 0;
+    .inputContainer{
+        width: 100%;
     }
+    .plantsContainer {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .filter {
+    padding: 50px 20px 0;
+    .heading{
+      @include font(24px, 30px, 500);
+    }
+    .inputContainer{
+      padding: 11px 0 30px;
+      .input{
+        @include font(20px, 30px, 500);
+      }
+    }
+    .plantsContainer {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 </style>
