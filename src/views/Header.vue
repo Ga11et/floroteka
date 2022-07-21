@@ -16,7 +16,7 @@
             <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
             <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
                 дендрологическом участке Сыктывкарского лесного института.</p>
-            <a class="link">Что у нас есть</a>
+            <router-link class="link" @click.native="scrollHandler" to="/">Что у нас есть</router-link>
         </div>
     </header>
 </template>
@@ -100,6 +100,8 @@ export default Vue.extend({
 
         .link {
             @include font(18px, 28px, 500);
+            color: white;
+            text-decoration: none;
             padding: 16px 44px;
             border: 1px solid $mainWhite;
             border-radius: 25px;
