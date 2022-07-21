@@ -276,6 +276,7 @@ export default Vue.extend({
           border-right: 1px solid white;
           border-bottom: none;
           padding-left: 10px;
+          padding-bottom: 7px;
           width: 100%;
           height: 50%;
           &::placeholder{
