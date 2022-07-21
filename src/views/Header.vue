@@ -1,24 +1,27 @@
 <template>
-    <header class="header" ref="header">
-        <img src="../assets/headerPic1.jpg" alt="background picture" class="image" />
-        <div class="top">
-            Флоротека
-            <nav class="nav">
-                <router-link class="link" @click.native="scrollHandler" to="/">Каталог</router-link>
-                <router-link class="link" @click.native="scrollHandler" to="/news">Новости</router-link>
-                <Dropdown :scrollHandler="scrollHandler" />
-                <router-link class="link" @click.native="scrollHandler" to="/aboutus">О нас</router-link>
-                <router-link class="link" @click.native="scrollHandler" to="/contacts">Контакты</router-link>
-            </nav>
-            <MobileMenu class="mobileMenu" :scrollHandler="scrollHandler" />
-        </div>
-        <div class="content">
-            <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
-            <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
-                дендрологическом участке Сыктывкарского лесного института.</p>
-            <router-link class="link" @click.native="scrollHandler" to="/">Что у нас есть</router-link>
-        </div>
-    </header>
+  <header class="header" ref="header">
+    <img src="../assets/headerPic1.jpg" alt="background picture" class="image" />
+    <div class="top">
+      ФлоротекаСЛИ
+      <nav class="nav">
+        <router-link class="link" @click.native="scrollHandler" to="/">Каталог</router-link>
+        <router-link class="link" @click.native="scrollHandler" to="/news">Новости</router-link>
+        <Dropdown :scrollHandler="scrollHandler" />
+        <router-link class="link" @click.native="scrollHandler" to="/aboutus">О нас</router-link>
+        <router-link class="link" @click.native="scrollHandler" to="/contacts">Контакты</router-link>
+      </nav>
+      <MobileMenu class="mobileMenu" :scrollHandler="scrollHandler" />
+    </div>
+    <div class="content">
+      <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
+      <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
+        дендрологическом участке Сыктывкарского лесного института.</p>
+      <div class="inputContainer">
+        <input type="text" placeholder="Попробуем найти что-то конкретное?" class="input" />
+        <router-link class="link" @click.native="scrollHandler" to="/">Что у нас есть</router-link>
+      </div>
+    </div>
+  </header>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -44,179 +47,250 @@ export default Vue.extend({
 @import '@/variables';
 
 .header {
-    @include flex(column, center, unset);
+  @include flex(column, center, unset);
+  width: 100%;
+  color: $mainWhite;
+  position: relative;
+
+  .image {
+    display: block;
     width: 100%;
-    color: $mainWhite;
-    position: relative;
-    .image{
-        display: block;
-        width: 100%;
+  }
+
+  .top {
+    @include flex(row, center, space-between);
+    @include font(28px, 36px, 500);
+    width: 1280px;
+    padding-top: 35px;
+    position: absolute;
+
+    .nav {
+      @include flex(row, center, space-between);
+      width: 55%;
+
+      .link {
+        @include font(16px, 19px, 500);
+        color: inherit;
+        text-decoration: none;
+        padding: 5px 20px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .router-link-exact-active {
+        text-decoration: underline;
+      }
     }
+
+    .mobileMenu {
+      display: none;
+    }
+  }
+
+  .content {
+    @include flex(column, flex-start, center);
+    width: 1280px;
+    position: absolute;
+    top: 30%;
+
+    .heading {
+      @include font(55px, 65px, 500);
+      width: 820px;
+    }
+
+    .paragraph {
+      @include font(20px, 34px, 500);
+      width: 700px;
+      padding: 20px 0 30px;
+    }
+
+    .inputContainer {
+      height: 70px;
+      @include flex(row, center, flex-start);
+
+      .input {
+        height: 100%;
+        width: 500px;
+        @include font(24px, 30px, 500);
+        padding-left: 20px;
+        border: 1px solid white;
+        border-right: none;
+        &::placeholder {
+          color: $mainVeryDarkGreen;
+        }
+      }
+
+      .link {
+        @include font(18px, 28px, 500);
+        @include flex(row, center, center);
+        color: white;
+        text-decoration: none;
+        width: 200px;
+        height: 100%;
+        border: 1px solid $mainWhite;
+        border-radius: 0 14px 14px 0;
+        border-left: none;
+        text-transform: uppercase;
+
+        &:hover {
+          cursor: pointer;
+          background-color: $mainDarkGreenHover;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .header {
     .top {
-        @include flex(row, center, space-between);
-        @include font(30px, 36px, 500);
-        width: 1280px;
-        padding-top: 35px;
-        position: absolute;
-        .nav {
-            @include flex(row, center, space-between);
-            width: 55%;
-
-            .link {
-                @include font(16px, 19px, 500);
-                color: inherit;
-                text-decoration: none;
-                padding: 5px 20px;
-
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-
-            .router-link-exact-active {
-                text-decoration: underline;
-            }
-        }
-        .mobileMenu{
-            display: none;
-        }
+      width: 100%;
+      padding: 35px 50px;
     }
 
     .content {
-        @include flex(column, flex-start, center);
-        width: 1280px;
-        position: absolute;
-        top: 30%;
-        .heading {
-            @include font(55px, 65px, 500);
-            width: 820px;
-        }
+      width: 100%;
+      padding: 0 50px;
 
-        .paragraph {
-            @include font(20px, 34px, 500);
-            width: 700px;
-            padding: 20px 0 30px;
+      .heading {
+        @include font(45px, 55px, 500);
+        width: 720px;
+      }
+
+      .paragraph {
+        @include font(16px, 20px, 500);
+        width: 600px;
+        padding: 20px 0 30px;
+      }
+
+      .link {
+        @include font(14px, 18px, 500);
+        border: 1px solid $mainWhite;
+        border-radius: 25px;
+        text-transform: uppercase;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .header {
+    .top {
+      .nav {
+        width: 70%;
+      }
+    }
+
+    .content {
+      .heading {
+        @include font(40px, 50px, 500);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .header {
+    .top {
+      .nav {
+        display: none;
+      }
+
+      .mobileMenu {
+        display: flex;
+      }
+    }
+
+    .content {
+      .heading {
+        @include font(28px, 38px, 500);
+        width: 600px;
+      }
+
+      .paragraph {
+        @include font(14px, 24px, 500);
+        width: 500px;
+      }
+
+      .inputContainer {
+        height: 60px;
+
+        .input {
+          width: 450px;
+
+          &::placeholder {
+            @include font(20px, 32px, 500);
+          }
         }
 
         .link {
-            @include font(18px, 28px, 500);
-            color: white;
-            text-decoration: none;
-            padding: 16px 44px;
-            border: 1px solid $mainWhite;
-            border-radius: 25px;
-            text-transform: uppercase;
-            &:hover{
-                cursor: pointer;
-            }
+          @include font(14px, 24px, 500);
+          width: 160px;
         }
+      }
     }
+  }
 }
-@media screen and (max-width: 1400px) {
-    .header{
-        .top{
-            width: 100%;
-            padding: 35px 50px;
-        }
-        .content {
-            width: 100%;
-            padding: 0 50px;
-            .heading {
-                @include font(45px, 55px, 500);
-                width: 720px;
-            }
 
-            .paragraph {
-                @include font(16px, 20px, 500);
-                width: 600px;
-                padding: 20px 0 30px;
-            }
-
-            .link {
-                @include font(14px, 18px, 500);
-                padding: 14px 40px;
-                border: 1px solid $mainWhite;
-                border-radius: 25px;
-                text-transform: uppercase;
-                &:hover{
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-}
-@media screen and (max-width: 1200px) {
-    .header{
-        .top {
-            .nav{
-                width: 70%;
-            }
-        }
-        .content{
-            .heading{
-                @include font(40px, 50px, 500);
-            }
-        }
-    }
-}
-@media screen and (max-width: 1000px) {
-    .header{
-        .top {
-            .nav{
-                display: none;
-            }
-            .mobileMenu{
-                display: flex;
-            }
-        }
-        .content {
-            .heading {
-                @include font(28px, 38px, 500);
-                width: 600px;
-            }
-
-            .paragraph {
-                @include font(14px, 24px, 500);
-                width: 500px;
-            }
-
-            .link {
-                @include font(14px, 24px, 500);
-                padding: 10px 30px;
-            }
-        }
-    }
-}
 @media screen and (max-width: 750px) {
-    .header{
-        .top{
-            padding: 20px;
-        }
-        .image{
-            height: 500px;
-            width: 100%;
-            object-fit: cover;
-        }
-        .content {
-            align-items: center;
-            top: 25%;
-            .heading {
-                @include font(20px, 30px, 500);
-                width: 80%;
-                text-align: center;
-            }
-
-            .paragraph {
-                @include font(14px, 24px, 500);
-                width: 100%;
-                text-align: center;
-                padding: 20px 0 0;
-            }
-
-            .link {
-                display: none;
-            }
-        }
+  .header {
+    .top {
+      padding: 20px;
     }
+
+    .image {
+      height: 500px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .content {
+      padding: 0 20px;
+      @include flex(column, center, space-between);
+      top: 27%;
+      height: 63%;
+
+      .heading {
+        @include font(20px, 30px, 500);
+        width: 80%;
+        text-align: center;
+      }
+
+      .paragraph {
+        display: none;
+      }
+
+      .inputContainer {
+        flex-direction: column;
+        margin-top: 10px;
+        height: 100px;
+        width: 100%;
+        .input{
+          border-right: 1px solid white;
+          border-bottom: none;
+          padding-left: 10px;
+          width: 100%;
+          height: 50%;
+          &::placeholder{
+            font-size: 16px;
+          }
+        }
+        .link{
+          border-radius: 0 0 14px 14px;
+          border-left: 1px solid white;
+          border-top: none;
+          width: 100%;
+          height: 50%;
+        }
+      }
+    }
+  }
 }
 </style>
