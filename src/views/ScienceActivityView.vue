@@ -10,13 +10,13 @@ import store from '@/store'
 import { fetchAllPostsData } from '@/store/api/api'
 
 export default Vue.extend({
-  name: 'before-after-container',
+  name: 'science-activity-container',
   components: {
     PostsInOne
   },
   computed: {
     posts () {
-      return store.state.allPosts.filter(el => el.type === 'beforeAfter')
+      return store.state.allPosts.filter(el => el.type === 'scienceActivity')
     }
   },
   mounted: async function () {

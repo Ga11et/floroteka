@@ -7,9 +7,11 @@
                 </div>
             <transition name="fromAbove" >
                 <nav v-if="isNavVisible" class="mobileNav">
-                    <router-link @click.native="setIsActive(false)" class="link" to="/">Каталог</router-link>
+                    <router-link @click.native="setIsActive(false)" class="link" to="/">Новости</router-link>
+                    <router-link @click.native="setIsActive(false)" class="link" to="/catalog">Каталог</router-link>
                     <router-link @click.native="setIsActive(false)" class="link" to="/beforeafter">Было / стало</router-link>
                     <router-link @click.native="setIsActive(false)" class="link" to="/technologies">Технологии</router-link>
+                    <router-link @click.native="setIsActive(false)" class="link" to="/science">Научная деятельность</router-link>
                     <router-link @click.native="setIsActive(false)" class="link" to="/aboutus">О нас</router-link>
                     <router-link @click.native="setIsActive(false)" class="link" to="/contacts">Контакты</router-link>
                 </nav>
