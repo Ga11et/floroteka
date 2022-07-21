@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { beforeAfterPostPropsType, plantPropsType } from './models'
-import beforeTestImg from '../assets/beforeTest.jpg'
-import afterTestImg from '../assets/afterTest.jpg'
+import { beforeAfterPostPropsType, plantPropsType, PostPropsType } from './models'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     plants: [] as plantPropsType[],
-    beforeAfterPosts: [] as beforeAfterPostPropsType[]
+    allPosts: [] as PostPropsType[],
+    postsLoaded: false
   },
   getters: {
   },
@@ -17,8 +16,11 @@ export default new Vuex.Store({
     setPlants (state, payload) {
       state.plants = payload
     },
-    setBeforeAfterPosts (state, payload) {
-      state.beforeAfterPosts = payload
+    setAllPosts (state, payload: PostPropsType[]) {
+      state.allPosts = payload.sort((prev, next) => {
+        return prev.date > next.date ? -1 : 1
+      })
+      state.postsLoaded = true
     }
   },
   actions: {

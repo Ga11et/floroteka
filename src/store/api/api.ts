@@ -1,4 +1,4 @@
-import { plantPropsType, beforeAfterPostPropsType, plantAirtableContentType, beboreAfterAirtableContentType } from '../models'
+import { plantPropsType, beforeAfterPostPropsType, plantAirtableContentType, beboreAfterAirtableContentType, postAirtableContentType, PostPropsType } from '../models'
 
 export const fetchPlantsData = async () => {
   const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/images', { headers: { Authorization: process.env.VUE_APP_API_KEY } })
@@ -15,18 +15,20 @@ export const fetchPlantsData = async () => {
   })
 }
 
-export const fetchBeforeAfterPostsData = async () => {
-  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/beforeAfter', { headers: { Authorization: process.env.VUE_APP_API_KEY } })
+export const fetchAllPostsData = async () => {
+  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/posts', { headers: { Authorization: process.env.VUE_APP_API_KEY } })
   const data = await response.json()
-  const readyData = data.records as beboreAfterAirtableContentType[]
+  const readyData = data.records as postAirtableContentType[]
   return readyData.map(el => {
-    const formattedData: beforeAfterPostPropsType = {
+    const formattedData: PostPropsType = {
       id: el.fields.id,
-      after: el.fields.after[0].url,
-      before: el.fields.before[0].url,
+      after: el.fields.after ? el.fields.after[0].url : '',
+      before: el.fields.before ? el.fields.before[0].url : '',
       date: el.fields.date,
       heading: el.fields.heading,
-      text: el.fields.text
+      text: el.fields.text,
+      images: el.fields.images ? el.fields.images.map(el => el.url) : [],
+      type: el.fields.type
     }
     return formattedData
   })

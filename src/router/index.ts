@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import CatalogView from '../views/CatalogView.vue'
+import NewsView from '../views/NewsView.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +8,17 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
-    component: CatalogView
+    component: NewsView
+  },
+  {
+    path: '/catalog',
+    name: 'catalog',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CatalogView.vue')
+  },
+  {
+    path: '/science',
+    name: 'science',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ScienceActivityView.vue')
   },
   {
     path: '/beforeAfter',

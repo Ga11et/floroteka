@@ -4,9 +4,11 @@
         <div class="top">
             Флоротека
             <nav class="nav">
-                <router-link class="link" to="/">Каталог</router-link>
+                <router-link class="link" to="/">Новости</router-link>
+                <router-link class="link" to="/catalog">Каталог</router-link>
                 <router-link class="link" to="/beforeafter">Было / стало</router-link>
                 <router-link class="link" to="/technologies">Технологии</router-link>
+                <router-link class="link" to="/science">Научная деятельность</router-link>
                 <router-link class="link" to="/aboutus">О нас</router-link>
                 <router-link class="link" to="/contacts">Контакты</router-link>
             </nav>
@@ -51,7 +53,7 @@ export default Vue.extend({
         position: absolute;
         .nav {
             @include flex(row, center, space-between);
-            width: 50%;
+            width: 70%;
 
             .link {
                 @include font(16px, 19px, 500);
@@ -137,7 +139,7 @@ export default Vue.extend({
     .header{
         .top {
             .nav{
-                width: 60%;
+                width: 75%;
             }
         }
     }

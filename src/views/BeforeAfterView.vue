@@ -1,33 +1,32 @@
 <template>
   <main class="container">
-    <BeforeAfterPost v-for="post in posts" :key="post.id" :content="post" />
+    <PostsInOne v-for="post in posts" :key="post.id" :content="post" />
   </main>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import BeforeAfterPost from '../components/BeforeAfterPost.vue'
+import PostsInOne from '../components/PostsInOne.vue'
 import store from '@/store'
-import { fetchBeforeAfterPostsData } from '@/store/api/api'
+import { fetchAllPostsData } from '@/store/api/api'
 
 export default Vue.extend({
   name: 'before-after-container',
   components: {
-    BeforeAfterPost
+    PostsInOne
   },
   computed: {
     posts () {
-      return store.state.beforeAfterPosts
+      return store.state.allPosts.filter(el => el.type === 'beforeAfter')
     }
   },
   mounted: async function () {
-    const data = await fetchBeforeAfterPostsData()
-    store.commit('setBeforeAfterPosts', data)
+    if (!store.state.postsLoaded) {
+      const data = await fetchAllPostsData()
+      store.commit('setAllPosts', data)
+    }
   }
 })
 
 </script>
 <style lang="scss">
-  .container{
-
-  }
 </style>
