@@ -29,4 +29,8 @@ export default Vue.extend({
 
 </script>
 <style lang="scss">
+  @import '@/variables';
+  .container{
+    @include flex(column, center, unset);
+  }
 </style>
