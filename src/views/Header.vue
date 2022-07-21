@@ -1,18 +1,16 @@
 <template>
-    <header class="header">
+    <header class="header" ref="header">
         <img src="../assets/headerPic1.jpg" alt="background picture" class="image" />
         <div class="top">
             Флоротека
             <nav class="nav">
-                <router-link class="link" to="/">Новости</router-link>
-                <router-link class="link" to="/catalog">Каталог</router-link>
-                <router-link class="link" to="/beforeafter">Было / стало</router-link>
-                <router-link class="link" to="/technologies">Технологии</router-link>
-                <router-link class="link" to="/science">Научная деятельность</router-link>
-                <router-link class="link" to="/aboutus">О нас</router-link>
-                <router-link class="link" to="/contacts">Контакты</router-link>
+                <router-link class="link" @click.native="scrollHandler" to="/">Каталог</router-link>
+                <router-link class="link" @click.native="scrollHandler" to="/news">Новости</router-link>
+                <Dropdown :scrollHandler="scrollHandler" />
+                <router-link class="link" @click.native="scrollHandler" to="/aboutus">О нас</router-link>
+                <router-link class="link" @click.native="scrollHandler" to="/contacts">Контакты</router-link>
             </nav>
-            <MobileMenu class="mobileMenu" />
+            <MobileMenu class="mobileMenu" :scrollHandler="scrollHandler" />
         </div>
         <div class="content">
             <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
@@ -25,11 +23,20 @@
 <script lang="ts">
 import Vue from 'vue'
 import MobileMenu from '@/components/MobileMenu.vue'
+import Dropdown from '@/components/dropdownHeader.vue'
 
 export default Vue.extend({
   name: 'header-component',
   components: {
-    MobileMenu
+    MobileMenu,
+    Dropdown
+  },
+  methods: {
+    scrollHandler: function () {
+      setTimeout(() => {
+        window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
+      }, 300)
+    }
   }
 })
 </script>
@@ -53,12 +60,13 @@ export default Vue.extend({
         position: absolute;
         .nav {
             @include flex(row, center, space-between);
-            width: 70%;
+            width: 55%;
 
             .link {
                 @include font(16px, 19px, 500);
                 color: inherit;
                 text-decoration: none;
+                padding: 5px 20px;
 
                 &:hover {
                     text-decoration: underline;
@@ -111,35 +119,40 @@ export default Vue.extend({
         .content {
             width: 100%;
             padding: 0 50px;
-        .heading {
-            @include font(45px, 55px, 500);
-            width: 720px;
-        }
+            .heading {
+                @include font(45px, 55px, 500);
+                width: 720px;
+            }
 
-        .paragraph {
-            @include font(16px, 20px, 500);
-            width: 600px;
-            padding: 20px 0 30px;
-        }
+            .paragraph {
+                @include font(16px, 20px, 500);
+                width: 600px;
+                padding: 20px 0 30px;
+            }
 
-        .link {
-            @include font(14px, 18px, 500);
-            padding: 14px 40px;
-            border: 1px solid $mainWhite;
-            border-radius: 25px;
-            text-transform: uppercase;
-            &:hover{
-                cursor: pointer;
+            .link {
+                @include font(14px, 18px, 500);
+                padding: 14px 40px;
+                border: 1px solid $mainWhite;
+                border-radius: 25px;
+                text-transform: uppercase;
+                &:hover{
+                    cursor: pointer;
+                }
             }
         }
-    }
     }
 }
 @media screen and (max-width: 1200px) {
     .header{
         .top {
             .nav{
-                width: 75%;
+                width: 70%;
+            }
+        }
+        .content{
+            .heading{
+                @include font(40px, 50px, 500);
             }
         }
     }
