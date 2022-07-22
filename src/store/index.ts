@@ -10,7 +10,8 @@ export default new Vuex.Store({
     plants: [] as plantPropsType[],
     allPosts: [] as PostPropsType[],
     postsLoaded: false,
-    plantsLoaded: false
+    plantsLoaded: false,
+    plantsFilterValue: ''
   },
   getters: {
     beforeAfterPosts (state) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     sciensePosts (state) {
       return state.allPosts.filter(el => el.type === 'scienceActivity')
+    },
+    filteredPlants (state) {
+      return state.plants.filter(el => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
     }
   },
   mutations: {
@@ -35,6 +39,9 @@ export default new Vuex.Store({
     },
     setPostsLoaded (state, payload: boolean) {
       state.postsLoaded = payload
+    },
+    setPlantsFilterValue (state, payload: string) {
+      state.plantsFilterValue = payload
     }
   },
   actions: {

@@ -2,42 +2,50 @@
   <section class="filter">
     <h2 class="heading">Попробуем найти что то конкретное?</h2>
     <div class="inputContainer">
-      <input v-model="filterValue" class="input" placeholder="Что вы ищете?" />
+      <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
       <SvgIcons type="search" />
     </div>
-    <div class="plantsContainer">
+    <TransitionGroup name="flipList" tag="div" class="plantsContainer">
       <Plant v-for="item in plants" :content="item" :key="item.id" />
-    </div>
+    </TransitionGroup>
   </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Plant from '../components/Plant.vue'
 import store from '@/store'
+import SvgIcons from './svgIcons.vue'
 
 export default Vue.extend({
   name: 'plants-filter',
-  data: function () {
-    return {
-      filterValue: '',
-      loaded: 0
-    }
-  },
   computed: {
     plants () {
-      return store.state.plants
+      return store.getters.filteredPlants
+    },
+    filterValue () {
+      return store.state.plantsFilterValue
     }
   },
   mounted: async function () {
     if (this.plants.length === 0) store.dispatch('setPlants')
   },
   components: {
-    Plant
+    Plant,
+    SvgIcons
+  },
+  methods: {
+    inputChangeHandler: function (event: InputEvent) {
+      const target = event.target as HTMLInputElement
+      store.commit('setPlantsFilterValue', target.value)
+    }
   }
 })
 </script>
 <style lang="scss">
 @import '@/variables';
+.flipList-move {
+  transition: transform 1s;
+}
 
 .filter {
   width: 1280px;

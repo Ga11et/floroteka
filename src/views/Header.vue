@@ -16,10 +16,10 @@
       <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
       <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
         дендрологическом участке Сыктывкарского лесного института.</p>
-      <div class="inputContainer">
-        <input type="text" placeholder="Попробуем найти что-то конкретное?" class="input" />
-        <router-link class="link" @click.native="scrollHandler" to="/">Что у нас есть</router-link>
-      </div>
+      <form class="inputContainer" @submit.prevent="submitHandler">
+        <input type="text" v-model="filterValue" placeholder="Попробуем найти что-то конкретное?" class="input" />
+        <router-link class="link" @click.native="submitHandler" to="/">Что у нас есть</router-link>
+      </form>
     </div>
   </header>
 </template>
@@ -27,6 +27,8 @@
 import Vue from 'vue'
 import MobileMenu from '@/components/MobileMenu.vue'
 import Dropdown from '@/components/dropdownHeader.vue'
+import router from '@/router'
+import store from '@/store'
 
 export default Vue.extend({
   name: 'header-component',
@@ -34,8 +36,20 @@ export default Vue.extend({
     MobileMenu,
     Dropdown
   },
+  data: function () {
+    return {
+      filterValue: ''
+    }
+  },
   methods: {
     scrollHandler: function () {
+      setTimeout(() => {
+        window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
+      }, 300)
+    },
+    submitHandler: function (values: any) {
+      store.commit('setPlantsFilterValue', this.filterValue)
+      if (this.$route.path !== '/') router.push('/')
       setTimeout(() => {
         window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
       }, 300)

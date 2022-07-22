@@ -22,7 +22,6 @@ export default Vue.extend({
   },
   methods: {
     loaded: function () {
-      console.log('loaded')
       this.isLoaded = true
     }
   }
