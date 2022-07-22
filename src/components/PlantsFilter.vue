@@ -1,6 +1,6 @@
 <template>
   <section class="filter">
-    <h2 class="heading">Попробуем найти что то конкретное?</h2>
+    <h2 class="heading">Каталог растений</h2>
     <div class="inputContainer">
       <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
       <SvgIcons type="search" />
@@ -51,6 +51,7 @@ export default Vue.extend({
   width: 1280px;
   padding: 100px 0 0;
   align-self: center;
+  position: relative;
 
   .heading {
     @include font(36px, 44px, 500);

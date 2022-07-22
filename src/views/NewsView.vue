@@ -1,5 +1,6 @@
 <template>
   <main class="container">
+      <SidePathContainer path="Новости" />
       <SuspenseConteiner v-if="!isPostsLoaded" />
       <PostsInOne v-for="post in posts" :key="post.id" :content="post" />
   </main>
@@ -9,12 +10,14 @@ import Vue from 'vue'
 import PostsInOne from '../components/PostsInOne.vue'
 import store from '@/store'
 import SuspenseConteiner from '@/components/SuspenseConteiner.vue'
+import SidePathContainer from '@/components/sidePathContainer.vue'
 
 export default Vue.extend({
   name: 'news-container',
   components: {
     PostsInOne,
-    SuspenseConteiner
+    SuspenseConteiner,
+    SidePathContainer
   },
   computed: {
     posts () {
@@ -36,5 +39,6 @@ export default Vue.extend({
   @import '@/variables';
   .container{
     @include flex(column, center, unset);
+    position: relative;
   }
 </style>

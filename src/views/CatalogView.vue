@@ -1,5 +1,6 @@
 <template>
   <main class="container">
+    <SidePathContainer path="Каталог" />
     <SuspenseConteiner v-if="!isPlantsLoaded" />
     <PlantsFilter />
   </main>
@@ -10,12 +11,14 @@ import Vue from 'vue'
 import PlantsFilter from '../components/PlantsFilter.vue'
 import SuspenseConteiner from '@/components/SuspenseConteiner.vue'
 import store from '@/store'
+import SidePathContainer from '@/components/sidePathContainer.vue'
 
 export default Vue.extend({
   name: 'HomeView',
   components: {
     PlantsFilter,
-    SuspenseConteiner
+    SuspenseConteiner,
+    SidePathContainer
   },
   computed: {
     isPlantsLoaded () {

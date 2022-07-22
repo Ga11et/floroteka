@@ -64,6 +64,12 @@ export default Vue.extend({
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .sciencePostConteiner {
+    margin: 50px 0;
+  }
+}
+
 @media screen and (max-width: 750px) {
   .sciencePostConteiner {
     padding: 0 20px;
