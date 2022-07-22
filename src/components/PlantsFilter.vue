@@ -34,7 +34,7 @@ export default Vue.extend({
     SvgIcons
   },
   methods: {
-    inputChangeHandler: function (event: InputEvent) {
+    inputChangeHandler: function (event: Event) {
       const target = event.target as HTMLInputElement
       store.commit('setPlantsFilterValue', target.value)
     }
