@@ -21,7 +21,8 @@ export default Vue.extend({
   name: 'plants-filter',
   data: function () {
     return {
-      filterValue: ''
+      filterValue: '',
+      loaded: 0
     }
   },
   computed: {
@@ -30,9 +31,17 @@ export default Vue.extend({
     }
   },
   mounted: async function () {
-    const data = await fetchPlantsData()
-    store.commit('setPlants', data)
+    if (this.plants.length === 0) store.dispatch('setPlants')
   },
+  // methods: {
+  //   loadedImage: function () {
+  //     console.log('loaded')
+  //     this.loaded += 1
+  //     if (this.loaded === this.plants.length) {
+  //       store.commit('setplantsLoaded', true)
+  //     }
+  //   }
+  // },
   components: {
     SvgIcons,
     Plant

@@ -1,5 +1,6 @@
 <template>
   <main class="container">
+    <SvgIcons v-if="!isPostsLoaded" type="loading" />
     <PostsInOne v-for="post in posts" :key="post.id" :content="post" />
   </main>
 </template>
@@ -17,6 +18,9 @@ export default Vue.extend({
   computed: {
     posts () {
       return store.state.allPosts.filter(el => el.type === 'scienceActivity')
+    },
+    isPostsLoaded () {
+      return store.state.postsLoaded
     }
   },
   mounted: async function () {
