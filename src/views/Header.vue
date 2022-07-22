@@ -1,5 +1,5 @@
 <template>
-  <header class="header" ref="header">
+  <header class="header">
     <img src="../assets/headerPic1.jpg" alt="background picture" class="image" />
     <div class="top">
       ФлоротекаСЛИ
@@ -47,13 +47,16 @@ export default Vue.extend({
         window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
       }, 300)
     },
-    submitHandler: function (values: any) {
+    submitHandler: function () {
       store.commit('setPlantsFilterValue', this.filterValue)
       if (this.$route.path !== '/') router.push('/')
       setTimeout(() => {
-        window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
+        this.$root.$emit('scroll')
       }, 300)
     }
+  },
+  mounted: function () {
+    this.$root.$on('scroll', () => window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' }))
   }
 })
 </script>

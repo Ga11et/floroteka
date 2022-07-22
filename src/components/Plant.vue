@@ -1,16 +1,18 @@
 <template>
   <div class="plant">
-    <img class="image" :src="content.img" alt="plant" @load="loaded" />
+    <img class="image" :src="content.img[0]" alt="plant" @load="loaded" />
     <span class="image span" v-if="!isLoaded" ></span>
     <div class="content">
       <h3 class="heading">{{ content.name }}</h3>
       <p class="paragraph">{{ content.description }}</p>
-      <router-link class="link" to="/plant">Читать больше</router-link>
+      <button class="link" @click.prevent="linkHandler" >Читать больше</button>
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import store from '@/store'
+import router from '@/router'
 
 export default Vue.extend({
   name: 'plant-container',
@@ -23,6 +25,11 @@ export default Vue.extend({
   methods: {
     loaded: function () {
       this.isLoaded = true
+    },
+    linkHandler: function () {
+      store.commit('setActivePlant', this.content.id)
+      this.$root.$emit('scroll')
+      router.push('/plant')
     }
   }
 })
@@ -77,6 +84,11 @@ export default Vue.extend({
       color: #ffffffbb;
       @include font(16px, 20px, 500);
       padding: 9px 26px;
+      background-color: transparent;
+      font-family: inherit;
+      &:hover{
+        cursor: pointer;
+      }
     }
   }
 

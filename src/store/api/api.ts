@@ -1,7 +1,7 @@
 import { plantPropsType, beforeAfterPostPropsType, plantAirtableContentType, beboreAfterAirtableContentType, postAirtableContentType, PostPropsType } from '../models'
 
 export const fetchPlantsData = async () => {
-  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/images', { headers: { Authorization: process.env.VUE_APP_API_KEY } })
+  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/plants', { headers: { Authorization: process.env.VUE_APP_API_KEY } })
   const data = await response.json()
   const readyData = data.records as plantAirtableContentType[]
   return readyData.map(el => {
@@ -9,7 +9,14 @@ export const fetchPlantsData = async () => {
       id: el.fields.id,
       description: el.fields.description,
       name: el.fields.Name,
-      img: el.fields.image[0].url
+      img: el.fields.image.map(el => el.url),
+      age: el.fields.age,
+      date: el.fields.date,
+      family: el.fields.family,
+      from: el.fields.from,
+      having: el.fields.having,
+      latin: el.fields.latin,
+      livingPlace: el.fields.livingPlace
     }
     return formattedData
   })

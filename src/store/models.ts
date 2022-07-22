@@ -1,68 +1,80 @@
 type postType = 'scienceActivity' | 'beforeAfter'
 
 export type plantPropsType = {
-    name: string
-    description: string
-    img: string
-    id: string
+  name: string
+  description: string
+  img: string[]
+  id: string
+  latin: string
+  date: string
+  age: number
+  family: string
+  from: string
+  livingPlace: string
+  having: boolean
 }
 export type beforeAfterPostPropsType = {
-    id: string
-    heading: string
-    date: string
-    text: string
-    before: string
-    after: string
+  id: string
+  heading: string
+  date: string
+  text: string
+  before: string
+  after: string
 }
 export type PostPropsType = {
-    id: string
-    heading: string
-    date: string
-    text: string
-    before: string
-    after: string
-    images: string[]
-    type: postType
+  id: string
+  heading: string
+  date: string
+  text: string
+  before: string
+  after: string
+  images: string[]
+  type: postType
 }
 export type plantAirtableContentType = {
-    fields: {
-        Name: string
-        image: [
-            { url: string }
-        ]
-        id: string
-        description: string
-    }
+  fields: {
+    Name: string
+    image: { url: string }[]
+    id: string
+    description: string
+    latin: string
+    date: string
+    age: number
+    family: string
+    from: string
+    livingPlace: string
+    having: boolean
+  }
 }
 export type beboreAfterAirtableContentType = {
-    fields: {
-        Name: string
-        after: [
-            { url: string }
-        ]
-        before: [
-            { url: string }
-        ]
-        id: string
-        date: string
-        heading: string
-        text: string
-    }
+  fields: {
+    Name: string
+    after: [
+      { url: string }
+    ]
+    before: [
+      { url: string }
+    ]
+    id: string
+    date: string
+    heading: string
+    text: string
+  }
 }
 export type postAirtableContentType = {
-    fields: {
-        Name: string
-        after: [
-            { url: string }
-        ]
-        before: [
-            { url: string }
-        ]
-        images: { url: string }[]
-        id: string
-        date: string
-        heading: string
-        text: string
-        type: postType
-    }
+  fields: {
+    Name: string
+    after: [
+      { url: string }
+    ]
+    before: [
+      { url: string }
+    ]
+    images: { url: string }[]
+    id: string
+    date: string
+    heading: string
+    text: string
+    type: postType
+  }
 }
