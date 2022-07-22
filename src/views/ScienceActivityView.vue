@@ -1,6 +1,6 @@
 <template>
   <main class="container">
-    <SvgIcons v-if="!isPostsLoaded" type="loading" />
+    <SuspenseConteiner v-if="!isPostsLoaded" />
     <PostsInOne v-for="post in posts" :key="post.id" :content="post" />
   </main>
 </template>
@@ -8,16 +8,17 @@
 import Vue from 'vue'
 import PostsInOne from '../components/PostsInOne.vue'
 import store from '@/store'
-import { fetchAllPostsData } from '@/store/api/api'
+import SuspenseConteiner from '@/components/SuspenseConteiner.vue'
 
 export default Vue.extend({
   name: 'science-activity-container',
   components: {
-    PostsInOne
+    PostsInOne,
+    SuspenseConteiner
   },
   computed: {
     posts () {
-      return store.state.allPosts.filter(el => el.type === 'scienceActivity')
+      return store.getters.sciensePosts
     },
     isPostsLoaded () {
       return store.state.postsLoaded
@@ -25,8 +26,7 @@ export default Vue.extend({
   },
   mounted: async function () {
     if (!store.state.postsLoaded) {
-      const data = await fetchAllPostsData()
-      store.commit('setAllPosts', data)
+      store.dispatch('setPosts')
     }
   }
 })

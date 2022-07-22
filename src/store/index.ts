@@ -1,6 +1,6 @@
-import { fetchPlantsData } from './api/api'
+import { fetchPlantsData, fetchAllPostsData } from './api/api'
 import Vue from 'vue'
-import Vuex, { Store } from 'vuex'
+import Vuex from 'vuex'
 import { plantPropsType, PostPropsType } from './models'
 
 Vue.use(Vuex)
@@ -13,13 +13,18 @@ export default new Vuex.Store({
     plantsLoaded: false
   },
   getters: {
+    beforeAfterPosts (state) {
+      return state.allPosts.filter(el => el.type === 'beforeAfter')
+    },
+    sciensePosts (state) {
+      return state.allPosts.filter(el => el.type === 'scienceActivity')
+    }
   },
   mutations: {
     setPlants (state, payload) {
       state.plants = payload
     },
     setplantsLoaded (state, payload: boolean) {
-      console.log('worked')
       state.plantsLoaded = payload
     },
     setAllPosts (state, payload: PostPropsType[]) {
@@ -27,13 +32,21 @@ export default new Vuex.Store({
         return prev.date > next.date ? -1 : 1
       })
       state.postsLoaded = true
+    },
+    setPostsLoaded (state, payload: boolean) {
+      state.postsLoaded = payload
     }
   },
   actions: {
-    async setPlants (context) {
+    async setPlants ({ commit }) {
       const data = await fetchPlantsData()
-      await context.commit('setPlants', data)
-      context.commit('setplantsLoaded', true)
+      commit('setPlants', data)
+      commit('setplantsLoaded', true)
+    },
+    async setPosts ({ commit }) {
+      const data = await fetchAllPostsData()
+      commit('setAllPosts', data)
+      commit('setPostsLoaded', true)
     }
   },
   modules: {

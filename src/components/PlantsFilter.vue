@@ -12,10 +12,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SvgIcons from '@/components/svgIcons.vue'
 import Plant from '../components/Plant.vue'
 import store from '@/store'
-import { fetchPlantsData } from '@/store/api/api'
 
 export default Vue.extend({
   name: 'plants-filter',
@@ -33,17 +31,7 @@ export default Vue.extend({
   mounted: async function () {
     if (this.plants.length === 0) store.dispatch('setPlants')
   },
-  // methods: {
-  //   loadedImage: function () {
-  //     console.log('loaded')
-  //     this.loaded += 1
-  //     if (this.loaded === this.plants.length) {
-  //       store.commit('setplantsLoaded', true)
-  //     }
-  //   }
-  // },
   components: {
-    SvgIcons,
     Plant
   }
 })
@@ -97,6 +85,7 @@ export default Vue.extend({
   .plantsContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 500px;
     grid-gap: 20px;
   }
 }
