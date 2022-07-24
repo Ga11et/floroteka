@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-        <p class="content">Сыктывкарский про Лесной Институт © 2022</p>
+        <p class="content">Сыктывкарский Лесной Институт © 2022</p>
     </footer>
 </template>
 <script lang="ts">
