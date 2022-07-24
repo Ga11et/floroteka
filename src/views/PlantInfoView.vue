@@ -15,12 +15,12 @@
         {{ plantInfo.description }}
       </p>
       <div class="item">
-        <h3>Дата посадки:</h3>
+        <h3>Фильтрация:</h3>
         <p>{{ plantInfo.date }}</p>
       </div>
       <div class="item">
-        <h3>Возраст:</h3>
-        <p>{{ plantInfo.age }}</p>
+        <h3>Дата посадки:</h3>
+        <p>{{ plantInfo.date }}</p>
       </div>
       <div class="item">
         <h3>Царство:</h3>
@@ -35,7 +35,7 @@
         <p>{{ plantInfo.livingPlace }}</p>
       </div>
       <div class="item">
-        <h3>Присутствует для разведения:</h3>
+        <h3>Доступно для приобретения:</h3>
         <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
       </div>
       <div class="photoContainer">
