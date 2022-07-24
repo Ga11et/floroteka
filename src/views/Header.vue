@@ -134,8 +134,13 @@ export default Vue.extend({
         padding-left: 20px;
         border: 1px solid white;
         border-right: none;
+        transition: 600ms;
         &::placeholder {
-          color: $mainVeryDarkGreen;
+          color: white;
+        }
+        &:focus{
+          background-color: white;
+          transition: 600ms;
         }
       }
 
