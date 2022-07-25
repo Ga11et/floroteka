@@ -1,4 +1,7 @@
 type postType = 'scienceActivity' | 'beforeAfter'
+export type PlantType = 'Деревья' | 'Декоративные кустарники' | 'Плодово-ягодные деревья и кустарники' |
+  'Ягодники' | 'Многолетние декоративные травянистые растения' | 'Однолетние декоративные травянистые растения' |
+  'Почвопокровные растения' | 'Декоративные объекты' | 'Комнатные растения' | 'Овощные культуры'
 
 export type plantPropsType = {
   name: string
@@ -7,11 +10,11 @@ export type plantPropsType = {
   id: string
   latin: string
   date: string
-  age: number
   family: string
   from: string
   livingPlace: string
   having: boolean
+  type: PlantType
 }
 export type beforeAfterPostPropsType = {
   id: string
@@ -39,11 +42,11 @@ export type plantAirtableContentType = {
     description: string
     latin: string
     date: string
-    age: number
     family: string
     from: string
     livingPlace: string
     having: boolean
+    type: PlantType
   }
 }
 export type beboreAfterAirtableContentType = {

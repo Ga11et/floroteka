@@ -16,7 +16,7 @@
       </p>
       <div class="item">
         <h3>Фильтрация:</h3>
-        <p>{{ plantInfo.date }}</p>
+        <p>{{ plantInfo.type }}</p>
       </div>
       <div class="item">
         <h3>Дата посадки:</h3>

@@ -1,4 +1,4 @@
-import { plantPropsType, beforeAfterPostPropsType, plantAirtableContentType, beboreAfterAirtableContentType, postAirtableContentType, PostPropsType } from '../models'
+import { plantPropsType, plantAirtableContentType, postAirtableContentType, PostPropsType } from '../models'
 
 export const fetchPlantsData = async () => {
   const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/plants', { headers: { Authorization: process.env.VUE_APP_API_KEY } })
@@ -10,13 +10,13 @@ export const fetchPlantsData = async () => {
       description: el.fields.description,
       name: el.fields.Name,
       img: el.fields.image.map(el => el.url),
-      age: el.fields.age,
       date: el.fields.date,
       family: el.fields.family,
       from: el.fields.from,
       having: el.fields.having,
       latin: el.fields.latin,
-      livingPlace: el.fields.livingPlace
+      livingPlace: el.fields.livingPlace,
+      type: el.fields.type
     }
     return formattedData
   })
@@ -41,14 +41,32 @@ export const fetchAllPostsData = async () => {
   })
 }
 
-export const postPlantData = async (name: string, description: string, imgUrl: string) => {
-  const urlResp = await fetch('http://localhost:3000/plants', { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: imgUrl }) })
-    .then(resp => resp.json())
+export const postPlantData = async (plantFormData: plantPropsType) => {
+  let urlResp = ''
+  if (plantFormData.img[0] !== '') {
+    urlResp = await fetch('https://florotekaback.herokuapp.com/plants', { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: plantFormData.img[0] }) })
+      .then(resp => resp.json())
+  }
   const data = {
     records: [
-      { fields: { id: '10', description: description, image: [{ url: urlResp }], Name: name } }
-    ]
+      {
+        fields: {
+          id: '10',
+          description: plantFormData.description,
+          image: [{ url: urlResp }],
+          Name: plantFormData.name,
+          date: plantFormData.date,
+          family: plantFormData.family,
+          from: plantFormData.from,
+          having: plantFormData.having,
+          latin: plantFormData.latin,
+          type: plantFormData.type,
+          livingPlace: plantFormData.livingPlace
+        }
+      }
+    ] as plantAirtableContentType[]
   }
-  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/images', { headers: { Authorization: process.env.VUE_APP_API_KEY, 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify(data) })
+  console.log(data)
+  const response = await fetch('https://api.airtable.com/v0/apphq3bB8tbOJbcaa/plants', { headers: { Authorization: process.env.VUE_APP_API_KEY, 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify(data) })
   return response
 }

@@ -3,11 +3,11 @@
         @dragenter.prevent="toggleActive(true)"
         @dragleave.prevent="toggleActive(false)"
         @dragover.prevent
-        @drop.prevent="dropHandlerLocal"
+        @drop.prevent="dropHandlerLocal($event)"
     >
         <p class="innerContent">Drop Here</p>
-        <input class="innerContent fileInput" type="file" @change="putFile" />
-        <img v-if="image" :src="image" alt="Dropped" class="background" />
+        <input class="innerContent fileInput" type="file" />
+        <img v-if="imageUrl" :src="imageUrl" alt="Dropped" class="background" />
     </div>
 </template>
 <script lang="ts">
@@ -15,19 +15,22 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'drop-file-container',
-  props: ['putFile', 'dropHandler', 'image'],
   data: function () {
     return {
-      isActive: false
+      isActive: false,
+      imageUrl: ''
     }
+  },
+  mounted: function () {
+    this.$root.$on('renderResult', (value: string) => { this.imageUrl = value })
   },
   methods: {
     toggleActive: function (value: boolean) {
       this.isActive = value
     },
     dropHandlerLocal: function (event: DragEvent) {
+      this.$root.$emit('dropHandler', event)
       this.toggleActive(false)
-      this.dropHandler(event)
     }
   }
 })

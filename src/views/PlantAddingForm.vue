@@ -1,81 +1,96 @@
 <template>
-    <main class="plantAddingFormContaner">
-        <form class="plantAddingForm">
-            <h2>Введите имя растения</h2>
-            <input v-model="plantName" type="text" class="input" />
-            <h2>Введите описание растения</h2>
-            <textarea v-model="description" type="text" class="input heightMore" ></textarea>
-            <h2>Добавьте фото растения (одно)</h2>
-            <DropFileContainer :putFile="putFile" :dropHandler="dropHandler" :image="image" />
-            <!-- <input @change="putFile" type="file" class="fileInput" /> -->
-            <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
-        </form>
-    </main>
+  <main class="plantAddingFormContaner">
+    <form class="plantAddingForm">
+      <h2 class="heading">Зарегистрировать новое растение:</h2>
+      <FormPartContainer name="Основная информация" >
+        <CustomInput v-model="plantFormData.name" text="Введите имя растения" type="normal" />
+        <CustomInput v-model="plantFormData.latin" text="Введите латинское имя растения" type="normal" />
+        <CustomInput v-model="plantFormData.description" text="Введите описание" type="textarea" />
+      </FormPartContainer>
+      <FormPartContainer name="Дополнительная информация" >
+        <CustomInput v-model="plantFormData.date" text="Введите дату посадки" type="normal" />
+        <CustomInput v-model="plantFormData.family" text="Введите семейство" type="normal" />
+        <CustomInput v-model="plantFormData.from" text="Введите откуда привезено" type="normal" />
+        <CustomInput v-model="plantFormData.livingPlace" text="Введите районирование" type="normal" />
+      </FormPartContainer>
+      <FormPartContainer name="Информация для базы" >
+        <CustomInput v-model="plantFormData.having" text="Присутствует для распространения" type="checkbox" />
+        <CustomInput v-model="plantFormData.type" text="Выберете тип для фильтрации" type="select" />
+      </FormPartContainer>
+      <FormPartContainer name="Фотографии"  >
+        <CustomInput text="Добавьте фото (одно)" type="photo" />
+      </FormPartContainer>
+      <div class="buttons">
+        <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
+      </div>
+    </form>
+  </main>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import { postPlantData } from '@/store/api/api'
-import DropFileContainer from '@/components/dropFileContainer.vue'
+import { plantPropsType, PlantType } from '@/store/models'
+import FormPartContainer from '../components/formPartContainer.vue'
+import CustomInput from '@/components/customInput.vue'
 
 export default Vue.extend({
   name: 'plant-adding-form',
   data: function () {
     return {
-      plantName: '',
-      description: '',
-      image: ''
+      plantFormData: {
+        name: '',
+        latin: '',
+        description: '',
+        img: [''],
+        date: '',
+        family: '',
+        from: '',
+        having: false,
+        livingPlace: '',
+        type: 'Деревья' as PlantType
+      } as plantPropsType
     }
   },
-  components: {
-    DropFileContainer
-  },
-  methods: {
-    submitForm: async function () {
-      await postPlantData(this.plantName, this.description, this.image)
-    },
-    putFile: function (event: any) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target?.files[0])
-      reader.onloadend = () => {
-        this.image = reader.result as string
-        return null
-      }
-    },
-    dropHandler: function (event: DragEvent) {
+  components: { FormPartContainer, CustomInput },
+  mounted: function () {
+    this.$root.$on('renderResult', (value: string) => { this.plantFormData.img[0] = value })
+    this.$root.$on('dropHandler', (event: DragEvent) => {
       if (event.dataTransfer?.files[0]) {
         const reader = new FileReader()
         reader.readAsDataURL(event.dataTransfer?.files[0])
         reader.onloadend = () => {
-          this.image = reader.result as string
-          return null
+          this.$root.$emit('renderResult', reader.result as string)
         }
       }
+    })
+  },
+  methods: {
+    submitForm: async function () {
+      await postPlantData(this.plantFormData)
     }
   }
 })
 </script>
 <style lang="scss">
 @import '@/variables';
-  .plantAddingFormContaner{
-    @include flex(column, center, flex-start);
-    .plantAddingForm{
-      padding: 100px 0;
-      width: 1280px;
-      h2{
-        @include font(30px, 45px, 500);
-      }
-      .input{
-        margin: 20px 0;
-        padding: 0 20px;
-        width: 500px;
-        height: 50px;
-        @include font(30px, 45px, 500);
-      }
-      .heightMore{
-        height: 200px;
-        padding: 20px;
-      }
-      .button{
+
+.plantAddingFormContaner {
+  @include flex(column, center, flex-start);
+
+  .plantAddingForm {
+    padding: 100px 0;
+    width: 1280px;
+
+    .heading {
+      @include font(34px, 55px, 500);
+      border-bottom: 1px solid $mainVeryDarkGreen;
+      padding-bottom: 50px;
+    }
+
+    .buttons {
+      @include flex(row, center, flex-end);
+
+      .button {
         width: 500px;
         height: 60px;
         margin-top: 30px;
@@ -84,7 +99,8 @@ export default Vue.extend({
         border-radius: 4px;
         background-color: #8BAB9444;
         transition: 300ms;
-        &:hover{
+
+        &:hover {
           cursor: pointer;
           background-color: #8BAB94;
           transition: 300ms;
@@ -92,4 +108,5 @@ export default Vue.extend({
       }
     }
   }
+}
 </style>
