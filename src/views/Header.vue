@@ -136,7 +136,7 @@ export default Vue.extend({
         border-right: none;
         transition: 600ms;
         &::placeholder {
-          color: white;
+          color: $mainVeryDarkGreen;
         }
         &:focus{
           background-color: white;

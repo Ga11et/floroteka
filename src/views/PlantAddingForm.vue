@@ -9,12 +9,12 @@
       </FormPartContainer>
       <FormPartContainer name="Дополнительная информация" >
         <CustomInput v-model="plantFormData.date" text="Введите дату посадки" type="normal" />
-        <CustomInput v-model="plantFormData.family" text="Введите семейство" type="normal" />
+        <CustomInput v-model="plantFormData.family" text="Введите царство" type="normal" />
         <CustomInput v-model="plantFormData.from" text="Введите откуда привезено" type="normal" />
         <CustomInput v-model="plantFormData.livingPlace" text="Введите районирование" type="normal" />
       </FormPartContainer>
       <FormPartContainer name="Информация для базы" >
-        <CustomInput v-model="plantFormData.having" text="Присутствует для распространения" type="checkbox" />
+        <CustomInput v-model="plantFormData.having" text="Доступность для приобретения" type="checkbox" />
         <CustomInput v-model="plantFormData.type" text="Выберете тип для фильтрации" type="select" />
       </FormPartContainer>
       <FormPartContainer name="Фотографии"  >
@@ -66,7 +66,8 @@ export default Vue.extend({
   },
   methods: {
     submitForm: async function () {
-      await postPlantData(this.plantFormData)
+      const response = await postPlantData(this.plantFormData)
+      if (response) console.log(response)
     }
   }
 })
