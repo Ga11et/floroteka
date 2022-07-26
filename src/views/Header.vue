@@ -7,20 +7,24 @@
         <router-link class="link" @click.native="scrollHandler" to="/">Каталог</router-link>
         <router-link class="link" @click.native="scrollHandler" to="/news">Новости</router-link>
         <Dropdown :scrollHandler="scrollHandler" />
-        <router-link class="link" @click.native="scrollHandler" to="/aboutus">О нас</router-link>
         <router-link class="link" @click.native="scrollHandler" to="/contacts">Контакты</router-link>
+        <router-link v-if="!isAuth" class="link" to="/login">Логин</router-link>
+        <router-link v-if="isAuth" class="link" @click.native="scrollHandler" to="/admin">Админская</router-link>
       </nav>
       <MobileMenu class="mobileMenu" :scrollHandler="scrollHandler" />
     </div>
-    <div class="content">
-      <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
-      <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
-        дендрологическом участке Сыктывкарского лесного института.</p>
-      <form class="inputContainer" @submit.prevent="submitHandler">
-        <input type="text" v-model="filterValue" placeholder="Попробуем найти что-то конкретное?" class="input" />
-        <router-link class="link" @click.native="submitHandler" to="/">Что у нас есть</router-link>
-      </form>
-    </div>
+    <LoginView v-if="isLogin" />
+    <transition name="content">
+      <div v-if="!isLogin" class="content">
+        <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
+        <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
+          дендрологическом участке Сыктывкарского лесного института.</p>
+        <form class="inputContainer" @submit.prevent="submitHandler">
+          <input type="text" v-model="filterValue" placeholder="Попробуем найти что-то конкретное?" class="input" />
+          <router-link class="link" @click.native="submitHandler" to="/">Что у нас есть</router-link>
+        </form>
+      </div>
+    </transition>
   </header>
 </template>
 <script lang="ts">
@@ -29,13 +33,11 @@ import MobileMenu from '@/components/MobileMenu.vue'
 import Dropdown from '@/components/dropdownHeader.vue'
 import router from '@/router'
 import store from '@/store'
+import LoginView from './loginView.vue'
 
 export default Vue.extend({
   name: 'header-component',
-  components: {
-    MobileMenu,
-    Dropdown
-  },
+  components: { MobileMenu, Dropdown, LoginView },
   data: function () {
     return {
       filterValue: ''
@@ -57,12 +59,28 @@ export default Vue.extend({
   },
   mounted: function () {
     this.$root.$on('scroll', () => window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' }))
+  },
+  computed: {
+    isLogin () {
+      return this.$route.path === '/login'
+    },
+    isAuth () {
+      return store.state.isAuth
+    }
   }
 })
 </script>
 <style lang="scss">
 @import '@/variables';
+.content-enter-active,
+.content-leave-active {
+  transition: opacity 600ms;
+}
 
+.content-enter,
+.content-leave-to {
+  opacity: 0;
+}
 .header {
   @include flex(column, center, unset);
   width: 100%;

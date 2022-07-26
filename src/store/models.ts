@@ -81,3 +81,18 @@ export type postAirtableContentType = {
     type: postType
   }
 }
+export type ErrorMessagesPlantAddingFormType = {
+  [unit: string]: string
+  name: string
+  latin: string
+  description: string
+  img: string
+  date: string
+  family: string
+  from: string
+  livingPlace: string
+}
+export type LoginData = {
+  login: string,
+  password: string
+}

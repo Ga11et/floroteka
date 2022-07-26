@@ -3,22 +3,22 @@
     <form class="plantAddingForm">
       <h2 class="heading">Зарегистрировать новое растение:</h2>
       <FormPartContainer name="Основная информация" >
-        <CustomInput v-model="plantFormData.name" text="Введите имя растения" type="normal" />
-        <CustomInput v-model="plantFormData.latin" text="Введите латинское имя растения" type="normal" />
-        <CustomInput v-model="plantFormData.description" text="Введите описание" type="textarea" />
+        <CustomInput :errorMessage="errorMessages.name" v-model="plantFormData.name" text="Введите имя растения" type="normal" />
+        <CustomInput :errorMessage="errorMessages.latin" v-model="plantFormData.latin" text="Введите латинское имя растения" type="normal" />
+        <CustomInput :errorMessage="errorMessages.description" v-model="plantFormData.description" text="Введите описание" type="textarea" />
       </FormPartContainer>
       <FormPartContainer name="Дополнительная информация" >
-        <CustomInput v-model="plantFormData.date" text="Введите дату посадки" type="normal" />
-        <CustomInput v-model="plantFormData.family" text="Введите царство" type="normal" />
-        <CustomInput v-model="plantFormData.from" text="Введите откуда привезено" type="normal" />
-        <CustomInput v-model="plantFormData.livingPlace" text="Введите районирование" type="normal" />
+        <CustomInput :errorMessage="errorMessages.date" v-model="plantFormData.date" text="Введите дату посадки" type="normal" />
+        <CustomInput :errorMessage="errorMessages.family" v-model="plantFormData.family" text="Введите царство" type="normal" />
+        <CustomInput :errorMessage="errorMessages.from" v-model="plantFormData.from" text="Введите откуда привезено" type="normal" />
+        <CustomInput :errorMessage="errorMessages.livingPlace" v-model="plantFormData.livingPlace" text="Введите районирование" type="normal" />
       </FormPartContainer>
       <FormPartContainer name="Информация для базы" >
         <CustomInput v-model="plantFormData.having" text="Доступность для приобретения" type="checkbox" />
         <CustomInput v-model="plantFormData.type" text="Выберете тип для фильтрации" type="select" />
       </FormPartContainer>
       <FormPartContainer name="Фотографии"  >
-        <CustomInput text="Добавьте фото (одно)" type="photo" />
+        <CustomInput :errorMessage="errorMessages.img" text="Добавьте фото (одно)" type="photo" />
       </FormPartContainer>
       <div class="buttons">
         <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
@@ -29,7 +29,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { postPlantData } from '@/store/api/api'
-import { plantPropsType, PlantType } from '@/store/models'
+import { plantPropsType, PlantType, ErrorMessagesPlantAddingFormType } from '@/store/models'
 import FormPartContainer from '../components/formPartContainer.vue'
 import CustomInput from '@/components/customInput.vue'
 
@@ -45,10 +45,11 @@ export default Vue.extend({
         date: '',
         family: '',
         from: '',
-        having: false,
         livingPlace: '',
+        having: false,
         type: 'Деревья' as PlantType
-      } as plantPropsType
+      } as plantPropsType,
+      errorMessages: {} as ErrorMessagesPlantAddingFormType
     }
   },
   components: { FormPartContainer, CustomInput },
@@ -67,7 +68,15 @@ export default Vue.extend({
   methods: {
     submitForm: async function () {
       const response = await postPlantData(this.plantFormData)
-      if (response) console.log(response)
+      this.errorMessages = {} as ErrorMessagesPlantAddingFormType
+      if (response !== 'ok') {
+        response.forEach((el: any) => {
+          const location = el.param.slice(5) as string
+          if (location.slice(0, 3) === 'img') this.errorMessages.img = el.msg
+          else this.errorMessages[location] = el.msg
+        })
+        this.$root.$emit('scroll')
+      }
     }
   }
 })

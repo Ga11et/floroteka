@@ -1,7 +1,7 @@
-import { fetchPlantsData, fetchAllPostsData } from './api/api'
+import { fetchPlantsData, fetchAllPostsData, getAutherisied } from './api/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { plantPropsType, PostPropsType } from './models'
+import { LoginData, plantPropsType, PostPropsType } from './models'
 
 Vue.use(Vuex)
 
@@ -12,7 +12,9 @@ export default new Vuex.Store({
     postsLoaded: false,
     plantsLoaded: false,
     plantsFilterValue: '',
-    activePlantId: '1'
+    activePlantId: '1',
+    token: '',
+    isAuth: false
   },
   getters: {
     beforeAfterPosts (state) {
@@ -60,6 +62,12 @@ export default new Vuex.Store({
     },
     setActivePlant (state, payload: string) {
       state.activePlantId = payload
+    },
+    setToken (state, payload: string) {
+      state.token = payload
+    },
+    getAuth (state, payload: boolean) {
+      state.isAuth = payload
     }
   },
   actions: {
@@ -72,6 +80,15 @@ export default new Vuex.Store({
       const data = await fetchAllPostsData()
       commit('setAllPosts', data)
       commit('setPostsLoaded', true)
+    },
+    async getAuth ({ commit }, data: LoginData) {
+      const returnData = await getAutherisied(data)
+      if (returnData.token) {
+        commit('setToken', returnData.token)
+        commit('getAuth', true)
+        return 'ok'
+      }
+      return returnData
     }
   },
   modules: {

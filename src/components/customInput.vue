@@ -1,10 +1,13 @@
 <template>
   <div class="item">
+    <div v-if="errorMessage" class="errorSpanContainer">
+      <span class="errorSpan">
+        {{ errorMessage }}
+      </span>
+    </div>
     <p class="text">{{ text }}</p>
-    <input v-if="type === 'normal'" :value="value" type="text" @input="inputHandler"
-      class="input" />
-    <textarea v-else-if="type === 'textarea'" :value="value" @input="inputHandler"
-      class="input heightMore"></textarea>
+    <input v-if="type === 'normal'" :value="value" :type="inputType || 'text'" @input="inputHandler" class="input" />
+    <textarea v-else-if="type === 'textarea'" :value="value" @input="inputHandler" class="input heightMore"></textarea>
     <label v-else-if="type === 'checkbox'" class="checkbox">
       <input :checked="value" @change="checkboxHandler" type="checkbox" class="checkboxInput" />
       Присутствует
@@ -25,7 +28,7 @@ export default Vue.extend({
     event: 'change',
     prop: 'value'
   },
-  props: ['text', 'type', 'value'],
+  props: ['text', 'type', 'value', 'errorMessage', 'inputType'],
   data: function () {
     return {
       options: [
@@ -60,10 +63,28 @@ export default Vue.extend({
 
 .item {
   padding: 0 0 20px;
+  position: relative;
+
+  .errorSpanContainer {
+    width: 380px;
+    position: absolute;
+    top: 40px;
+    left: -400px;
+    @include flex(row, flex-start, flex-end);
+
+    .errorSpan {
+      @include flex(row, center, center);
+      border-radius: 10px;
+      background-color: $mainRed;
+      padding: 10px 20px;
+      min-height: 50px;
+      min-width: 200px;
+    }
+  }
 
   .text {
     @include font(20px, 30px, 500);
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   .input {

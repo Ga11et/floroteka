@@ -40,7 +40,6 @@ export default Vue.extend({
     .dropFileContainer{
         background-color: #8BAB9415;
         border: 1px dotted #8BAB94;
-        margin: 20px 0;
         width: 500px;
         height: 500px;
         @include flex(column, center, center);
