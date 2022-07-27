@@ -1,4 +1,4 @@
-import { plantPropsType, plantAirtableContentType, LoginData } from '../models'
+import { plantPropsType, LoginData } from '../models'
 
 const prod = 'https://florotekaback.herokuapp.com'
 // const prod = 'http://localhost:3000'

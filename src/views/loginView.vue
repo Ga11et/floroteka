@@ -75,4 +75,14 @@ export default Vue.extend({
     }
   }
 }
+@media screen and (max-width: 1200px) {
+  .loginContainer{
+    top: 20%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .loginContainer{
+    padding: 30px;
+  }
+}
 </style>

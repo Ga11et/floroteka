@@ -1,10 +1,5 @@
 <template>
   <div class="item">
-    <div v-if="errorMessage" class="errorSpanContainer">
-      <span class="errorSpan">
-        {{ errorMessage }}
-      </span>
-    </div>
     <p class="text">{{ text }}</p>
     <input v-if="type === 'normal'" :value="value" :type="inputType || 'text'" @input="inputHandler" class="input" />
     <textarea v-else-if="type === 'textarea'" :value="value" @input="inputHandler" class="input heightMore"></textarea>
@@ -16,6 +11,11 @@
       <option v-for="option in options" :key="option">{{ option }}</option>
     </select>
     <DropFileContainer v-else-if="type === 'photo'" :photo="value" />
+    <div v-if="errorMessage" class="errorSpanContainer">
+      <span class="errorSpan">
+        {{ errorMessage }}
+      </span>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -108,6 +108,39 @@ export default Vue.extend({
       width: 20px;
       height: 20px;
       margin-right: 10px;
+    }
+  }
+}
+@media screen and (max-width: 1000px) {
+  .item{
+    padding-bottom: 10px;
+    .errorSpanContainer{
+      width: 280px;
+      left: -300px;
+      top: 30px;
+    }
+    .text{
+      font-size: 16px;
+      padding-bottom: 5px;
+    }
+    .input{
+      font-size: 16px;
+      padding: 0 10px;
+    }
+    .checkbox{
+      font-size: 16px;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .item{
+    .errorSpanContainer{
+      position: static;
+      width: 100%;
+      margin-top: 10px;
+      .errorSpan{
+        width: 100%;
+      }
     }
   }
 }

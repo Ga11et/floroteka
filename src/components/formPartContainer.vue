@@ -27,4 +27,18 @@ export default Vue.extend({
     @include font(20px, 30px, 700);
   }
 }
+@media screen and (max-width: 1000px) {
+  .formPartContainer{
+    grid-template-columns: 300px 1fr;
+    .containerName{
+      font-size: 16px;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .formPartContainer{
+    grid-template-columns: 1fr;
+    padding: 10px 0;
+  }
+}
 </style>

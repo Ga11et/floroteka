@@ -1,7 +1,8 @@
 <template>
   <main class="plantAddingFormContaner">
+    <SidePathContainer path="Добавить растение" />
     <form class="plantAddingForm">
-      <h2 class="heading">Зарегистрировать новое растение:</h2>
+      <h2 class="heading">Зарегистрировать новое растение</h2>
       <FormPartContainer name="Основная информация" >
         <CustomInput :errorMessage="errorMessages.name" v-model="plantFormData.name" text="Введите имя растения" type="normal" />
         <CustomInput :errorMessage="errorMessages.latin" v-model="plantFormData.latin" text="Введите латинское имя растения" type="normal" />
@@ -32,6 +33,7 @@ import { postPlantData } from '@/store/api/api'
 import { plantPropsType, PlantType, ErrorMessagesPlantAddingFormType } from '@/store/models'
 import FormPartContainer from '../components/formPartContainer.vue'
 import CustomInput from '@/components/customInput.vue'
+import SidePathContainer from '@/components/sidePathContainer.vue'
 
 export default Vue.extend({
   name: 'plant-adding-form',
@@ -52,13 +54,13 @@ export default Vue.extend({
       errorMessages: {} as ErrorMessagesPlantAddingFormType
     }
   },
-  components: { FormPartContainer, CustomInput },
+  components: { FormPartContainer, CustomInput, SidePathContainer },
   mounted: function () {
     this.$root.$on('renderResult', (value: string) => { this.plantFormData.img[0] = value })
-    this.$root.$on('dropHandler', (event: DragEvent) => {
-      if (event.dataTransfer?.files[0]) {
+    this.$root.$on('dropHandler', (file: File) => {
+      if (file) {
         const reader = new FileReader()
-        reader.readAsDataURL(event.dataTransfer?.files[0])
+        reader.readAsDataURL(file)
         reader.onloadend = () => {
           this.$root.$emit('renderResult', reader.result as string)
         }
@@ -115,6 +117,36 @@ export default Vue.extend({
           background-color: #8BAB94;
           transition: 300ms;
         }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1400px) {
+  .plantAddingFormContaner{
+    .plantAddingForm{
+      width: 100%;
+      padding: 100px 50px;
+    }
+  }
+}
+@media screen and (max-width: 1000px) {
+  .plantAddingFormContaner{
+    .plantAddingForm{
+      padding: 50px 50px;
+      .heading{
+        font-size: 28px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .plantAddingFormContaner{
+    .plantAddingForm{
+      padding: 20px;
+      .heading{
+        font-size: 26px;
+        line-height: 34px;
+        padding-bottom: 20px;
       }
     }
   }
