@@ -1,6 +1,6 @@
 <template>
   <div class="navPart" @click="clickHandler">
-    {{ content }}
+    {{ content.rus }}
   </div>
 </template>
 <script lang="ts">
@@ -11,7 +11,7 @@ export default Vue.extend({
   props: ['content'],
   methods: {
     clickHandler: function () {
-      this.$root.$emit('changeForm', this.content)
+      this.$root.$emit('changeForm', this.content.en)
       setTimeout(() => {
         this.$root.$emit('scroll')
       }, 300)

@@ -92,8 +92,15 @@ export type ErrorMessagesPlantAddingFormType = {
   from: string
   livingPlace: string
 }
+export type ErrorMessagesBeforeAfterPost = {
+  [unit: string]: string
+  heading: string
+  description: string
+  before: string
+  after: string
+}
 export type LoginData = {
   login: string,
   password: string
 }
-export type FormType = 'plantAddingForm' | undefined
+export type FormType = 'plantForm' | 'beforeAfterPostForm' | undefined

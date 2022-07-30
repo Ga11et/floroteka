@@ -10,7 +10,7 @@
     <select v-else-if="type === 'select'" class="select input" :value="value" @change="inputHandler">
       <option v-for="option in options" :key="option">{{ option }}</option>
     </select>
-    <DropFileContainer v-else-if="type === 'photo'" :photo="value" />
+    <DropFileContainer v-else-if="type === 'photo'" :photo="value" :photoId="photoId" />
     <div v-if="errorMessage" class="errorSpanContainer">
       <span class="errorSpan">
         {{ errorMessage }}
@@ -28,7 +28,7 @@ export default Vue.extend({
     event: 'change',
     prop: 'value'
   },
-  props: ['text', 'type', 'value', 'errorMessage', 'inputType'],
+  props: ['text', 'type', 'value', 'errorMessage', 'inputType', 'photoId'],
   data: function () {
     return {
       options: [
@@ -98,6 +98,7 @@ export default Vue.extend({
     height: 200px;
     padding: 20px;
     resize: none;
+    font-family: inherit
   }
 
   .checkbox {

@@ -1,7 +1,7 @@
 <template>
-  <section class="plantAddingFormContaner">
+  <section class="addingFormContaner">
     <SidePathContainer path="Добавить растение" />
-    <form class="plantAddingForm">
+    <form class="addingForm">
       <h2 class="heading">Зарегистрировать новое растение</h2>
       <FormPartContainer name="Основная информация" >
         <CustomInput :errorMessage="errorMessages.name" v-model="plantFormData.name" text="Введите имя растения" type="normal" />
@@ -19,7 +19,7 @@
         <CustomInput v-model="plantFormData.type" text="Выберете тип для фильтрации" type="select" />
       </FormPartContainer>
       <FormPartContainer name="Фотографии"  >
-        <CustomInput :errorMessage="errorMessages.img" text="Добавьте фото (одно)" type="photo" />
+        <CustomInput :errorMessage="errorMessages.img" text="Добавьте фото (одно)" type="photo" photoId="plant1" />
       </FormPartContainer>
       <div class="buttons">
         <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
@@ -56,13 +56,16 @@ export default Vue.extend({
   },
   components: { FormPartContainer, CustomInput, SidePathContainer },
   mounted: function () {
-    this.$root.$on('renderResult', (value: string) => { this.plantFormData.img[0] = value })
-    this.$root.$on('dropHandler', (file: File) => {
+    this.$root.$on('renderResult', (value: string, photoId: string) => {
+      if (photoId === 'plant1') this.plantFormData.img[0] = value
+    })
+    this.$root.$on('dropHandler', (file: File, photoId: string) => {
+      console.log(photoId)
       if (file) {
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onloadend = () => {
-          this.$root.$emit('renderResult', reader.result as string)
+          this.$root.$emit('renderResult', reader.result as string, photoId)
         }
       }
     })
@@ -86,11 +89,11 @@ export default Vue.extend({
 <style lang="scss">
 @import '@/variables';
 
-.plantAddingFormContaner {
+.addingFormContaner {
   @include flex(column, center, flex-start);
   width: 100%;
 
-  .plantAddingForm {
+  .addingForm {
     padding: 50px 0 100px;
     width: 1280px;
 
@@ -123,16 +126,16 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 1400px) {
-  .plantAddingFormContaner{
-    .plantAddingForm{
+  .addingFormContaner{
+    .addingForm{
       width: 100%;
-      padding: 100px 50px;
+      padding: 50px 50px 100px;
     }
   }
 }
 @media screen and (max-width: 1000px) {
-  .plantAddingFormContaner{
-    .plantAddingForm{
+  .addingFormContaner{
+    .addingForm{
       padding: 50px 50px;
       .heading{
         font-size: 28px;
@@ -141,8 +144,8 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 750px) {
-  .plantAddingFormContaner{
-    .plantAddingForm{
+  .addingFormContaner{
+    .addingForm{
       padding: 20px;
       .heading{
         font-size: 26px;

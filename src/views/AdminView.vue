@@ -9,6 +9,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import PlantAddingForm from '@/components/forms/PlantAddingForm.vue'
+import BeforeAfrerPostForm from '@/components/forms/beforeAfterAddingForm.vue'
 import Navigation from '@/components/adminViewComponents/navigation.vue'
 import { FormType } from '@/store/models'
 import noFormContainerVue from '@/components/forms/noFormContainer.vue'
@@ -25,9 +26,13 @@ export default Vue.extend({
   methods: {
     changeForm: function (value: FormType) {
       this.formName = value
+      console.log(value)
       switch (value) {
-        case 'plantAddingForm':
+        case 'plantForm':
           this.form = PlantAddingForm
+          break
+        case 'beforeAfterPostForm':
+          this.form = BeforeAfrerPostForm
           break
         case undefined:
           this.form = noFormContainerVue

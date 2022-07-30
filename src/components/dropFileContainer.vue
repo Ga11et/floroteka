@@ -21,8 +21,11 @@ export default Vue.extend({
       file: ''
     }
   },
+  props: ['photoId'],
   mounted: function () {
-    this.$root.$on('renderResult', (value: string) => { this.imageUrl = value })
+    this.$root.$on('renderResult', (value: string, id: string) => {
+      if (id === this.photoId) this.imageUrl = value
+    })
   },
   methods: {
     toggleActive: function (value: boolean) {
@@ -31,7 +34,7 @@ export default Vue.extend({
     dropHandlerLocal: function (event: DragEvent) {
       if (event.dataTransfer) {
         const file = event.dataTransfer.files[0]
-        this.$root.$emit('dropHandler', file)
+        this.$root.$emit('dropHandler', file, this.photoId)
       }
       this.toggleActive(false)
     },
@@ -39,7 +42,7 @@ export default Vue.extend({
       const target = event.target as HTMLInputElement
       if (target.files) {
         const file = target.files[0] as File
-        this.$root.$emit('dropHandler', file)
+        this.$root.$emit('dropHandler', file, this.photoId)
       }
     }
   }

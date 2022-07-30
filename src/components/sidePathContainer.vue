@@ -5,7 +5,6 @@
       <div class="line"></div>
     </div>
   </div>
-
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -24,12 +23,12 @@ export default Vue.extend({
 
   .pathContainer {
     @include flex(row, flex-end, flex-end);
-    width: 500px;
+    width: 600px;
     @include font(20px, 30px, 500);
     position: absolute;
     transform: rotate(-90deg);
-    left: -293px;
-    top: 339px;
+    left: -329px;
+    top: 346px;
 
     .path {
       padding-right: 10px;
@@ -49,7 +48,7 @@ export default Vue.extend({
     padding: 0 50px;
 
     .pathContainer {
-      left: -226px;
+      left: -276px;
     }
   }
 }
@@ -57,7 +56,7 @@ export default Vue.extend({
 @media screen and (max-width: 1000px) {
   .adaptiveContainer {
     .pathContainer {
-      top: 289px;
+      top: 349px;
     }
   }
 }

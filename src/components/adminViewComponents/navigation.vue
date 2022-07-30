@@ -56,7 +56,7 @@ export default Vue.extend({
     padding: 0 50px;
   }
 }
-@media screen and (max-width: 7500px) {
+@media screen and (max-width: 750px) {
   .adminViewNavigation{
     padding: 0 20px;
   }
