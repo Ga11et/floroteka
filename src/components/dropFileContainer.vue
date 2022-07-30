@@ -2,9 +2,9 @@
   <label :class="['dropFileContainer', { active: isActive }]" @dragenter.prevent="toggleActive(true)"
     @dragleave.prevent="toggleActive(false)" @dragover.prevent @drop.prevent="dropHandlerLocal($event)"
     >
-    <p class="innerContent">Drop Here</p>
-    <p class="innerContent">or</p>
-    <p class="innerContent">Click</p>
+    <p class="innerContent">Перетащите сюда</p>
+    <p class="innerContent">или</p>
+    <p class="innerContent">Кликните</p>
     <input class="innerContent fileInput" @change="changeHandler" type="file" ref="file" />
     <img v-if="imageUrl" :src="imageUrl" alt="Dropped" class="background" />
   </label>
@@ -55,6 +55,11 @@ export default Vue.extend({
   height: 400px;
   @include flex(column, center, center);
   position: relative;
+
+  &:hover{
+    cursor: pointer;
+    border-color: $mainVeryDarkGreen;
+  }
 
   .background {
     width: 100%;

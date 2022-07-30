@@ -28,7 +28,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PlantAddingForm.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminView.vue')
   },
   {
     path: '/plant',

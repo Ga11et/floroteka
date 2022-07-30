@@ -20,12 +20,14 @@
     <polyline points="4,8 12,16 20,8" stroke="white" fill="transparent" stroke-width="2px" />
   </svg>
   <svg v-else-if="type === 'loading'" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"
-    style="align-self: flex-start;">
+    width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="align-self: flex-start;">
     <path d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="#84ab2e" stroke="none">
       <animateTransform attributeName="transform" type="rotate" dur="1.3157894736842106s" repeatCount="indefinite"
         keyTimes="0;1" values="0 50 50;-360 50 50"></animateTransform>
     </path>
+  </svg>
+  <svg v-else-if="type === 'arrow'" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+    <path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" />
   </svg>
 </template>
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <main class="plantAddingFormContaner">
+  <section class="plantAddingFormContaner">
     <SidePathContainer path="Добавить растение" />
     <form class="plantAddingForm">
       <h2 class="heading">Зарегистрировать новое растение</h2>
@@ -25,13 +25,13 @@
         <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
       </div>
     </form>
-  </main>
+  </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import { postPlantData } from '@/store/api/api'
 import { plantPropsType, PlantType, ErrorMessagesPlantAddingFormType } from '@/store/models'
-import FormPartContainer from '../components/formPartContainer.vue'
+import FormPartContainer from '../../components/formPartContainer.vue'
 import CustomInput from '@/components/customInput.vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
 
@@ -72,7 +72,7 @@ export default Vue.extend({
       const response = await postPlantData(this.plantFormData)
       this.errorMessages = {} as ErrorMessagesPlantAddingFormType
       if (response !== 'ok') {
-        response.forEach((el: any) => {
+        response.forEach((el: { param: string, msg: string }) => {
           const location = el.param.slice(5) as string
           if (location.slice(0, 3) === 'img') this.errorMessages.img = el.msg
           else this.errorMessages[location] = el.msg
@@ -88,9 +88,10 @@ export default Vue.extend({
 
 .plantAddingFormContaner {
   @include flex(column, center, flex-start);
+  width: 100%;
 
   .plantAddingForm {
-    padding: 100px 0;
+    padding: 50px 0 100px;
     width: 1280px;
 
     .heading {

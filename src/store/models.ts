@@ -96,3 +96,4 @@ export type LoginData = {
   login: string,
   password: string
 }
+export type FormType = 'plantAddingForm' | undefined
