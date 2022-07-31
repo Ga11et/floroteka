@@ -28,7 +28,7 @@ export default Vue.extend({
     position: absolute;
     transform: rotate(-90deg);
     left: -329px;
-    top: 346px;
+    top: 396px;
 
     .path {
       padding-right: 10px;
