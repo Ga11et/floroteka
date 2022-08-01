@@ -3,6 +3,9 @@
     <SidePathContainer path="Добавить пост Было / Стало" />
     <form class="addingForm">
       <h2 class="heading">Зарегистрировать новый пост "Было / Стало"</h2>
+      <span class="originError" v-if="errorMessages.origin">
+        {{ errorMessages.origin }}
+      </span>
       <FormPartContainer name="Основная информация">
         <CustomInput :errorMessage="errorMessages.heading" v-model="formData.heading" text="Введите заголовок"
           type="normal" />
@@ -26,9 +29,9 @@ import Vue from 'vue'
 import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
-import { ErrorMessagesBeforeAfterPost } from '@/store/models'
-import { BeforeAfterFormType } from '@/store/models/formTypes'
+import { BeforeAfterFormType, ErrorMessagesBeforeAfterPost } from '@/store/models/formTypes'
 import { postBeforeAfterPostData } from '@/store/api/api'
+import store from '@/store'
 
 export default Vue.extend({
   name: 'before-after-adding-form',
@@ -49,19 +52,15 @@ export default Vue.extend({
       if (photoId === 'before') this.formData.before = value
       if (photoId === 'after') this.formData.after = value
     })
-    this.$root.$on('dropHandler', (file: File, photoId: string) => {
-      if (file) {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onloadend = () => {
-          this.$root.$emit('renderResult', reader.result as string, photoId)
-        }
-      }
-    })
+  },
+  computed: {
+    token () {
+      return store.getters.getToken
+    }
   },
   methods: {
     submitForm: async function () {
-      const response = await postBeforeAfterPostData(this.formData)
+      const response = await postBeforeAfterPostData(this.formData, this.token)
       this.errorMessages = {} as ErrorMessagesBeforeAfterPost
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {

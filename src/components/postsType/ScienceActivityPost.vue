@@ -2,7 +2,7 @@
   <section class="sciencePostConteiner">
     <div class="top">
       <h2 class="heading">{{ content.heading }}</h2>
-      <p class="date">{{ content.date }}</p>
+      <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <div class="contentContainer">
       <img class="images" :src="content.images[0]" />

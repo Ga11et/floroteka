@@ -11,16 +11,13 @@
       <option v-for="option in options" :key="option">{{ option }}</option>
     </select>
     <DropFileContainer v-else-if="type === 'photo'" :photo="value" :photoId="photoId" />
-    <div v-if="errorMessage" class="errorSpanContainer">
-      <span class="errorSpan">
-        {{ errorMessage }}
-      </span>
-    </div>
+    <ErrorSpanContainer v-if="errorMessage" :message="errorMessage" />
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import DropFileContainer from './dropFileContainer.vue'
+import ErrorSpanContainer from './errorSpanContainer.vue'
 
 export default Vue.extend({
   name: 'cunsom-input',
@@ -45,7 +42,7 @@ export default Vue.extend({
       ]
     }
   },
-  components: { DropFileContainer },
+  components: { DropFileContainer, ErrorSpanContainer },
   methods: {
     inputHandler: function (event: Event) {
       const target = event.target as HTMLInputElement
@@ -64,23 +61,6 @@ export default Vue.extend({
 .item {
   padding: 0 0 20px;
   position: relative;
-
-  .errorSpanContainer {
-    width: 380px;
-    position: absolute;
-    top: 40px;
-    left: -400px;
-    @include flex(row, flex-start, flex-end);
-
-    .errorSpan {
-      @include flex(row, center, center);
-      border-radius: 10px;
-      background-color: $mainRed;
-      padding: 10px 20px;
-      min-height: 50px;
-      min-width: 200px;
-    }
-  }
 
   .text {
     @include font(20px, 30px, 500);
@@ -115,11 +95,6 @@ export default Vue.extend({
 @media screen and (max-width: 1000px) {
   .item{
     padding-bottom: 10px;
-    .errorSpanContainer{
-      width: 280px;
-      left: -300px;
-      top: 30px;
-    }
     .text{
       font-size: 16px;
       padding-bottom: 5px;
@@ -130,18 +105,6 @@ export default Vue.extend({
     }
     .checkbox{
       font-size: 16px;
-    }
-  }
-}
-@media screen and (max-width: 750px) {
-  .item{
-    .errorSpanContainer{
-      position: static;
-      width: 100%;
-      margin-top: 10px;
-      .errorSpan{
-        width: 100%;
-      }
     }
   }
 }

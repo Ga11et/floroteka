@@ -39,6 +39,9 @@ export default new Vuex.Store({
         reccomendations.push(state.plants[index])
       }
       return reccomendations
+    },
+    getToken: (state) => {
+      return state.token
     }
   },
   mutations: {

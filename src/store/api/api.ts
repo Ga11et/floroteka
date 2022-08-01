@@ -1,8 +1,8 @@
 import { plantPropsType, LoginData } from '../models'
-import { BeforeAfterFormType } from '../models/formTypes'
+import { BeforeAfterFormType, technologiesFormType } from '../models/formTypes'
 
-const prod = 'https://florotekaback.herokuapp.com'
-// const prod = 'http://localhost:3000'
+// const prod = 'https://florotekaback.herokuapp.com'
+const prod = 'http://localhost:3000'
 
 export const fetchPlantsData = async () => {
   const response = await fetch(prod + '/plants')
@@ -16,14 +16,32 @@ export const fetchAllPostsData = async () => {
   return response
 }
 
-export const postPlantData = async (plantFormData: plantPropsType) => {
-  const response = await fetch(prod + '/plants', { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: plantFormData }) })
+export const postPlantData = async (plantFormData: plantPropsType, token: string) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`
+  }
+  const response = await fetch(prod + '/plants', { method: 'POST', mode: 'cors', headers: headers, body: JSON.stringify({ data: plantFormData }) })
     .then(resp => resp.json())
   return response
 }
 
-export const postBeforeAfterPostData = async (formData: BeforeAfterFormType) => {
-  const response = await fetch(prod + '/beforeAfter', { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: formData }) })
+export const postBeforeAfterPostData = async (formData: BeforeAfterFormType, token: string) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`
+  }
+  const response = await fetch(prod + '/beforeAfter', { method: 'POST', mode: 'cors', headers: headers, body: JSON.stringify({ data: formData }) })
+    .then(resp => resp.json())
+  return response
+}
+
+export const postTechnologiesPostData = async (formData: technologiesFormType, token: string) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`
+  }
+  const response = await fetch(prod + '/technologies', { method: 'POST', mode: 'cors', headers: headers, body: JSON.stringify({ data: formData }) })
     .then(resp => resp.json())
   return response
 }

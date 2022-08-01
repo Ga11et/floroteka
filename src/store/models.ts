@@ -1,4 +1,4 @@
-type postType = 'scienceActivity' | 'beforeAfter'
+type postType = 'scienceActivity' | 'beforeAfter' | 'technologies'
 export type PlantType = 'Деревья' | 'Декоративные кустарники' | 'Плодово-ягодные деревья и кустарники' |
   'Ягодники' | 'Многолетние декоративные травянистые растения' | 'Однолетние декоративные травянистые растения' |
   'Почвопокровные растения' | 'Декоративные объекты' | 'Комнатные растения' | 'Овощные культуры'
@@ -19,7 +19,7 @@ export type plantPropsType = {
 export type beforeAfterPostPropsType = {
   id: string
   heading: string
-  date: string
+  date: Date
   text: string
   before: string
   after: string
@@ -92,15 +92,9 @@ export type ErrorMessagesPlantAddingFormType = {
   from: string
   livingPlace: string
 }
-export type ErrorMessagesBeforeAfterPost = {
-  [unit: string]: string
-  heading: string
-  description: string
-  before: string
-  after: string
-}
+
 export type LoginData = {
   login: string,
   password: string
 }
-export type FormType = 'plantForm' | 'beforeAfterPostForm' | undefined
+export type FormType = 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined

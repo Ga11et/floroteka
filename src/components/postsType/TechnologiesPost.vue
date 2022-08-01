@@ -2,7 +2,7 @@
   <section class="technologiesContainer">
     <div class="top">
       <h2 class="heading">{{ content.heading }}</h2>
-      <p class="date">{{ content.date }}</p>
+      <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <ClosedTechnology v-if="!isOpened" :content="postParts[0]" >
       <button class="openButton" @click="setIsOpened(true)">Читать больше</button>
