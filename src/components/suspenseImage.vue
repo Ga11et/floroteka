@@ -1,6 +1,6 @@
 <template>
   <div class="suspenseImage">
-    <img class="image" :src="imageUrl" :alt="alt" @load="loaded" @click="$root.$emit('showImage', imageUrl)" />
+    <img class="image" :src="imageUrl" :alt="alt" @load="loaded" @click="$root.$emit('openImage', imageUrl, alt)" />
     <span class="image span" v-if="!isLoaded"></span>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default Vue.extend({
     width: 100%;
     height: 100%;
     object-fit: cover;
+    &:hover{
+      cursor: pointer;
+    }
   }
 
   .span {

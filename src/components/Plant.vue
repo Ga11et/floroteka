@@ -1,7 +1,6 @@
 <template>
   <div class="plant">
-    <img class="image" :src="content.img[0]" alt="plant" @load="loaded" />
-    <span class="image span" v-if="!isLoaded" ></span>
+    <SuspenseImage class="image" :imageUrl="content.img[0]" alt="plant" />
     <div class="content">
       <h3 class="heading">{{ content.name }}</h3>
       <p class="paragraph">{{ content.description }}</p>
@@ -13,10 +12,12 @@
 import Vue from 'vue'
 import store from '@/store'
 import router from '@/router'
+import SuspenseImage from './suspenseImage.vue'
 
 export default Vue.extend({
   name: 'plant-container',
   props: ['content'],
+  components: { SuspenseImage },
   data: function () {
     return {
       isLoaded: false

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" />
     <Header />
     <router-view />
     <Footer />
@@ -23,12 +24,29 @@
 import Vue from 'vue'
 import Header from './views/Header.vue'
 import Footer from './views/Footer.vue'
+import OpenedImage from './components/openedImage.vue'
 
 export default Vue.extend({
   name: 'app',
-  components: {
-    Header,
-    Footer
+  components: { Header, Footer, OpenedImage },
+  data: function () {
+    return {
+      isImageOpened: false,
+      imageUrl: '',
+      alt: ''
+    }
+  },
+  mounted: function () {
+    this.$root.$on('openImage', (url: string, alt: string) => {
+      this.imageUrl = url
+      this.alt = alt
+      this.isImageOpened = true
+    })
+    this.$root.$on('closeImage', () => {
+      this.imageUrl = ''
+      this.alt = ''
+      this.isImageOpened = false
+    })
   }
 })
 </script>
