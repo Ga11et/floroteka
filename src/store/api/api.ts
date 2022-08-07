@@ -1,8 +1,8 @@
 import { plantPropsType, LoginData } from '../models'
 import { BeforeAfterFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 
-// const prod = 'https://florotekaback.herokuapp.com'
-const prod = 'http://localhost:3000'
+const prod = 'https://florotekaback.herokuapp.com'
+// const prod = 'http://localhost:3000'
 
 export const fetchPlantsData = async () => {
   const response = await fetch(prod + '/plants')
