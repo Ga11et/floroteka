@@ -11,6 +11,7 @@ import Vue from 'vue'
 import PlantAddingForm from '@/components/forms/PlantAddingForm.vue'
 import BeforeAfrerPostForm from '@/components/forms/beforeAfterAddingForm.vue'
 import TechnologiesPostForm from '@/components/forms/technologyAddingForm.vue'
+import ThingsAddingForm from '@/components/forms/ThingsAddingForm.vue'
 import Navigation from '@/components/adminViewComponents/navigation.vue'
 import { FormType } from '@/store/models'
 import noFormContainerVue from '@/components/forms/noFormContainer.vue'
@@ -41,9 +42,11 @@ export default Vue.extend({
         case undefined:
           this.form = noFormContainerVue
           break
+        case 'thingsForm':
+          this.form = ThingsAddingForm
+          break
         default:
           this.form = PlantAddingForm
-          break
       }
     }
   },

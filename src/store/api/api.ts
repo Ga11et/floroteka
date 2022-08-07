@@ -1,8 +1,8 @@
 import { plantPropsType, LoginData } from '../models'
-import { BeforeAfterFormType, technologiesFormType } from '../models/formTypes'
+import { BeforeAfterFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 
-const prod = 'https://florotekaback.herokuapp.com'
-// const prod = 'http://localhost:3000'
+// const prod = 'https://florotekaback.herokuapp.com'
+const prod = 'http://localhost:3000'
 
 export const fetchPlantsData = async () => {
   const response = await fetch(prod + '/plants')
@@ -42,6 +42,16 @@ export const postTechnologiesPostData = async (formData: technologiesFormType, t
     authorization: `Bearer ${token}`
   }
   const response = await fetch(prod + '/technologies', { method: 'POST', mode: 'cors', headers: headers, body: JSON.stringify({ data: formData }) })
+    .then(resp => resp.json())
+  return response
+}
+
+export const postThingsPostData = async (formData: thingsFormType, token: string) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`
+  }
+  const response = await fetch(prod + '/things', { method: 'POST', mode: 'cors', headers: headers, body: JSON.stringify({ data: formData }) })
     .then(resp => resp.json())
   return response
 }

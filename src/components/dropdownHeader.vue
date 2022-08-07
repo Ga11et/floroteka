@@ -8,6 +8,7 @@
         <router-link class="link" @click.native="ddHandler(true)" to="/beforeafter">Было / стало</router-link>
         <router-link class="link" @click.native="ddHandler(true)" to="/technologies">Технологии</router-link>
         <router-link class="link" @click.native="ddHandler(true)" to="/science">Научная деятельность</router-link>
+        <router-link class="link" @click.native="ddHandler(true)" to="/things">Дела</router-link>
       </div>
     </transition>
   </div>

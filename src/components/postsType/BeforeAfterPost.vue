@@ -47,6 +47,7 @@ export default Vue.extend({
   }
 
   .paragraph {
+    width: 100%;
     text-align: justify;
     padding: 20px 0;
     @include font(16px, 20px, 500);

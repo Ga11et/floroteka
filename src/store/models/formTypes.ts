@@ -10,6 +10,11 @@ export type technologiesFormType = {
   stepPhotos: string[]
   stepTexts: string[]
 }
+export type thingsFormType = {
+  heading: string
+  describtion: string
+  photos: string[]
+}
 
 export type ErrorMessagesBeforeAfterPost = {
   [unit: string]: string
@@ -25,4 +30,11 @@ export type technologiesErrorMessages = {
   description: string
   stepPhotos: string
   stepTexts: string
+}
+export type thingsErrorMessages = {
+  [unit: string]: string
+  origin: string
+  heading: string
+  description: string
+  photos: string
 }
