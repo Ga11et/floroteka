@@ -1,4 +1,4 @@
-import { fetchPlantsData, fetchAllPostsData, getAutherisied } from './api/api'
+import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied } from './api/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { LoginData, plantPropsType, PostPropsType } from './models'
@@ -92,6 +92,15 @@ export default new Vuex.Store({
     },
     async getAuth ({ commit }, data: LoginData) {
       const returnData = await getAutherisied(data)
+      if (returnData.token) {
+        commit('setToken', returnData.token)
+        commit('getAuth', true)
+        return 'ok'
+      }
+      return returnData
+    },
+    async getRefresh ({ commit }) {
+      const returnData = await isAutherisied()
       if (returnData.token) {
         commit('setToken', returnData.token)
         commit('getAuth', true)

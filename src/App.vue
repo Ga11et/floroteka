@@ -25,6 +25,7 @@ import Vue from 'vue'
 import Header from './views/Header.vue'
 import Footer from './views/Footer.vue'
 import OpenedImage from './components/openedImage.vue'
+import store from './store'
 
 export default Vue.extend({
   name: 'app',
@@ -47,6 +48,7 @@ export default Vue.extend({
       this.alt = ''
       this.isImageOpened = false
     })
+    store.dispatch('getRefresh')
   }
 })
 </script>
