@@ -46,3 +46,8 @@ export type photosErrorMessages = {
   origin: string
   photo: string
 }
+export type loginErrorMessages = {
+  [unit: string]: string
+  login: string
+  pass: string
+}
