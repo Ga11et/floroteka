@@ -1,57 +1,56 @@
 <template>
   <main class="plantInfoContainer">
     <SidePathContainer :path="plantInfo.name" />
-    <SuspenseConteiner v-if="!plantsLoaded" />
-    <div v-else class="contentContainer">
-      <div class="top">
-        <div class="headings">
-          <h2 class="name">{{ plantInfo.name }}</h2>
-          <h2 class="latinName">{{ plantInfo.latin }}</h2>
+      <div class="contentContainer">
+        <div class="top">
+          <div class="headings">
+            <h2 class="name">{{ plantInfo.name }}</h2>
+            <h2 class="latinName">{{ plantInfo.latin }}</h2>
+          </div>
+          <div class="spans">
+          </div>
         </div>
-        <div class="spans">
+        <p class="description">
+          {{ plantInfo.description }}
+        </p>
+        <div class="item">
+          <h3>Фильтрация:</h3>
+          <p>{{ plantInfo.type }}</p>
         </div>
-      </div>
-      <p class="description">
-        {{ plantInfo.description }}
-      </p>
-      <div class="item">
-        <h3>Фильтрация:</h3>
-        <p>{{ plantInfo.type }}</p>
-      </div>
-      <div class="item">
-        <h3>Дата посадки:</h3>
-        <p>{{ plantInfo.date }}</p>
-      </div>
-      <div class="item">
-        <h3>Царство:</h3>
-        <p>{{ plantInfo.family }}</p>
-      </div>
-      <div class="item">
-        <h3>Привезено из:</h3>
-        <p>{{ plantInfo.from }}</p>
-      </div>
-      <div class="item">
-        <h3>Районирование:</h3>
-        <p>{{ plantInfo.livingPlace }}</p>
-      </div>
-      <div class="item">
-        <h3>Доступно для приобретения:</h3>
-        <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
-      </div>
-      <div class="photoContainer">
-        <img v-for="image in plantInfo.img" class="image" :src="image" :alt="plantInfo.name"
-          :key="plantInfo.img.indexOf(image)" />
-      </div>
-      <div class="recommendstionContainer">
-        <h3 class="title">Также рекомендуем:</h3>
-        <div class="reccomendations">
-          <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id" >
-            <h4 class="heading">{{ plant.name }}</h4>
-            <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0]" :alt="plant.name" class="image" />
+        <div class="item">
+          <h3>Дата посадки:</h3>
+          <p>{{ plantInfo.date }}</p>
+        </div>
+        <div class="item">
+          <h3>Царство:</h3>
+          <p>{{ plantInfo.family }}</p>
+        </div>
+        <div class="item">
+          <h3>Привезено из:</h3>
+          <p>{{ plantInfo.from }}</p>
+        </div>
+        <div class="item">
+          <h3>Районирование:</h3>
+          <p>{{ plantInfo.livingPlace }}</p>
+        </div>
+        <div class="item">
+          <h3>Доступно для приобретения:</h3>
+          <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
+        </div>
+        <div class="photoContainer">
+          <SuspenseImage v-for="image in plantInfo.img" class="image" :imageUrl="image" :alt="plantInfo.name"
+            :key="plantInfo.img.indexOf(image)" />
+        </div>
+        <div class="recommendstionContainer">
+          <h3 class="title">Также рекомендуем:</h3>
+          <div class="reccomendations">
+            <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id" >
+              <h4 class="heading">{{ plant.name }}</h4>
+              <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0]" :alt="plant.name" class="image" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </main>
 </template>
 <script lang="ts">
@@ -59,17 +58,14 @@ import Vue from 'vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
 import store from '@/store'
 import { plantPropsType } from '@/store/models'
-import SuspenseConteiner from '@/components/SuspenseConteiner.vue'
+import SuspenseImage from '@/components/suspenseImage.vue'
 
 export default Vue.extend({
   name: 'plant-info-container',
-  components: { SidePathContainer, SuspenseConteiner },
+  components: { SidePathContainer, SuspenseImage },
   computed: {
     plantInfo () {
       return store.getters.activePlant as plantPropsType
-    },
-    randomPlants () {
-      return store.getters.randomPlants(3) as plantPropsType[]
     },
     plantsLoaded () {
       return store.state.plantsLoaded
@@ -79,13 +75,20 @@ export default Vue.extend({
     if (!store.state.plantsLoaded) {
       store.dispatch('setPlants')
     }
+    this.randomPlants = store.getters.randomPlants(3) as plantPropsType[]
   },
   methods: {
     imageClickHandler (plantId: string) {
       store.commit('setActivePlant', plantId)
       setTimeout(() => {
         this.$root.$emit('scroll')
+        this.randomPlants = store.getters.randomPlants(3) as plantPropsType[]
       }, 300)
+    }
+  },
+  data: function () {
+    return {
+      randomPlants: [] as plantPropsType[]
     }
   }
 })
@@ -141,9 +144,8 @@ export default Vue.extend({
       flex-wrap: wrap;
 
       .image {
-        display: block;
-        object-fit: cover;
-        min-width: 40%;
+        display: inline-block;
+        min-width: 30%;
         height: 500px;
         margin: 0 20px 20px 0;
 

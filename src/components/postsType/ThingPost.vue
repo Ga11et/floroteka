@@ -4,7 +4,7 @@
       <h2 class="heading">{{ content.heading }}</h2>
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
-    <p class="paragraph">{{ content.describtion }}</p>
+    <p class="paragraph">{{ content.description }}</p>
     <div class="thingPhotos">
       <h3>Фотографии:</h3>
       <div class="photos">

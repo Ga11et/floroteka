@@ -9,7 +9,7 @@
       <FormPartContainer name="Основная информация">
         <CustomInput :errorMessage="errorMessages.heading" v-model="formData.heading" text="Введите заголовок"
           type="normal" />
-        <CustomInput :errorMessage="errorMessages.describtion" v-model="formData.describtion" text="Введите описание"
+        <CustomInput :errorMessage="errorMessages.describtion" v-model="formData.description" text="Введите описание"
           type="textarea" />
       </FormPartContainer>
       <FormPartContainer name="Фотографии" >
@@ -40,7 +40,7 @@ export default Vue.extend({
     return {
       formData: {
         heading: '',
-        describtion: '',
+        description: '',
         photos: ['']
       } as thingsFormType,
       errorMessages: {} as technologiesErrorMessages,

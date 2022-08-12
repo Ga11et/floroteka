@@ -14,11 +14,7 @@ import SidePathContainer from '@/components/sidePathContainer.vue'
 
 export default Vue.extend({
   name: 'news-container',
-  components: {
-    PostsInOne,
-    SuspenseConteiner,
-    SidePathContainer
-  },
+  components: { PostsInOne, SuspenseConteiner, SidePathContainer },
   computed: {
     posts () {
       return store.state.allPosts

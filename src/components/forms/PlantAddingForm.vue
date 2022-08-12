@@ -29,8 +29,10 @@
         <CustomInput v-model="plantFormData.type" text="Выберете тип для фильтрации" type="select" />
       </FormPartContainer>
       <FormPartContainer name="Фотографии">
-        <CustomInput :errorMessage="errorMessages.img" text="Добавьте фото (одно)" type="photo" photoId="plant1" />
+        <CustomInput v-for="step in steps" :key="step" :errorMessage="errorMessages.img" v-model="plantFormData.img[step - 1]" text="Добавьте фото (одно)"
+          type="photo" :photoId="'plant' + step" />
       </FormPartContainer>
+      <button class="plusStep" v-if="steps.length !== 3" type="button" @click.prevent="addStep">Добавить этап</button>
       <div class="buttons">
         <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
         <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>
@@ -65,7 +67,8 @@ export default Vue.extend({
         type: 'Деревья' as PlantType
       } as plantPropsType,
       errorMessages: {} as ErrorMessagesPlantAddingFormType,
-      sumbitLoading: false
+      sumbitLoading: false,
+      steps: [1]
     }
   },
   components: { FormPartContainer, CustomInput, SidePathContainer, SvgIcons },
@@ -76,10 +79,14 @@ export default Vue.extend({
   },
   mounted: function () {
     this.$root.$on('renderResult', (value: string, photoId: string) => {
-      if (photoId === 'plant1') this.plantFormData.img[0] = value
+      if (photoId.indexOf('plant') !== -1) this.plantFormData.img[+photoId[5] - 1] = value
     })
   },
   methods: {
+    addStep: function () {
+      this.steps.push(this.steps.length + 1)
+      this.plantFormData.img.push('')
+    },
     submitForm: async function () {
       this.sumbitLoading = true
       const response = await postPlantData(this.plantFormData, this.token)

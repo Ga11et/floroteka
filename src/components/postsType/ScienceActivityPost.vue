@@ -6,7 +6,7 @@
     </div>
     <div class="contentContainer">
       <img class="images" :src="content.images[0]" />
-      <p class="paragraph">{{ content.text }}</p>
+      <p class="paragraph">{{ content.description }}</p>
     </div>
   </section>
 </template>

@@ -20,12 +20,13 @@ export type beforeAfterPostPropsType = {
   id: string
   heading: string
   date: Date
-  text: string
+  description: string
   before: string
   after: string
 }
 export type PostPropsType = {
   id: string
+  description: string
   heading: string
   date: string
   text: string
@@ -33,53 +34,6 @@ export type PostPropsType = {
   after: string
   images: string[]
   type: postType
-}
-export type plantAirtableContentType = {
-  fields: {
-    Name: string
-    image: { url: string }[]
-    id: string
-    description: string
-    latin: string
-    date: string
-    family: string
-    from: string
-    livingPlace: string
-    having: boolean
-    type: PlantType
-  }
-}
-export type beboreAfterAirtableContentType = {
-  fields: {
-    Name: string
-    after: [
-      { url: string }
-    ]
-    before: [
-      { url: string }
-    ]
-    id: string
-    date: string
-    heading: string
-    text: string
-  }
-}
-export type postAirtableContentType = {
-  fields: {
-    Name: string
-    after: [
-      { url: string }
-    ]
-    before: [
-      { url: string }
-    ]
-    images: { url: string }[]
-    id: string
-    date: string
-    heading: string
-    text: string
-    type: postType
-  }
 }
 export type ErrorMessagesPlantAddingFormType = {
   [unit: string]: string
@@ -92,7 +46,6 @@ export type ErrorMessagesPlantAddingFormType = {
   from: string
   livingPlace: string
 }
-
 export type LoginData = {
   login: string,
   password: string

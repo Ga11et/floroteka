@@ -17,17 +17,17 @@ export default Vue.extend({
 <style lang="scss">
   .suspenseConteiner{
     width: 1280px;
-    margin: 50px 0 500px;
+    padding: 50px 0 500px;
   }
   @media screen and (max-width: 1400px) {
     .suspenseConteiner{
       width: 100%;
-      margin-left: 50px;
+      padding-left: 50px;
     }
   }
   @media screen and (max-width: 750px) {
     .suspenseConteiner{
-      margin-left: 20px;
+      padding-left: 20px;
     }
   }
 </style>

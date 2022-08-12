@@ -12,7 +12,7 @@ export type technologiesFormType = {
 }
 export type thingsFormType = {
   heading: string
-  describtion: string
+  description: string
   photos: string[]
 }
 export type photosFormType = {
