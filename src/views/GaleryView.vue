@@ -2,7 +2,7 @@
   <main class="container">
     <SidePathContainer path="Галерея" />
     <SuspenseConteiner v-if="!isGaleryLoaded" />
-    <div v-else class="images">
+    <div v-else class="galeryImages">
       <SuspenseImage class="image" v-for="item in photos" :imageUrl="item.image" alt="galeryImage" :key="item.id" />
     </div>
   </main>
@@ -36,7 +36,7 @@ export default Vue.extend({
 @import '@/variables';
 
 .container {
-  .images {
+  .galeryImages {
     width: 1280px;
     margin: 100px 0;
     display: grid;
@@ -48,7 +48,7 @@ export default Vue.extend({
 
 @media screen and (max-width: 1400px) {
   .container{
-    .images{
+    .galeryImages{
       width: 100%;
       margin: 100px 0;
       padding: 0 50px;
@@ -57,14 +57,14 @@ export default Vue.extend({
 }
 @media screen and (max-width: 1200px) {
   .container{
-    .images{
+    .galeryImages{
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
 }
 @media screen and (max-width: 1000px) {
   .container{
-    .images{
+    .galeryImages{
       grid-template-columns: 1fr 1fr;
       margin: 50px 0;
     }
@@ -72,7 +72,7 @@ export default Vue.extend({
 }
 @media screen and (max-width: 750px) {
   .container{
-    .images{
+    .galeryImages{
       grid-template-columns: 1fr;
       margin: 0;
       padding: 20px;
