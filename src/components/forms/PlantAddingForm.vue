@@ -32,6 +32,7 @@
         <CustomInput :errorMessage="errorMessages.img" text="Добавьте фото (одно)" type="photo" photoId="plant1" />
       </FormPartContainer>
       <div class="buttons">
+        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
         <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
       </div>
     </form>
@@ -45,6 +46,7 @@ import FormPartContainer from '../../components/formPartContainer.vue'
 import CustomInput from '@/components/customInput.vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
 import store from '@/store'
+import SvgIcons from '../svgIcons.vue'
 
 export default Vue.extend({
   name: 'plant-adding-form',
@@ -62,10 +64,11 @@ export default Vue.extend({
         having: false,
         type: 'Деревья' as PlantType
       } as plantPropsType,
-      errorMessages: {} as ErrorMessagesPlantAddingFormType
+      errorMessages: {} as ErrorMessagesPlantAddingFormType,
+      sumbitLoading: false
     }
   },
-  components: { FormPartContainer, CustomInput, SidePathContainer },
+  components: { FormPartContainer, CustomInput, SidePathContainer, SvgIcons },
   computed: {
     token () {
       return store.getters.getToken
@@ -78,6 +81,7 @@ export default Vue.extend({
   },
   methods: {
     submitForm: async function () {
+      this.sumbitLoading = true
       const response = await postPlantData(this.plantFormData, this.token)
       this.errorMessages = {} as ErrorMessagesPlantAddingFormType
       if (response !== 'ok') {
@@ -87,6 +91,14 @@ export default Vue.extend({
           else this.errorMessages[location] = el.msg
         })
         this.$root.$emit('scroll')
+        this.sumbitLoading = false
+      }
+      if (response === 'ok') {
+        this.$root.$emit('changeForm', undefined)
+        setTimeout(() => {
+          this.$root.$emit('scroll')
+        }, 300)
+        this.sumbitLoading = false
       }
     }
   }
@@ -121,11 +133,11 @@ export default Vue.extend({
 
     .buttons {
       @include flex(row, center, flex-end);
+      margin-top: 30px;
 
       .button {
         width: 500px;
         height: 60px;
-        margin-top: 30px;
         @include font(20px, 30px, 400);
         border: 1px solid #8BAB94;
         border-radius: 4px;
@@ -137,6 +149,12 @@ export default Vue.extend({
           background-color: #8BAB94;
           transition: 300ms;
         }
+      }
+
+      .suspense{
+        height: 60px;
+        width: 60px;
+        margin: 0;
       }
 
       .plusStep {
@@ -176,6 +194,15 @@ export default Vue.extend({
         font-size: 26px;
         line-height: 34px;
         padding-bottom: 20px;
+      }
+
+      .buttons{
+        position: relative;
+        .suspense{
+          position: absolute;
+          top: 60px;
+          left: 0;
+        }
       }
     }
   }

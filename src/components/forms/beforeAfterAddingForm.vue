@@ -19,6 +19,7 @@
           type="photo" photoId="after" />
       </FormPartContainer>
       <div class="buttons">
+        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
         <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
       </div>
     </form>
@@ -32,10 +33,11 @@ import CustomInput from '../customInput.vue'
 import { BeforeAfterFormType, ErrorMessagesBeforeAfterPost } from '@/store/models/formTypes'
 import { postBeforeAfterPostData } from '@/store/api/api'
 import store from '@/store'
+import SvgIcons from '../svgIcons.vue'
 
 export default Vue.extend({
   name: 'before-after-adding-form',
-  components: { SidePathContainer, FormPartContainer, CustomInput },
+  components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
   data: function () {
     return {
       formData: {
@@ -44,7 +46,8 @@ export default Vue.extend({
         before: '',
         after: ''
       } as BeforeAfterFormType,
-      errorMessages: {} as ErrorMessagesBeforeAfterPost
+      errorMessages: {} as ErrorMessagesBeforeAfterPost,
+      sumbitLoading: false
     }
   },
   mounted: function () {
@@ -60,6 +63,7 @@ export default Vue.extend({
   },
   methods: {
     submitForm: async function () {
+      this.sumbitLoading = true
       const response = await postBeforeAfterPostData(this.formData, this.token)
       this.errorMessages = {} as ErrorMessagesBeforeAfterPost
       if (response !== 'ok') {
@@ -68,8 +72,14 @@ export default Vue.extend({
           this.errorMessages[location] = el.msg
         })
         this.$root.$emit('scroll')
-      } else {
-        console.log('success')
+        this.sumbitLoading = false
+      }
+      if (response === 'ok') {
+        this.$root.$emit('changeForm', undefined)
+        setTimeout(() => {
+          this.$root.$emit('scroll')
+        }, 300)
+        this.sumbitLoading = false
       }
     }
   }

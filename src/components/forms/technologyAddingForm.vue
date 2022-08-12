@@ -20,6 +20,7 @@
       </FormPartContainer>
       <button class="plusStep" type="button" @click.prevent="addStep">Добавить этап</button>
       <div class="buttons">
+        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
         <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
       </div>
     </form>
@@ -32,10 +33,11 @@ import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, technologiesFormType } from '@/store/models/formTypes'
 import { postTechnologiesPostData } from '@/store/api/api'
+import SvgIcons from '../svgIcons.vue'
 
 export default Vue.extend({
   name: 'technology-adding-form',
-  components: { SidePathContainer, FormPartContainer, CustomInput },
+  components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
   data: function () {
     return {
       formData: {
@@ -45,7 +47,8 @@ export default Vue.extend({
         stepTexts: ['']
       } as technologiesFormType,
       errorMessages: {} as technologiesErrorMessages,
-      steps: [1]
+      steps: [1],
+      sumbitLoading: false
     }
   },
   mounted: function () {
@@ -65,6 +68,7 @@ export default Vue.extend({
       this.formData.stepTexts.push('')
     },
     submitForm: async function () {
+      this.sumbitLoading = true
       const response = await postTechnologiesPostData(this.formData, this.token)
       console.log(response)
       this.errorMessages = {} as technologiesErrorMessages
@@ -75,6 +79,14 @@ export default Vue.extend({
         })
         console.log(this.errorMessages)
         this.$root.$emit('scroll')
+        this.sumbitLoading = false
+      }
+      if (response === 'ok') {
+        this.$root.$emit('changeForm', undefined)
+        setTimeout(() => {
+          this.$root.$emit('scroll')
+        }, 300)
+        this.sumbitLoading = false
       }
     }
   }

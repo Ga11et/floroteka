@@ -15,6 +15,9 @@ export type thingsFormType = {
   describtion: string
   photos: string[]
 }
+export type photosFormType = {
+  photo: string
+}
 
 export type ErrorMessagesBeforeAfterPost = {
   [unit: string]: string
@@ -37,4 +40,9 @@ export type thingsErrorMessages = {
   heading: string
   description: string
   photos: string
+}
+export type photosErrorMessages = {
+  [unit: string]: string
+  origin: string
+  photo: string
 }

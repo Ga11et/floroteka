@@ -16,7 +16,8 @@ export default Vue.extend({
         { rus: 'Технологии', en: 'technologiesForm' },
         { rus: 'Научная деятельность', en: 'scienceForm' },
         { rus: 'Дела', en: 'thingsForm' },
-        { rus: 'Растения', en: 'plantsForm' }
+        { rus: 'Растения', en: 'plantsForm' },
+        { rus: 'Галерея', en: 'photoForm' }
       ]
     }
   },

@@ -1,7 +1,8 @@
-import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied } from './api/api'
+import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied, florotekaAPI } from './api/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { LoginData, plantPropsType, PostPropsType } from './models'
+import { GaleryPhotoType } from './models/appTypes'
 
 Vue.use(Vuex)
 
@@ -9,8 +10,10 @@ export default new Vuex.Store({
   state: {
     plants: [] as plantPropsType[],
     allPosts: [] as PostPropsType[],
+    photos: [] as GaleryPhotoType[],
     postsLoaded: false,
     plantsLoaded: false,
+    galeryLoaded: false,
     plantsFilterValue: '',
     activePlantId: '1',
     token: '',
@@ -48,6 +51,9 @@ export default new Vuex.Store({
     },
     getToken: (state) => {
       return state.token
+    },
+    photos: (state) => {
+      return state.photos
     }
   },
   mutations: {
@@ -77,6 +83,10 @@ export default new Vuex.Store({
     },
     getAuth (state, payload: boolean) {
       state.isAuth = payload
+    },
+    setPhotos (state, payload: GaleryPhotoType[]) {
+      state.photos = payload
+      state.galeryLoaded = true
     }
   },
   actions: {
@@ -107,6 +117,10 @@ export default new Vuex.Store({
         return 'ok'
       }
       return returnData
+    },
+    async getGalery ({ commit }) {
+      const returnData = await florotekaAPI.fetchGalery()
+      commit('setPhotos', returnData)
     }
   },
   modules: {

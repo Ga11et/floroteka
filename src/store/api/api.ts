@@ -1,11 +1,11 @@
 import store from '..'
 import { plantPropsType, LoginData } from '../models'
-import { BeforeAfterFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
+import { BeforeAfterFormType, photosFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 
 const prod = 'https://florotekaback.herokuapp.com'
 // const prod = 'http://localhost:3000'
 
-type postRequestData = plantPropsType | BeforeAfterFormType | technologiesFormType | thingsFormType
+type postRequestData = plantPropsType | BeforeAfterFormType | technologiesFormType | thingsFormType | photosFormType
 
 export const createPostRequest = async (postType: postRequestData, path: string, token: string) => {
   const response = await fetch(prod + path, {
@@ -50,6 +50,17 @@ export const postTechnologiesPostData = async (formData: technologiesFormType, t
 
 export const postThingsPostData = async (formData: thingsFormType, token: string) => {
   return await createPostRequest(formData, '/things', token)
+}
+
+export const florotekaAPI = {
+  fetchGalery: async () => {
+    const response = await fetch(prod + '/galery')
+      .then(resp => resp.json())
+    return response
+  },
+  postPhotoPostData: async (formData: photosFormType, token: string) => {
+    return await createPostRequest(formData, '/galery', token)
+  }
 }
 
 export const getAutherisied = async (data: LoginData): Promise<{ token: string }> => {

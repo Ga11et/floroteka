@@ -15,7 +15,7 @@
           <router-link @click.native="setIsActive(false, true)" class="link" to="/science">Научная деятельность
           </router-link>
           <router-link @click.native="setIsActive(false, true)" class="link" to="/things">Дела</router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/contacts">Контакты</router-link>
+          <router-link @click.native="setIsActive(false, true)" class="link" to="/galery">Галерея</router-link>
           <router-link v-if="!isAuth" @click.native="setIsActive(false, false)" class="link" to="/login">Логин</router-link>
           <router-link v-if="isAuth" @click.native="setIsActive(false, true)" class="link" to="/admin">Админская</router-link>
         </nav>

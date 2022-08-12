@@ -18,7 +18,8 @@
       </FormPartContainer>
       <button class="plusPhoto" type="button" @click.prevent="addStep">Добавить фото</button>
       <div class="buttons">
-        <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
+        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
+        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>
       </div>
     </form>
   </section>
@@ -30,10 +31,11 @@ import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, thingsFormType } from '@/store/models/formTypes'
 import { postThingsPostData } from '@/store/api/api'
+import SvgIcons from '../svgIcons.vue'
 
 export default Vue.extend({
   name: 'technology-adding-form',
-  components: { SidePathContainer, FormPartContainer, CustomInput },
+  components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
   data: function () {
     return {
       formData: {
@@ -42,7 +44,8 @@ export default Vue.extend({
         photos: ['']
       } as thingsFormType,
       errorMessages: {} as technologiesErrorMessages,
-      steps: [1]
+      steps: [1],
+      sumbitLoading: false
     }
   },
   mounted: function () {
@@ -61,17 +64,23 @@ export default Vue.extend({
       this.formData.photos.push('')
     },
     submitForm: async function () {
-      console.log(this.formData)
+      this.sumbitLoading = true
       const response = await postThingsPostData(this.formData, this.token)
-      console.log(response)
       this.errorMessages = {} as technologiesErrorMessages
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {
           const location = el.param.slice(5) as string
           this.errorMessages[location] = el.msg
         })
-        console.log(this.errorMessages)
         this.$root.$emit('scroll')
+        this.sumbitLoading = false
+      }
+      if (response === 'ok') {
+        this.$root.$emit('changeForm', undefined)
+        setTimeout(() => {
+          this.$root.$emit('scroll')
+        }, 300)
+        this.sumbitLoading = false
       }
     }
   }

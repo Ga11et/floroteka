@@ -7,7 +7,7 @@
         <router-link class="link" @click.native="scrollHandler" to="/">Каталог</router-link>
         <router-link class="link" @click.native="scrollHandler" to="/news">Новости</router-link>
         <Dropdown :scrollHandler="scrollHandler" />
-        <router-link class="link" @click.native="scrollHandler" to="/contacts">Контакты</router-link>
+        <router-link class="link" @click.native="scrollHandler" to="/galery">Галерея</router-link>
         <router-link v-if="!isAuth" class="link" to="/login">Логин</router-link>
         <router-link v-if="isAuth" class="link" @click.native="scrollHandler" to="/admin">Админская</router-link>
       </nav>
