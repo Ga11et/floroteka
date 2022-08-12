@@ -1,4 +1,4 @@
-type postType = 'scienceActivity' | 'beforeAfter' | 'technologies' | 'things'
+type postType = 'studyProject' | 'scienceActivity' | 'beforeAfter' | 'technologies' | 'things'
 export type PlantType = 'Деревья' | 'Декоративные кустарники' | 'Плодово-ягодные деревья и кустарники' |
   'Ягодники' | 'Многолетние декоративные травянистые растения' | 'Однолетние декоративные травянистые растения' |
   'Почвопокровные растения' | 'Декоративные объекты' | 'Комнатные растения' | 'Овощные культуры'
@@ -97,4 +97,4 @@ export type LoginData = {
   login: string,
   password: string
 }
-export type FormType = 'photoForm' | 'thingsForm' | 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined
+export type FormType = 'studyProject' | 'photoForm' | 'thingsForm' | 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined

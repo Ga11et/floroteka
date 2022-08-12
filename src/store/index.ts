@@ -32,6 +32,9 @@ export default new Vuex.Store({
     thingPosts (state) {
       return state.allPosts.filter(el => el.type === 'things')
     },
+    studyProjectPosts (state) {
+      return state.allPosts.filter(el => el.type === 'studyProject')
+    },
     filteredPlants (state) {
       return state.plants.filter(el => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
     },

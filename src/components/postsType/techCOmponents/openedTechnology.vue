@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="openedTechnology">
     <div class="contentContainer" v-for="item in content" :key="item.text.slice(3, 10)">
       <h3 class="step">{{ item.step }} шаг</h3>
       <div class="stepContainer">

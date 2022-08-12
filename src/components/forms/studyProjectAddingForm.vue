@@ -1,8 +1,8 @@
 <template>
   <section class="addingFormContaner">
-    <SidePathContainer path="Добавить пост Технологии" />
+    <SidePathContainer path="Добавить проект обучающегося" />
     <form class="addingForm">
-      <h2 class="heading">Зарегистрировать новый пост "Технологии"</h2>
+      <h2 class="heading">Зарегистрировать новый пост "Проекты обучающихся"</h2>
       <span class="originError" v-if="errorMessages.origin">
       {{ errorMessages.origin }}
       </span>
@@ -12,13 +12,13 @@
         <CustomInput :errorMessage="errorMessages.description" v-model="formData.description" text="Введите описание"
           type="textarea" />
       </FormPartContainer>
-      <FormPartContainer :name="'Этап ' + step" v-for="step in steps" :key="step">
+      <FormPartContainer :name="'Фото ' + step" v-for="step in steps" :key="step">
         <CustomInput :errorMessage="errorMessages.stepPhotos" v-model="formData.stepPhotos[step - 1]" text="Добавьте фото (одно)"
           type="photo" :photoId="'step' + step" />
-        <CustomInput :errorMessage="errorMessages.stepTexts" v-model="formData.stepTexts[step - 1]" text="Введите описание этапа"
+        <CustomInput :errorMessage="errorMessages.stepTexts" v-model="formData.stepTexts[step - 1]" text="Введите описание для фотографии"
           type="textarea" />
       </FormPartContainer>
-      <button class="plusStep" type="button" @click.prevent="addStep">Добавить этап</button>
+      <button class="plusStep" type="button" @click.prevent="addStep">Добавить фото</button>
       <div class="buttons">
         <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
         <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>
@@ -32,11 +32,11 @@ import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, technologiesFormType } from '@/store/models/formTypes'
-import { postTechnologiesPostData } from '@/store/api/api'
+import { florotekaAPI, postTechnologiesPostData } from '@/store/api/api'
 import SvgIcons from '../svgIcons.vue'
 
 export default Vue.extend({
-  name: 'technology-adding-form',
+  name: 'study-project-adding-form',
   components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
   data: function () {
     return {
@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     submitForm: async function () {
       this.sumbitLoading = true
-      const response = await postTechnologiesPostData(this.formData, this.token)
+      const response = await florotekaAPI.postStudyProjectPostData(this.formData, this.token)
       console.log(response)
       this.errorMessages = {} as technologiesErrorMessages
       if (response !== 'ok') {

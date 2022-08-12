@@ -15,6 +15,7 @@ export default Vue.extend({
         { rus: 'Было / Стало', en: 'beforeAfterPostForm' },
         { rus: 'Технологии', en: 'technologiesForm' },
         { rus: 'Научная деятельность', en: 'scienceForm' },
+        { rus: 'Проект обучающегося', en: 'studyProject' },
         { rus: 'Дела', en: 'thingsForm' },
         { rus: 'Растения', en: 'plantsForm' },
         { rus: 'Галерея', en: 'photoForm' }

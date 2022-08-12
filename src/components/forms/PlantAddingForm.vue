@@ -33,7 +33,7 @@
       </FormPartContainer>
       <div class="buttons">
         <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
-        <button class="button" type="submit" @click.prevent="submitForm">Отправить на сервер</button>
+        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>
       </div>
     </form>
   </section>
@@ -168,7 +168,7 @@ export default Vue.extend({
   .addingFormContaner {
     .addingForm {
       width: 100%;
-      padding: 50px 50px 100px;
+      padding: 100px 50px;
     }
   }
 }

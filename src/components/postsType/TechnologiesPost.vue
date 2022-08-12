@@ -4,10 +4,11 @@
       <h2 class="heading">{{ content.heading }}</h2>
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
-    <ClosedTechnology v-if="!isOpened" :content="postParts[0]" >
+    <p class="paragraph">{{ content.description }}</p>
+    <ClosedTechnology v-if="!isOpened" :content="postParts[0]">
       <button class="openButton" @click="setIsOpened(true)">Читать больше</button>
     </ClosedTechnology>
-    <OpenedTechnology v-else :content="postParts" >
+    <OpenedTechnology v-else :content="postParts">
       <button v-if="isOpened" class="openButton" @click="setIsOpened(false)">Закрыть</button>
     </OpenedTechnology>
   </section>
@@ -65,6 +66,17 @@ export default Vue.extend({
   @include flex(column, center, unset);
   position: relative;
 
+  .paragraph {
+    text-align: justify;
+    width: 100%;
+    padding: 0;
+    @include font(16px, 20px, 500);
+  }
+
+  .openedTechnology {
+    width: 100%;
+  }
+
   .openButton {
     padding: 15px 50px;
     background-color: $mainDarkGreen;
@@ -73,7 +85,8 @@ export default Vue.extend({
     position: absolute;
     right: 0;
     bottom: 0;
-    &:hover{
+
+    &:hover {
       cursor: pointer;
     }
   }
@@ -97,7 +110,7 @@ export default Vue.extend({
     width: 100%;
     padding-bottom: 20px;
 
-    &:last-child{
+    &:last-child {
       padding-bottom: 0
     }
 
@@ -112,6 +125,7 @@ export default Vue.extend({
 
       .paragraph {
         text-align: justify;
+        width: 100%;
         padding: 0;
         @include font(16px, 20px, 500);
       }
@@ -129,7 +143,8 @@ export default Vue.extend({
   .technologiesContainer {
     padding: 0 50px;
     width: 100%;
-    .openButton{
+
+    .openButton {
       right: 50px;
     }
   }
@@ -138,8 +153,9 @@ export default Vue.extend({
 @media screen and (max-width: 1000px) {
   .technologiesContainer {
     margin: 50px 0;
-    .contentContainer{
-      .stepContainer{
+
+    .contentContainer {
+      .stepContainer {
         grid-template-columns: 50% 1fr;
       }
     }
@@ -151,7 +167,7 @@ export default Vue.extend({
     padding: 0 20px;
     margin: 50px 0;
 
-    .openButton{
+    .openButton {
       position: relative;
       width: 100%;
       margin-top: 10px;
@@ -172,7 +188,7 @@ export default Vue.extend({
     }
 
     .contentContainer {
-      .stepContainer{
+      .stepContainer {
         grid-template-columns: 1fr;
       }
     }

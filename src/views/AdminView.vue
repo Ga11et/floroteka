@@ -16,6 +16,7 @@ import Navigation from '@/components/adminViewComponents/navigation.vue'
 import { FormType } from '@/store/models'
 import noFormContainerVue from '@/components/forms/noFormContainer.vue'
 import photoAddingFormVue from '@/components/forms/photoAddingForm.vue'
+import studyProjectAddingFormVue from '@/components/forms/studyProjectAddingForm.vue'
 
 export default Vue.extend({
   name: 'admin-view',
@@ -48,6 +49,9 @@ export default Vue.extend({
           break
         case 'photoForm':
           this.form = photoAddingFormVue
+          break
+        case 'studyProject':
+          this.form = studyProjectAddingFormVue
           break
         default:
           this.form = PlantAddingForm
