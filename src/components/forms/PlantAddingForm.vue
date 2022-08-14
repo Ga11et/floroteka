@@ -43,12 +43,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import { postPlantData } from '@/store/api/api'
-import { plantPropsType, PlantType, ErrorMessagesPlantAddingFormType } from '@/store/models'
 import FormPartContainer from '../../components/formPartContainer.vue'
 import CustomInput from '@/components/customInput.vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
 import store from '@/store'
 import SvgIcons from '../svgIcons.vue'
+import { PlantType } from '@/store/models/appTypes'
+import { plantErrorMessages, plantFormType } from '@/store/models/formTypes'
 
 export default Vue.extend({
   name: 'plant-adding-form',
@@ -58,15 +59,15 @@ export default Vue.extend({
         name: '',
         latin: '',
         description: '',
-        img: [''],
+        img: [],
         date: '',
         family: '',
         from: '',
         livingPlace: '',
         having: false,
         type: 'Деревья' as PlantType
-      } as plantPropsType,
-      errorMessages: {} as ErrorMessagesPlantAddingFormType,
+      } as plantFormType,
+      errorMessages: {} as plantErrorMessages,
       sumbitLoading: false,
       steps: [1]
     }
@@ -90,7 +91,7 @@ export default Vue.extend({
     submitForm: async function () {
       this.sumbitLoading = true
       const response = await postPlantData(this.plantFormData, this.token)
-      this.errorMessages = {} as ErrorMessagesPlantAddingFormType
+      this.errorMessages = {} as plantErrorMessages
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {
           const location = el.param.slice(5) as string
@@ -113,6 +114,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import '@/variables';
+@import '@/app';
 
 .addingFormContaner {
   @include flex(column, center, flex-start);
@@ -121,16 +123,6 @@ export default Vue.extend({
   .addingForm {
     padding: 100px 0 100px;
     width: 1280px;
-
-    .originError{
-      @include flex(row, center, center);
-      border-radius: 10px;
-      background-color: $mainRed;
-      padding: 10px 20px;
-      min-height: 50px;
-      min-width: 200px;
-      margin: 10px 0;
-    }
 
     .heading {
       @include font(34px, 55px, 500);

@@ -8,20 +8,22 @@
     <div class="photoContainer">
       <div class="before">
         <h3>Было</h3>
-        <img :src="content.before" />
+        <SuspenseImage :imageUrl="content.before" alt="Было" />
       </div>
       <div class="after">
         <h3>Стало</h3>
-        <img :src="content.after" />
+        <SuspenseImage :imageUrl="content.after" alt="Стало" />
       </div>
     </div>
   </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import SuspenseImage from '../suspenseImage.vue'
 export default Vue.extend({
   name: 'before-after-post',
-  props: ['content']
+  props: ['content'],
+  components: { SuspenseImage }
 })
 </script>
 <style lang="scss">

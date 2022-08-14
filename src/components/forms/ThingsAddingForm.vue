@@ -16,7 +16,7 @@
         <CustomInput v-for="step in steps" :key="step" :errorMessage="errorMessages.photos" v-model="formData.photos[step - 1]" text="Добавьте фото (одно)"
           type="photo" :photoId="'thingPhoto' + step" />
       </FormPartContainer>
-      <button class="plusPhoto" type="button" @click.prevent="addStep">Добавить фото</button>
+      <button v-if="steps.length !== 3" class="plusPhoto" type="button" @click.prevent="addStep">Добавить фото</button>
       <div class="buttons">
         <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
         <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>

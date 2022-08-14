@@ -1,0 +1,13 @@
+.disabledScroll{
+  height: 100vh;
+  overflow: hidden;
+}
+.originError{
+  @include flex(row, center, center);
+  border-radius: 10px;
+  background-color: $mainRed;
+  padding: 10px 20px;
+  min-height: 50px;
+  min-width: 200px;
+  margin: 10px 0;
+}

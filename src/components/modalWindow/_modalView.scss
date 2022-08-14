@@ -12,6 +12,8 @@
   .modalContent{
     padding: 50px;
     background-color: $mainBackGreenTight;
+    max-height: 90%;
+    overflow-y: auto;
 
     .modalInput{
       .errorSpanContainer{

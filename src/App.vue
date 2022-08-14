@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ 'disabledScroll': disabledScroll }">
     <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" />
     <Header />
     <transition name="fade" mode="out-in" apear>
@@ -37,7 +37,8 @@ export default Vue.extend({
     return {
       isImageOpened: false,
       imageUrl: '',
-      alt: ''
+      alt: '',
+      disabledScroll: false
     }
   },
   mounted: function () {
@@ -50,6 +51,12 @@ export default Vue.extend({
       this.imageUrl = ''
       this.alt = ''
       this.isImageOpened = false
+    })
+    this.$root.$on('disableScroll', () => {
+      this.disabledScroll = true
+    })
+    this.$root.$on('ableScroll', () => {
+      this.disabledScroll = false
     })
     store.dispatch('getRefresh')
   }

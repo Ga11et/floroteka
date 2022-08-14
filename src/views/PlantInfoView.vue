@@ -1,7 +1,10 @@
 <template>
-  <main class="plantInfoContainer" v-if="plantsLoaded">
+  <main class='plantInfoContainer' v-if="plantsLoaded">
     <transition name="fade">
       <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler" />
+    </transition>
+    <transition name="fade">
+      <UpdatePlant v-if="isUpdateModalOpen" :errorMessages="errorMessages" :submitCallback="submitUpdateHandler" :actualData="plantInfo" />
     </transition>
     <SidePathContainer :path="plantInfo.name" />
     <div class="contentContainer">
@@ -40,7 +43,10 @@
         <h3>Доступно для приобретения:</h3>
         <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
       </div>
-      <DeleteButton v-if="isAuth" class="plantDeletePosition" content="Удалить растение" :onclick="deleteHandler" />
+      <div v-if="isAuth" class="optionButtons">
+        <CustomButton class="blue" content="Изменить растение" :onclick="updateHandler" />
+        <CustomButton content="Удалить растение" :onclick="deleteHandler" />
+      </div>
       <div class="photoContainer">
         <SuspenseImage v-for="image in plantInfo.img" class="image" :imageUrl="image" :alt="plantInfo.name"
           :key="plantInfo.img.indexOf(image)" />
@@ -50,7 +56,7 @@
         <div class="reccomendations">
           <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id" >
             <h4 class="heading">{{ plant.name }}</h4>
-            <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0]" :alt="plant.name" class="image" />
+            <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0].small" :alt="plant.name" class="image" />
           </div>
         </div>
       </div>
@@ -61,15 +67,18 @@
 import Vue from 'vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
 import store from '@/store'
-import { plantPropsType } from '@/store/models'
 import SuspenseImage from '@/components/suspenseImage.vue'
-import DeleteButton from '@/components/common/deleteButton.vue'
 import CheckPass from '@/components/modalWindow/checkPass.vue'
 import router from '@/router'
+import { plantPropsType } from '@/store/models/appTypes'
+import UpdatePlant from '@/components/modalWindow/updatePlant.vue'
+import { plantErrorMessages, plantFormType } from '@/store/models/formTypes'
+import CustomButton from '../components/common/customButton.vue'
+import { formServises } from '../servises/formServises'
 
 export default Vue.extend({
   name: 'plant-info-container',
-  components: { SidePathContainer, SuspenseImage, DeleteButton, CheckPass },
+  components: { SidePathContainer, SuspenseImage, CheckPass, UpdatePlant, CustomButton },
   computed: {
     plantInfo () {
       return store.getters.activePlant as plantPropsType
@@ -87,6 +96,9 @@ export default Vue.extend({
     this.$root.$on('closeCheckPass', () => {
       this.isModalOpen = false
     })
+    this.$root.$on('closeUpdateModal', () => {
+      this.isUpdateModalOpen = false
+    })
   },
   methods: {
     imageClickHandler (plantId: string) {
@@ -98,24 +110,47 @@ export default Vue.extend({
     },
     deleteHandler () {
       this.isModalOpen = true
+      this.$root.$emit('disableScroll')
+    },
+    updateHandler () {
+      this.isUpdateModalOpen = true
+      this.$root.$emit('disableScroll')
     },
     async submitModalhandler (pass: string) {
       const response = await store.dispatch('deletePlant', { id: this.plantInfo.id, pass: pass })
-      if (response === 'ok') this.isModalOpen = false
+      if (response === 'ok') {
+        this.isModalOpen = false
+        this.$root.$emit('ableScroll')
+      }
       this.modalError = response[0].msg
+    },
+    async submitUpdateHandler (data: plantFormType, password: string) {
+      const response = await store.dispatch('updatePlant', { formData: data, pass: password, plantId: this.plantInfo.id })
+      if (response === 'ok') {
+        this.isUpdateModalOpen = false
+        this.$root.$emit('ableScroll')
+        setTimeout(() => {
+          this.$root.$emit('scroll')
+        }, 300)
+      } else {
+        formServises.plantErrorMapping(response, this.errorMessages)
+      }
     }
   },
   data: function () {
     return {
       randomPlants: [] as plantPropsType[],
       isModalOpen: false,
-      modalError: ''
+      isUpdateModalOpen: false,
+      modalError: '',
+      errorMessages: {} as plantErrorMessages
     }
   }
 })
 </script>
 <style lang="scss">
 @import '@/variables';
+@import '@/app';
 
 .plantInfoContainer {
   @include flex(column, center, flex-start);
@@ -125,9 +160,20 @@ export default Vue.extend({
     width: 1280px;
     @include flex(column, flex-start, flex-start);
     margin: 100px 0 0;
-    .plantDeletePosition{
+    .optionButtons{
+      @include flex(row, center, flex-end);
+      position: absolute;
       right: 0;
       top: 0;
+
+      .blue{
+        background-color: $mainBlue;
+        margin-right: 10px;
+
+        &:hover{
+          background-color: $mainBlueHover;
+        }
+      }
     }
     .top {
       @include flex(row, center, space-between);
@@ -223,7 +269,7 @@ export default Vue.extend({
     .contentContainer{
       width: 100%;
       padding: 0 50px;
-      .plantDeletePosition{
+      .optionButtons{
         right: 50px;
       }
     }
@@ -233,6 +279,13 @@ export default Vue.extend({
   .plantInfoContainer{
     .contentContainer{
       margin-top: 50px;
+
+      .optionButtons{
+        position: relative;
+        width: 100%;
+        right: 0;
+        margin-bottom: 10px;
+      }
       .recommendstionContainer{
         .reccomendations{
           grid-template-columns: 1fr 1fr;
@@ -251,9 +304,8 @@ export default Vue.extend({
     .contentContainer{
       margin-top: 20px;
       padding: 0 20px;
-      .plantDeletePosition{
-        right: 0;
-        margin-bottom: 10px;
+      .optionButtons{
+        flex-direction: column;
       }
       .top{
         .headings{

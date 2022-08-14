@@ -2,7 +2,7 @@
   <main class="container">
     <SidePathContainer path="Галерея" />
     <SuspenseConteiner v-if="!isGaleryLoaded" />
-    <NotFoundthing v-if="photos.length === 0" />
+    <NotFoundthing v-else-if="photos.length === 0" />
     <div v-else class="galeryImages">
       <SuspenseImage class="image" v-for="item in photos" :imageUrl="item.image" alt="galeryImage" :key="item.id" />
     </div>

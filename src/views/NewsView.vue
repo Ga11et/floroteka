@@ -2,8 +2,8 @@
   <main class="container">
       <SidePathContainer path="Новости" />
       <SuspenseConteiner v-if="!isPostsLoaded" />
+      <NotFoundthing v-else-if="posts.length === 0" />
       <PostsInOne v-for="post in posts" :key="post.id" :content="post" />
-      <NotFoundthing v-if="posts.length === 0" />
   </main>
 </template>
 <script lang="ts">

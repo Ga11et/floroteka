@@ -1,5 +1,5 @@
 <template>
-  <button @click="onclick" class="deleteButton">
+  <button @click="onclick" class="customButton">
     {{ content }}
   </button>
 </template>
@@ -13,14 +13,13 @@ export default Vue.extend({
 </script>
 <style lang='scss'>
 @import '@/variables';
-.deleteButton{
+.customButton{
   background-color: $mainDarkGreen;
   border: none;
   border-radius: 5px;
   @include font(18px, 30px, 500);
   padding: 15px 35px;
   background-color: $mainRed;
-  position: absolute;
   transition: 400ms;
 
   &:hover {
@@ -31,8 +30,7 @@ export default Vue.extend({
 }
 
 @media screen and (max-width: 750px) {
-  .deleteButton{
-    position: relative;
+  .customButton{
     width: 100%;
   }
 }

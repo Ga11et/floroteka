@@ -29,8 +29,10 @@ export default Vue.extend({
     },
     linkHandler: function () {
       store.commit('setActivePlant', this.content.id)
-      this.$root.$emit('scroll')
       router.push('/plant')
+      setTimeout(() => {
+        this.$root.$emit('scroll')
+      }, 300)
     }
   }
 })

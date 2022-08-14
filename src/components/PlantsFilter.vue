@@ -5,10 +5,11 @@
       <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
       <SvgIcons type="search" />
     </div>
+    <SuspenseConteiner v-if="!isPlantsLoaded" />
+    <NotFoundthing v-else-if="plants.length === 0" />
     <TransitionGroup name="flipList" tag="div" class="plantsContainer">
       <Plant v-for="item in plants" :content="item" :key="item.id" />
     </TransitionGroup>
-    <NotFoundthing v-if="plants.length === 0" />
   </section>
 </template>
 <script lang="ts">
@@ -17,6 +18,7 @@ import Plant from '../components/Plant.vue'
 import store from '@/store'
 import SvgIcons from './svgIcons.vue'
 import NotFoundthing from './common/notFoundthing.vue'
+import SuspenseConteiner from './SuspenseConteiner.vue'
 
 export default Vue.extend({
   name: 'plants-filter',
@@ -26,12 +28,15 @@ export default Vue.extend({
     },
     filterValue () {
       return store.state.plantsFilterValue
+    },
+    isPlantsLoaded () {
+      return store.state.plantsLoaded
     }
   },
   mounted: async function () {
     if (this.plants.length === 0) store.dispatch('setPlants')
   },
-  components: { Plant, SvgIcons, NotFoundthing },
+  components: { Plant, SvgIcons, NotFoundthing, SuspenseConteiner },
   methods: {
     inputChangeHandler: function (event: Event) {
       const target = event.target as HTMLInputElement

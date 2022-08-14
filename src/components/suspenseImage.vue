@@ -1,6 +1,6 @@
 <template>
   <div class="suspenseImage">
-    <img class="image" :src="imageUrl" :alt="alt" @load="loaded" @click="$root.$emit('openImage', imageUrl, alt)" />
+    <img class="image" :src="imageUrl.small" :alt="alt" @load="loaded" @click="$root.$emit('openImage', imageUrl.full, alt)" />
     <span class="image span" v-if="!isLoaded"></span>
   </div>
 </template>

@@ -5,16 +5,18 @@
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <div class="contentContainer">
-      <img class="images" :src="content.images[0]" />
+      <SuspenseImage class="images" :imageUrl="content.images[0]" alt="Научная активность" />
       <p class="paragraph">{{ content.description }}</p>
     </div>
   </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import SuspenseImage from '../suspenseImage.vue'
 export default Vue.extend({
   name: 'science-activity-post',
-  props: ['content']
+  props: ['content'],
+  components: { SuspenseImage }
 })
 </script>
 <style lang="scss">

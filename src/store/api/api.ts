@@ -1,11 +1,11 @@
 import store from '..'
-import { plantPropsType, LoginData } from '../models'
-import { BeforeAfterFormType, deletePlantFormType, photosFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
+import { LoginData } from '../models'
+import { BeforeAfterFormType, deletePlantFormType, photosFormType, plantFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 
-const prod = 'https://florotekaback.herokuapp.com'
-// const prod = 'http://localhost:3000'
+export const prod = 'https://florotekaback.herokuapp.com'
+// export const prod = 'http://localhost:3000'
 
-type postRequestData = plantPropsType | BeforeAfterFormType | technologiesFormType | thingsFormType | photosFormType
+type postRequestData = plantFormType | BeforeAfterFormType | technologiesFormType | thingsFormType | photosFormType
 type deleteRequestData = deletePlantFormType
 
 const createPostRequest = async (postType: postRequestData, path: string, token: string) => {
@@ -53,7 +53,7 @@ export const fetchAllPostsData = async () => {
   return response
 }
 
-export const postPlantData = async (plantFormData: plantPropsType, token: string) => {
+export const postPlantData = async (plantFormData: plantFormType, token: string) => {
   return await createPostRequest(plantFormData, '/plants', token)
 }
 

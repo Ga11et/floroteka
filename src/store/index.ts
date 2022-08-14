@@ -1,10 +1,11 @@
 import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied, florotekaAPI, deleteAPI } from './api/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { LoginData, plantPropsType, PostPropsType } from './models'
-import { GaleryPhotoType } from './models/appTypes'
+import { LoginData, PostPropsType } from './models'
+import { GaleryPhotoType, plantPropsType } from './models/appTypes'
 import router from '@/router'
 import { deletePlantFormType } from './models/formTypes'
+import { updateAPI, updateRequestData } from './api/updateAPI'
 
 Vue.use(Vuex)
 
@@ -137,6 +138,11 @@ export default new Vuex.Store({
       } else {
         return returnData
       }
+    },
+    async updatePlant ({ commit, state }, data: updateRequestData) {
+      const returnData = await updateAPI.updatePlant(data, state.token)
+      if (returnData === 'ok') return 'ok'
+      return returnData
     }
   },
   modules: {

@@ -6,7 +6,7 @@
       <div class="buttons">
         <SvgIcons v-if="isLoading" type="loading" class="modalLoading" />
         <button v-else class="button next" type="submit" @click.prevent="modalSubmit">Отправить</button>
-        <button class="button cancel" type="button" @click="$root.$emit('closeCheckPass')">Закрыть</button>
+        <button class="button cancel" type="button" @click="closeHandler">Закрыть</button>
       </div>
     </form>
   </div>
@@ -34,6 +34,10 @@ export default Vue.extend({
       this.isLoading = true
       await this.submitCallback(this.formData.password)
       this.isLoading = false
+    },
+    closeHandler () {
+      this.$root.$emit('closeCheckPass')
+      this.$root.$emit('ableScroll')
     }
   }
 })

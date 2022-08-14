@@ -1,3 +1,5 @@
+import { PlantType } from './appTypes'
+
 export type BeforeAfterFormType = {
   heading: string
   description: string
@@ -18,9 +20,17 @@ export type thingsFormType = {
 export type photosFormType = {
   photo: string
 }
-export type deletePlantFormType = {
-  id: string
-  pass: string
+export type plantFormType = {
+  name: string
+  latin: string
+  description: string
+  date: string
+  family: string
+  from: string
+  livingPlace: string
+  having: boolean
+  type: PlantType
+  img: string[]
 }
 
 export type ErrorMessagesBeforeAfterPost = {
@@ -55,4 +65,26 @@ export type loginErrorMessages = {
   login: string
   pass: string
 }
+export type plantErrorMessages = {
+  [unit: string]: string
+  origin: string
+  name: string
+  latin: string
+  description: string
+  img: string
+  date: string
+  family: string
+  from: string
+  livingPlace: string
+}
 
+export type deletePlantFormType = {
+  id: string
+  pass: string
+}
+
+export type updatePlantFormType = {
+  data: plantFormType
+  pass: string
+  plantId: string
+}
