@@ -32,7 +32,7 @@ import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, technologiesFormType } from '@/store/models/formTypes'
-import { florotekaAPI, postTechnologiesPostData } from '@/store/api/api'
+import { florotekaAPI } from '@/store/api/api'
 import SvgIcons from '../svgIcons.vue'
 
 export default Vue.extend({

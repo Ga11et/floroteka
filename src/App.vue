@@ -2,12 +2,15 @@
   <div id="app">
     <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" />
     <Header />
-    <router-view />
+    <transition name="fade" mode="out-in" apear>
+      <router-view />
+    </transition>
     <Footer />
   </div>
 </template>
 
 <style lang="scss">
+@import '@/variables';
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,7 +19,7 @@
   font-family: Montserrat, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgba(168, 192, 175, 0.3);
+  background-color: $mainBackGreen;
 
 }
 </style>

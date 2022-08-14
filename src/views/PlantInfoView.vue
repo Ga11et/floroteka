@@ -1,56 +1,60 @@
 <template>
-  <main class="plantInfoContainer">
+  <main class="plantInfoContainer" v-if="plantsLoaded">
+    <transition name="fade">
+      <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler" />
+    </transition>
     <SidePathContainer :path="plantInfo.name" />
-      <div class="contentContainer">
-        <div class="top">
-          <div class="headings">
-            <h2 class="name">{{ plantInfo.name }}</h2>
-            <h2 class="latinName">{{ plantInfo.latin }}</h2>
-          </div>
-          <div class="spans">
-          </div>
+    <div class="contentContainer">
+      <div class="top">
+        <div class="headings">
+          <h2 class="name">{{ plantInfo.name }}</h2>
+          <h2 class="latinName">{{ plantInfo.latin }}</h2>
         </div>
-        <p class="description">
-          {{ plantInfo.description }}
-        </p>
-        <div class="item">
-          <h3>Фильтрация:</h3>
-          <p>{{ plantInfo.type }}</p>
+        <div class="spans">
         </div>
-        <div class="item">
-          <h3>Дата посадки:</h3>
-          <p>{{ plantInfo.date }}</p>
-        </div>
-        <div class="item">
-          <h3>Царство:</h3>
-          <p>{{ plantInfo.family }}</p>
-        </div>
-        <div class="item">
-          <h3>Привезено из:</h3>
-          <p>{{ plantInfo.from }}</p>
-        </div>
-        <div class="item">
-          <h3>Районирование:</h3>
-          <p>{{ plantInfo.livingPlace }}</p>
-        </div>
-        <div class="item">
-          <h3>Доступно для приобретения:</h3>
-          <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
-        </div>
-        <div class="photoContainer">
-          <SuspenseImage v-for="image in plantInfo.img" class="image" :imageUrl="image" :alt="plantInfo.name"
-            :key="plantInfo.img.indexOf(image)" />
-        </div>
-        <div class="recommendstionContainer">
-          <h3 class="title">Также рекомендуем:</h3>
-          <div class="reccomendations">
-            <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id" >
-              <h4 class="heading">{{ plant.name }}</h4>
-              <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0]" :alt="plant.name" class="image" />
-            </div>
+      </div>
+      <p class="description">
+        {{ plantInfo.description }}
+      </p>
+      <div class="item">
+        <h3>Фильтрация:</h3>
+        <p>{{ plantInfo.type }}</p>
+      </div>
+      <div class="item">
+        <h3>Дата посадки:</h3>
+        <p>{{ plantInfo.date }}</p>
+      </div>
+      <div class="item">
+        <h3>Царство:</h3>
+        <p>{{ plantInfo.family }}</p>
+      </div>
+      <div class="item">
+        <h3>Привезено из:</h3>
+        <p>{{ plantInfo.from }}</p>
+      </div>
+      <div class="item">
+        <h3>Районирование:</h3>
+        <p>{{ plantInfo.livingPlace }}</p>
+      </div>
+      <div class="item">
+        <h3>Доступно для приобретения:</h3>
+        <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
+      </div>
+      <DeleteButton v-if="isAuth" class="plantDeletePosition" content="Удалить растение" :onclick="deleteHandler" />
+      <div class="photoContainer">
+        <SuspenseImage v-for="image in plantInfo.img" class="image" :imageUrl="image" :alt="plantInfo.name"
+          :key="plantInfo.img.indexOf(image)" />
+      </div>
+      <div class="recommendstionContainer">
+        <h3 class="title">Также рекомендуем:</h3>
+        <div class="reccomendations">
+          <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id" >
+            <h4 class="heading">{{ plant.name }}</h4>
+            <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0]" :alt="plant.name" class="image" />
           </div>
         </div>
       </div>
+    </div>
   </main>
 </template>
 <script lang="ts">
@@ -59,23 +63,30 @@ import SidePathContainer from '@/components/sidePathContainer.vue'
 import store from '@/store'
 import { plantPropsType } from '@/store/models'
 import SuspenseImage from '@/components/suspenseImage.vue'
+import DeleteButton from '@/components/common/deleteButton.vue'
+import CheckPass from '@/components/modalWindow/checkPass.vue'
+import router from '@/router'
 
 export default Vue.extend({
   name: 'plant-info-container',
-  components: { SidePathContainer, SuspenseImage },
+  components: { SidePathContainer, SuspenseImage, DeleteButton, CheckPass },
   computed: {
     plantInfo () {
       return store.getters.activePlant as plantPropsType
     },
     plantsLoaded () {
       return store.state.plantsLoaded
+    },
+    isAuth () {
+      return store.state.isAuth
     }
   },
   mounted: async function () {
-    if (!store.state.plantsLoaded) {
-      store.dispatch('setPlants')
-    }
+    if (!this.plantsLoaded) return router.push('./')
     this.randomPlants = store.getters.randomPlants(3) as plantPropsType[]
+    this.$root.$on('closeCheckPass', () => {
+      this.isModalOpen = false
+    })
   },
   methods: {
     imageClickHandler (plantId: string) {
@@ -84,11 +95,21 @@ export default Vue.extend({
         this.$root.$emit('scroll')
         this.randomPlants = store.getters.randomPlants(3) as plantPropsType[]
       }, 300)
+    },
+    deleteHandler () {
+      this.isModalOpen = true
+    },
+    async submitModalhandler (pass: string) {
+      const response = await store.dispatch('deletePlant', { id: this.plantInfo.id, pass: pass })
+      if (response === 'ok') this.isModalOpen = false
+      this.modalError = response[0].msg
     }
   },
   data: function () {
     return {
-      randomPlants: [] as plantPropsType[]
+      randomPlants: [] as plantPropsType[],
+      isModalOpen: false,
+      modalError: ''
     }
   }
 })
@@ -100,10 +121,14 @@ export default Vue.extend({
   @include flex(column, center, flex-start);
 
   .contentContainer {
+    position: relative;
     width: 1280px;
     @include flex(column, flex-start, flex-start);
     margin: 100px 0 0;
-
+    .plantDeletePosition{
+      right: 0;
+      top: 0;
+    }
     .top {
       @include flex(row, center, space-between);
 
@@ -198,6 +223,9 @@ export default Vue.extend({
     .contentContainer{
       width: 100%;
       padding: 0 50px;
+      .plantDeletePosition{
+        right: 50px;
+      }
     }
   }
 }
@@ -223,6 +251,10 @@ export default Vue.extend({
     .contentContainer{
       margin-top: 20px;
       padding: 0 20px;
+      .plantDeletePosition{
+        right: 0;
+        margin-bottom: 10px;
+      }
       .top{
         .headings{
           .name{

@@ -1,8 +1,10 @@
-import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied, florotekaAPI } from './api/api'
+import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied, florotekaAPI, deleteAPI } from './api/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { LoginData, plantPropsType, PostPropsType } from './models'
 import { GaleryPhotoType } from './models/appTypes'
+import router from '@/router'
+import { deletePlantFormType } from './models/formTypes'
 
 Vue.use(Vuex)
 
@@ -124,6 +126,17 @@ export default new Vuex.Store({
     async getGalery ({ commit }) {
       const returnData = await florotekaAPI.fetchGalery()
       commit('setPhotos', returnData)
+    },
+    async deletePlant ({ commit, state }, data: deletePlantFormType) {
+      const returnData = await deleteAPI.deletePlant(data, state.token)
+      if (returnData === 'ok') {
+        const newState = state.plants.filter(el => el.id !== data.id)
+        router.push('./')
+        commit('setPlants', newState)
+        return 'ok'
+      } else {
+        return returnData
+      }
     }
   },
   modules: {

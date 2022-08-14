@@ -1,13 +1,14 @@
 import store from '..'
 import { plantPropsType, LoginData } from '../models'
-import { BeforeAfterFormType, photosFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
+import { BeforeAfterFormType, deletePlantFormType, photosFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 
 const prod = 'https://florotekaback.herokuapp.com'
 // const prod = 'http://localhost:3000'
 
 type postRequestData = plantPropsType | BeforeAfterFormType | technologiesFormType | thingsFormType | photosFormType
+type deleteRequestData = deletePlantFormType
 
-export const createPostRequest = async (postType: postRequestData, path: string, token: string) => {
+const createPostRequest = async (postType: postRequestData, path: string, token: string) => {
   const response = await fetch(prod + path, {
     method: 'POST',
     mode: 'cors',
@@ -16,6 +17,22 @@ export const createPostRequest = async (postType: postRequestData, path: string,
       authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ data: postType })
+  }).then(async (resp) => {
+    if (resp.status !== 401) return resp.json()
+    store.dispatch('getRefresh')
+    return [{ param: 'data.origin', msg: 'Токен устарел и был обновлен, подтвердите форму еще раз' }]
+  })
+  return response
+}
+const createDeleteRequest = async (requestData: deleteRequestData, path: string, token: string) => {
+  const response = await fetch(prod + path, {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ data: requestData })
   }).then(async (resp) => {
     if (resp.status !== 401) return resp.json()
     store.dispatch('getRefresh')
@@ -63,6 +80,12 @@ export const florotekaAPI = {
   },
   postStudyProjectPostData: async (formData: technologiesFormType, token: string) => {
     return await createPostRequest(formData, '/studyProject', token)
+  }
+}
+
+export const deleteAPI = {
+  deletePlant: async (formData: deletePlantFormType, token: string) => {
+    return await createDeleteRequest(formData, '/plants', token)
   }
 }
 

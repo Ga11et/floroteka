@@ -8,6 +8,7 @@
     <TransitionGroup name="flipList" tag="div" class="plantsContainer">
       <Plant v-for="item in plants" :content="item" :key="item.id" />
     </TransitionGroup>
+    <NotFoundthing v-if="plants.length === 0" />
   </section>
 </template>
 <script lang="ts">
@@ -15,6 +16,7 @@ import Vue from 'vue'
 import Plant from '../components/Plant.vue'
 import store from '@/store'
 import SvgIcons from './svgIcons.vue'
+import NotFoundthing from './common/notFoundthing.vue'
 
 export default Vue.extend({
   name: 'plants-filter',
@@ -29,10 +31,7 @@ export default Vue.extend({
   mounted: async function () {
     if (this.plants.length === 0) store.dispatch('setPlants')
   },
-  components: {
-    Plant,
-    SvgIcons
-  },
+  components: { Plant, SvgIcons, NotFoundthing },
   methods: {
     inputChangeHandler: function (event: Event) {
       const target = event.target as HTMLInputElement

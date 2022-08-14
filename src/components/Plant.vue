@@ -3,7 +3,7 @@
     <SuspenseImage class="image" :imageUrl="content.img[0]" alt="plant" />
     <div class="content">
       <h3 class="heading">{{ content.name }}</h3>
-      <p class="paragraph">{{ content.description }}</p>
+      <p class="paragraph">{{ content.description.length > 120 ? content.description.slice(0, 120) + '...' : content.description }}</p>
       <button class="link" @click.prevent="linkHandler" >Читать больше</button>
     </div>
   </div>

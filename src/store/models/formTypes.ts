@@ -18,6 +18,10 @@ export type thingsFormType = {
 export type photosFormType = {
   photo: string
 }
+export type deletePlantFormType = {
+  id: string
+  pass: string
+}
 
 export type ErrorMessagesBeforeAfterPost = {
   [unit: string]: string
@@ -51,3 +55,4 @@ export type loginErrorMessages = {
   login: string
   pass: string
 }
+
