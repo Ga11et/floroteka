@@ -32,8 +32,8 @@ import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, technologiesFormType } from '@/store/models/formTypes'
-import { florotekaAPI } from '@/store/api/api'
 import SvgIcons from '../svgIcons.vue'
+import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({
   name: 'study-project-adding-form',
@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     submitForm: async function () {
       this.sumbitLoading = true
-      const response = await florotekaAPI.postStudyProjectPostData(this.formData, this.token)
+      const response = await postAPI.postStudyProjectPostData(this.formData, this.token)
       console.log(response)
       this.errorMessages = {} as technologiesErrorMessages
       if (response !== 'ok') {

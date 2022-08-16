@@ -23,8 +23,8 @@ import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { photosErrorMessages, photosFormType } from '../../store/models/formTypes'
 import SvgIcons from '../svgIcons.vue'
-import { florotekaAPI } from '../../store/api/api'
 import SidePathContainer from '../sidePathContainer.vue'
+import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({
   name: 'photo-adding-form',
@@ -51,7 +51,7 @@ export default Vue.extend({
   methods: {
     submitForm: async function () {
       this.sumbitLoading = true
-      const response = await florotekaAPI.postPhotoPostData(this.formData, this.token)
+      const response = await postAPI.postPhotoPostData(this.formData, this.token)
       this.errorMessages = {} as photosErrorMessages
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {

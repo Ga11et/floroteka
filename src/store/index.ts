@@ -1,4 +1,3 @@
-import { fetchPlantsData, fetchAllPostsData, getAutherisied, isAutherisied, florotekaAPI, deleteAPI } from './api/api'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { LoginData, PostPropsType } from './models'
@@ -6,6 +5,9 @@ import { GaleryPhotoType, plantPropsType } from './models/appTypes'
 import router from '@/router'
 import { deletePlantFormType } from './models/formTypes'
 import { updateAPI, updateRequestData } from './api/updateAPI'
+import { florotekaAPI } from './api/api'
+import { postAPI } from './api/postAPI'
+import { deleteAPI } from './api/deleteAPI'
 
 Vue.use(Vuex)
 
@@ -105,18 +107,18 @@ export default new Vuex.Store({
   actions: {
     async setPlants ({ commit }) {
       commit('setplantsLoaded', false)
-      const data = await fetchPlantsData()
+      const data = await florotekaAPI.fetchPlantsData()
       commit('setPlants', data)
       commit('setplantsLoaded', true)
     },
     async setPosts ({ commit }) {
       commit('setPostsLoaded', false)
-      const data = await fetchAllPostsData()
+      const data = await florotekaAPI.fetchAllPostsData()
       commit('setAllPosts', data)
       commit('setPostsLoaded', true)
     },
     async getAuth ({ commit }, data: LoginData) {
-      const returnData = await getAutherisied(data)
+      const returnData = await postAPI.getAutherisied(data)
       if (returnData.token) {
         commit('setToken', returnData.token)
         commit('getAuth', true)
@@ -125,7 +127,7 @@ export default new Vuex.Store({
       return returnData
     },
     async getRefresh ({ commit }) {
-      const returnData = await isAutherisied()
+      const returnData = await florotekaAPI.isAutherisied()
       if (returnData.token) {
         commit('setToken', returnData.token)
         commit('getAuth', true)

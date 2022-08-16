@@ -1,17 +1,13 @@
 import store from '..'
 import { APIResponseType } from '../models/apiTypes'
-import { plantFormType } from '../models/formTypes'
+import { deletePlantFormType } from '../models/formTypes'
 import { prod } from './api'
 
-export type updateRequestData = {
-  pass: string
-  plantId: string
-  formData: plantFormType
-}
+type deleteRequestData = deletePlantFormType
 
-const createUpdateRequest = async (requestData: updateRequestData, path: string, token: string) => {
+const createDeleteRequest = async (requestData: deleteRequestData, path: string, token: string) => {
   const response = await fetch(prod + path, {
-    method: 'PUT',
+    method: 'DELETE',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
@@ -26,8 +22,8 @@ const createUpdateRequest = async (requestData: updateRequestData, path: string,
   return response
 }
 
-export const updateAPI = {
-  updatePlant: async (formData: updateRequestData, token: string): APIResponseType => {
-    return await createUpdateRequest(formData, '/plants', token)
+export const deleteAPI = {
+  deletePlant: async (formData: deletePlantFormType, token: string): APIResponseType => {
+    return await createDeleteRequest(formData, '/plants', token)
   }
 }

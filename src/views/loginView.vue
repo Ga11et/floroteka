@@ -81,6 +81,7 @@ export default Vue.extend({
 
   .form {
     position: relative;
+    width: 350px;
 
     .originError {
       @include flex(row, center, center);
@@ -123,12 +124,33 @@ export default Vue.extend({
 @media screen and (max-width: 1200px) {
   .loginContainer {
     top: 20%;
+    padding: 30px;
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1000px) {
   .loginContainer {
-    padding: 30px;
+    .form{
+      .errorSpanContainer{
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top: 10px;
+        .errorSpan{
+          width: 100%
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .loginContainer {
+    width: 100%;
+    .form{
+      width: 100%;
+    }
   }
 }
 </style>

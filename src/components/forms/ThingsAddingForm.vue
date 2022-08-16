@@ -30,8 +30,8 @@ import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, thingsFormType } from '@/store/models/formTypes'
-import { postThingsPostData } from '@/store/api/api'
 import SvgIcons from '../svgIcons.vue'
+import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({
   name: 'technology-adding-form',
@@ -65,7 +65,7 @@ export default Vue.extend({
     },
     submitForm: async function () {
       this.sumbitLoading = true
-      const response = await postThingsPostData(this.formData, this.token)
+      const response = await postAPI.postThingsPostData(this.formData, this.token)
       this.errorMessages = {} as technologiesErrorMessages
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {

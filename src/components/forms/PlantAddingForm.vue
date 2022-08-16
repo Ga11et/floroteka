@@ -42,7 +42,6 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { postPlantData } from '@/store/api/api'
 import FormPartContainer from '../../components/formPartContainer.vue'
 import CustomInput from '@/components/customInput.vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
@@ -50,6 +49,7 @@ import store from '@/store'
 import SvgIcons from '../svgIcons.vue'
 import { PlantType } from '@/store/models/appTypes'
 import { plantErrorMessages, plantFormType } from '@/store/models/formTypes'
+import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({
   name: 'plant-adding-form',
@@ -90,7 +90,7 @@ export default Vue.extend({
     },
     submitForm: async function () {
       this.sumbitLoading = true
-      const response = await postPlantData(this.plantFormData, this.token)
+      const response = await postAPI.postPlantData(this.plantFormData, this.token)
       this.errorMessages = {} as plantErrorMessages
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {

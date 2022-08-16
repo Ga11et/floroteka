@@ -31,9 +31,9 @@ import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { BeforeAfterFormType, ErrorMessagesBeforeAfterPost } from '@/store/models/formTypes'
-import { postBeforeAfterPostData } from '@/store/api/api'
 import store from '@/store'
 import SvgIcons from '../svgIcons.vue'
+import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({
   name: 'before-after-adding-form',
@@ -64,7 +64,7 @@ export default Vue.extend({
   methods: {
     submitForm: async function () {
       this.sumbitLoading = true
-      const response = await postBeforeAfterPostData(this.formData, this.token)
+      const response = await postAPI.postBeforeAfterPostData(this.formData, this.token)
       this.errorMessages = {} as ErrorMessagesBeforeAfterPost
       if (response !== 'ok') {
         response.forEach((el: { param: string, msg: string }) => {
