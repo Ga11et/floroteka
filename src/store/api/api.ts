@@ -1,7 +1,7 @@
 import { PostPropsType } from '../models'
 import { GaleryPhotoType, plantPropsType } from '../models/appTypes'
 
-export const prod = process.env.SERVER_URL || 'http://localhost:3000'
+export const prod = process.env.VUE_APP_SERVER_URL || 'https://florotekaback.herokuapp.com'
 
 export const florotekaAPI = {
   async fetchGalery (): Promise<GaleryPhotoType[]> {
