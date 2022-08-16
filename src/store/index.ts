@@ -18,25 +18,29 @@ export default new Vuex.Store({
     plantsLoaded: false,
     galeryLoaded: false,
     plantsFilterValue: '',
+    postsFilterValue: '',
     activePlantId: '1',
     token: '',
     isAuth: false
   },
   getters: {
     beforeAfterPosts (state) {
-      return state.allPosts.filter(el => el.type === 'beforeAfter')
+      return state.allPosts.filter(el => el.type === 'beforeAfter' && el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1)
     },
     sciensePosts (state) {
-      return state.allPosts.filter(el => el.type === 'scienceActivity')
+      return state.allPosts.filter(el => el.type === 'scienceActivity' && el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1)
     },
     technologyPosts (state) {
-      return state.allPosts.filter(el => el.type === 'technologies')
+      return state.allPosts.filter(el => el.type === 'technologies' && el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1)
     },
     thingPosts (state) {
-      return state.allPosts.filter(el => el.type === 'things')
+      return state.allPosts.filter(el => el.type === 'things' && el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1)
     },
     studyProjectPosts (state) {
-      return state.allPosts.filter(el => el.type === 'studyProject')
+      return state.allPosts.filter(el => el.type === 'studyProject' && el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1)
+    },
+    filteredPosts (state) {
+      return state.allPosts.filter(el => el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1)
     },
     filteredPlants (state) {
       return state.plants.filter(el => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
@@ -81,6 +85,9 @@ export default new Vuex.Store({
     setPlantsFilterValue (state, payload: string) {
       state.plantsFilterValue = payload
     },
+    setPostsFilterValue (state, payload: string) {
+      state.postsFilterValue = payload
+    },
     setActivePlant (state, payload: string) {
       state.activePlantId = payload
     },
@@ -97,11 +104,13 @@ export default new Vuex.Store({
   },
   actions: {
     async setPlants ({ commit }) {
+      commit('setplantsLoaded', false)
       const data = await fetchPlantsData()
       commit('setPlants', data)
       commit('setplantsLoaded', true)
     },
     async setPosts ({ commit }) {
+      commit('setPostsLoaded', false)
       const data = await fetchAllPostsData()
       commit('setAllPosts', data)
       commit('setPostsLoaded', true)

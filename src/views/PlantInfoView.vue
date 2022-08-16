@@ -109,18 +109,27 @@ export default Vue.extend({
       }, 300)
     },
     deleteHandler () {
-      this.isModalOpen = true
-      this.$root.$emit('disableScroll')
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+      setTimeout(() => {
+        this.isModalOpen = true
+        this.$root.$emit('disableScroll')
+      }, 500)
     },
     updateHandler () {
-      this.isUpdateModalOpen = true
-      this.$root.$emit('disableScroll')
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+      setTimeout(() => {
+        this.isUpdateModalOpen = true
+        this.$root.$emit('disableScroll')
+      }, 500)
     },
     async submitModalhandler (pass: string) {
       const response = await store.dispatch('deletePlant', { id: this.plantInfo.id, pass: pass })
       if (response === 'ok') {
         this.isModalOpen = false
         this.$root.$emit('ableScroll')
+        setTimeout(() => {
+          this.$root.$emit('scroll')
+        }, 300)
       }
       this.modalError = response[0].msg
     },
@@ -306,6 +315,10 @@ export default Vue.extend({
       padding: 0 20px;
       .optionButtons{
         flex-direction: column;
+        .blue{
+          margin-right: 0;
+          margin-bottom: 5px;
+        }
       }
       .top{
         .headings{

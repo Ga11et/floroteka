@@ -49,6 +49,9 @@ export default Vue.extend({
     closeHandler () {
       this.$root.$emit('closeUpdateModal')
       this.$root.$emit('ableScroll')
+      setTimeout(() => {
+        this.$root.$emit('scroll')
+      }, 300)
     }
   }
 })

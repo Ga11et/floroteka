@@ -1,10 +1,8 @@
 <template>
   <section class="filter">
-    <h2 class="heading">Каталог растений</h2>
-    <div class="inputContainer">
+    <FilterPart heading="Каталог растений" :isLoaded="isPlantsLoaded" :refreshFunc="refreshPlants" >
       <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
-      <SvgIcons type="search" />
-    </div>
+    </FilterPart>
     <SuspenseConteiner v-if="!isPlantsLoaded" />
     <NotFoundthing v-else-if="plants.length === 0" />
     <TransitionGroup name="flipList" tag="div" class="plantsContainer">
@@ -16,9 +14,9 @@
 import Vue from 'vue'
 import Plant from '../components/Plant.vue'
 import store from '@/store'
-import SvgIcons from './svgIcons.vue'
 import NotFoundthing from './common/notFoundthing.vue'
 import SuspenseConteiner from './SuspenseConteiner.vue'
+import FilterPart from './secondary/filterPart.vue'
 
 export default Vue.extend({
   name: 'plants-filter',
@@ -36,11 +34,14 @@ export default Vue.extend({
   mounted: async function () {
     if (this.plants.length === 0) store.dispatch('setPlants')
   },
-  components: { Plant, SvgIcons, NotFoundthing, SuspenseConteiner },
+  components: { Plant, NotFoundthing, SuspenseConteiner, FilterPart },
   methods: {
     inputChangeHandler: function (event: Event) {
       const target = event.target as HTMLInputElement
       store.commit('setPlantsFilterValue', target.value)
+    },
+    refreshPlants () {
+      store.dispatch('setPlants')
     }
   }
 })
@@ -56,44 +57,6 @@ export default Vue.extend({
   padding: 100px 0 0;
   align-self: center;
   position: relative;
-
-  .heading {
-    @include font(36px, 44px, 500);
-  }
-
-  .inputContainer {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    padding-top: 50px - 19px;
-    padding-bottom: 50px;
-    width: 717px;
-
-    .input {
-      outline: none;
-      border: none;
-      border-bottom: 2px solid #6D6D6D;
-      height: 29px + 38px;
-      width: 100%;
-      background-color: transparent;
-      @include font(24px, 30px, 500);
-
-      &:focus {
-        border-color: black;
-
-        &+svg {
-          path {
-            fill: black;
-          }
-        }
-      }
-    }
-
-    svg {
-      position: absolute;
-      right: 0px;
-    }
-  }
 
   .plantsContainer {
     display: grid;
@@ -113,9 +76,6 @@ export default Vue.extend({
 @media screen and (max-width: 1000px) {
   .filter {
     padding: 50px 50px 0;
-    .inputContainer{
-        width: 100%;
-    }
     .plantsContainer {
       grid-template-columns: 1fr 1fr;
     }
@@ -124,15 +84,6 @@ export default Vue.extend({
 @media screen and (max-width: 750px) {
   .filter {
     padding: 50px 20px 0;
-    .heading{
-      @include font(24px, 30px, 500);
-    }
-    .inputContainer{
-      padding: 11px 0 30px;
-      .input{
-        @include font(20px, 30px, 500);
-      }
-    }
     .plantsContainer {
       grid-template-columns: 1fr;
     }

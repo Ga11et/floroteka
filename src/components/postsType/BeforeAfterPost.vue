@@ -30,7 +30,7 @@ export default Vue.extend({
 @import '@/variables';
 
 .postContainer {
-  margin: 100px 0 0;
+  margin: 0 0 100px;
   width: 1280px;
   @include flex(column, center, unset);
 

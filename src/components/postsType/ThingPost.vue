@@ -8,7 +8,7 @@
     <div class="thingPhotos">
       <h3>Фотографии:</h3>
       <div class="photos">
-        <SuspenseImage v-for="photo in content.images" :imageUrl="photo" :key="photo" />
+        <SuspenseImage v-for="photo in content.images" :imageUrl="photo" :key="photo.small" />
       </div>
     </div>
   </section>
