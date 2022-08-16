@@ -2,7 +2,7 @@
   <div id="app" :class="{ 'disabledScroll': disabledScroll }">
     <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" />
     <Header />
-    <transition name="fade" mode="out-in" apear>
+    <transition name="fadeFast" mode="out-in" apear>
       <router-view />
     </transition>
     <Footer />
@@ -11,6 +11,7 @@
 
 <style lang="scss">
 @import '@/variables';
+@import '@/animations';
 * {
   box-sizing: border-box;
   margin: 0;
