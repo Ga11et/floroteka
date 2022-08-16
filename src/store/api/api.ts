@@ -2,8 +2,8 @@ import store from '..'
 import { LoginData } from '../models'
 import { BeforeAfterFormType, deletePlantFormType, photosFormType, plantFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 
-// export const prod = 'https://florotekaback.herokuapp.com'
-export const prod = 'http://localhost:3000'
+export const prod = 'https://florotekaback.herokuapp.com'
+// export const prod = 'http://localhost:3000'
 
 type postRequestData = plantFormType | BeforeAfterFormType | technologiesFormType | thingsFormType | photosFormType
 type deleteRequestData = deletePlantFormType

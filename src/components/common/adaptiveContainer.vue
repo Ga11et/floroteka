@@ -29,7 +29,7 @@ export default Vue.extend({
 }
 @media (max-width: 750px) {
   .mobileAdaptiveContainer{
-    padding: 20px;
+    padding: 50px 20px 0;
   }
 }
 </style>
