@@ -22,7 +22,7 @@ import Vue from 'vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { photosErrorMessages, photosFormType } from '../../store/models/formTypes'
-import SvgIcons from '../svgIcons.vue'
+import SvgIcons from '../common/svgIcons.vue'
 import SidePathContainer from '../sidePathContainer.vue'
 import { postAPI } from '@/store/api/postAPI'
 

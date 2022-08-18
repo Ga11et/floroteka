@@ -16,7 +16,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SvgIcon from '@/components/svgIcons.vue'
+import SvgIcon from '@/components/common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'dropdown-header',

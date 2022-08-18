@@ -12,7 +12,7 @@
 </template>
 <script lang='ts'>
 import Vue from 'vue'
-import SvgIcons from '../svgIcons.vue'
+import SvgIcons from '../common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'filter-part',
@@ -109,6 +109,7 @@ export default Vue.extend({
   .filterTop{
     .heading{
       @include font(24px, 30px, 500);
+      width: 100%;
     }
     .inputContainer{
       padding: 11px 0 30px;

@@ -32,7 +32,7 @@ import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { BeforeAfterFormType, ErrorMessagesBeforeAfterPost } from '@/store/models/formTypes'
 import store from '@/store'
-import SvgIcons from '../svgIcons.vue'
+import SvgIcons from '../common/svgIcons.vue'
 import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({

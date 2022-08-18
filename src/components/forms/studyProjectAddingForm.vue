@@ -32,7 +32,7 @@ import SidePathContainer from '../sidePathContainer.vue'
 import FormPartContainer from '../formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, technologiesFormType } from '@/store/models/formTypes'
-import SvgIcons from '../svgIcons.vue'
+import SvgIcons from '../common/svgIcons.vue'
 import { postAPI } from '@/store/api/postAPI'
 
 export default Vue.extend({

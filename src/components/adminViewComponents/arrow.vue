@@ -6,7 +6,7 @@
 </template>
 <script lang='ts'>
 import Vue from 'vue'
-import SvgIcons from '../svgIcons.vue'
+import SvgIcons from '../common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'navigation-back-arrow',

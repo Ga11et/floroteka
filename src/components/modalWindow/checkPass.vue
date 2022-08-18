@@ -14,7 +14,7 @@
 <script lang='ts'>
 import Vue from 'vue'
 import CustomInput from '../customInput.vue'
-import SvgIcons from '../svgIcons.vue'
+import SvgIcons from '../common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'chech-pass-modal-view',

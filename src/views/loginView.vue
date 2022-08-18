@@ -19,7 +19,7 @@ import Vue from 'vue'
 import CustomInput from '@/components/customInput.vue'
 import router from '@/router'
 import { loginErrorMessages } from '@/store/models/formTypes'
-import SvgIcons from '@/components/svgIcons.vue'
+import SvgIcons from '@/components/common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'login-view',

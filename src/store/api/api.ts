@@ -10,7 +10,6 @@ export const florotekaAPI = {
     return response
   },
   async fetchPlantsData (): Promise<plantPropsType[]> {
-    console.log(process.env.SERVER_URL)
     const response = await fetch(prod + '/plants')
       .then(resp => resp.json())
     return response

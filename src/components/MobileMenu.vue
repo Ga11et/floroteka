@@ -27,7 +27,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SvgIcons from '@/components/svgIcons.vue'
+import SvgIcons from '@/components/common/svgIcons.vue'
 import store from '@/store'
 
 export default Vue.extend({

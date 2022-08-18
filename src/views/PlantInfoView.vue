@@ -44,8 +44,8 @@
         <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
       </div>
       <div v-if="isAuth" class="optionButtons">
-        <CustomButton class="blue" content="Изменить растение" :onclick="updateHandler" />
-        <CustomButton content="Удалить растение" :onclick="deleteHandler" />
+        <button class="button" @click="updateHandler"><SvgIcons class="change" type="change" /></button>
+        <button class="button" @click="deleteHandler"><SvgIcons class="delete" type="delete" /></button>
       </div>
       <div class="photoContainer">
         <SuspenseImage v-for="image in plantInfo.img" class="image" :imageUrl="image" :alt="plantInfo.name"
@@ -73,12 +73,12 @@ import router from '@/router'
 import { plantPropsType } from '@/store/models/appTypes'
 import UpdatePlant from '@/components/modalWindow/updatePlant.vue'
 import { plantErrorMessages, plantFormType } from '@/store/models/formTypes'
-import CustomButton from '../components/common/customButton.vue'
 import { formServises } from '../servises/formServises'
+import SvgIcons from '@/components/common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'plant-info-container',
-  components: { SidePathContainer, SuspenseImage, CheckPass, UpdatePlant, CustomButton },
+  components: { SidePathContainer, SuspenseImage, CheckPass, UpdatePlant, SvgIcons },
   computed: {
     plantInfo () {
       return store.getters.activePlant as plantPropsType
@@ -165,22 +165,42 @@ export default Vue.extend({
   @include flex(column, center, flex-start);
 
   .contentContainer {
-    position: relative;
     width: 1280px;
     @include flex(column, flex-start, flex-start);
     margin: 100px 0 0;
     .optionButtons{
       @include flex(row, center, flex-end);
-      position: absolute;
-      right: 0;
-      top: 0;
-
-      .blue{
-        background-color: $mainBlue;
-        margin-right: 10px;
-
-        &:hover{
-          background-color: $mainBlueHover;
+      padding-bottom: 20px;
+      .button{
+        border: none;
+        background-color: transparent;
+        width: 80px;
+        height: 80px;
+        svg{
+          width: 100%;
+          height: 100%;
+        }
+        .change{
+          path{
+            fill: $mainBlue;
+          }
+          &:hover{
+            cursor: pointer;
+            path{
+              fill: $mainBlueHover;
+            }
+          }
+        }
+        .delete{
+          path{
+            fill: $mainRed;
+          }
+          &:hover{
+            cursor: pointer;
+            path{
+              fill: $mainRedHover;
+            }
+          }
         }
       }
     }
@@ -205,7 +225,7 @@ export default Vue.extend({
     }
 
     .item {
-      @include flex(row, center, flex-start);
+      @include flex(row, flex-start, flex-start);
       padding-bottom: 20px;
 
       h3 {
@@ -314,11 +334,7 @@ export default Vue.extend({
       margin-top: 20px;
       padding: 0 20px;
       .optionButtons{
-        flex-direction: column;
-        .blue{
-          margin-right: 0;
-          margin-bottom: 5px;
-        }
+        padding-bottom: 0px;
       }
       .top{
         .headings{
