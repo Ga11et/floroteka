@@ -25,10 +25,10 @@ export default Vue.extend({
       return store.getters.filteredPlants
     },
     filterValue () {
-      return store.state.plantsFilterValue
+      return store.getters.plantsFilterValue
     },
     isPlantsLoaded () {
-      return store.state.plantsLoaded
+      return store.getters.plantsLoaded
     }
   },
   mounted: async function () {

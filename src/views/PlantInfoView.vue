@@ -84,7 +84,7 @@ export default Vue.extend({
       return store.getters.activePlant as plantPropsType
     },
     plantsLoaded () {
-      return store.state.plantsLoaded
+      return store.getters.plantsLoaded
     },
     isAuth () {
       return store.state.isAuth

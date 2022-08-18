@@ -29,14 +29,14 @@ export default Vue.extend({
       return store.getters.filteredPosts
     },
     isPostsLoaded () {
-      return store.state.postsLoaded
+      return store.getters.postsLoaded
     },
     filterValue () {
-      return store.state.postsFilterValue
+      return store.getters.postsFilterValue
     }
   },
   mounted: async function () {
-    if (!store.state.postsLoaded) {
+    if (!this.isPostsLoaded) {
       store.dispatch('setPosts')
     }
     store.commit('setPostsFilterValue', '')

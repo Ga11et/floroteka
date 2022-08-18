@@ -23,3 +23,8 @@ export type plantPropsType = {
   having: boolean
   type: PlantType
 }
+
+export type IRootStore = {
+  token: string
+  isAuth: boolean
+}

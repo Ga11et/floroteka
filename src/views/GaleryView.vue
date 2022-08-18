@@ -24,11 +24,11 @@ export default Vue.extend({
       return store.getters.photos
     },
     isGaleryLoaded () {
-      return store.state.galeryLoaded
+      return store.getters.galeryLoaded
     }
   },
   mounted: async function () {
-    if (!store.state.galeryLoaded) {
+    if (!this.isGaleryLoaded) {
       store.dispatch('getGalery')
     }
   }
