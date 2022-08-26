@@ -33,14 +33,15 @@ export default Vue.extend({
     return {
       errorMessages: {} as photosErrorMessages,
       formData: {
-        photo: ''
+        photo: '',
+        lastModified: ''
       } as photosFormType,
       sumbitLoading: false
     }
   },
   mounted: function () {
-    this.$root.$on('renderResult', (value: string, photoId: string) => {
-      if (photoId.indexOf('galeryPhoto') !== -1) this.formData.photo = value
+    this.$root.$on('renderResult', (value: string, photoId: string, lastModified: string) => {
+      if (photoId.indexOf('galeryPhoto') !== -1) this.formData = { photo: value, lastModified }
     })
   },
   computed: {

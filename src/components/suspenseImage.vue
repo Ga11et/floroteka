@@ -1,6 +1,6 @@
 <template>
-  <div class="suspenseImage">
-    <img class="image" :src="imageUrl.small" :alt="alt" @load="loaded" @click="$root.$emit('openImage', imageUrl.full, alt)" />
+  <div class="suspenseImage" :title="title ? title : ''">
+    <img class="image" :src="imageUrl.small" :alt="alt" @load="loaded" @click="$root.$emit('openImage', imageUrl.full, alt, title)" />
     <span class="image span" v-if="!isLoaded"></span>
   </div>
 </template>
@@ -9,7 +9,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'suspense-image',
-  props: ['imageUrl', 'alt'],
+  props: ['imageUrl', 'alt', 'title'],
   data: function () {
     return {
       isLoaded: false

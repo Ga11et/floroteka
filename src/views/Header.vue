@@ -60,12 +60,12 @@ export default Vue.extend({
   mounted: function () {
     this.$root.$on('scroll', () => window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' }))
     this.$root.$on('dropHandler', (file: File, photoId: string) => {
-      console.log(photoId)
+      console.log(file)
       if (file) {
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onloadend = () => {
-          this.$root.$emit('renderResult', reader.result as string, photoId)
+          this.$root.$emit('renderResult', reader.result as string, photoId, file.name)
         }
       }
     })

@@ -7,8 +7,8 @@
     <p class="paragraph">{{ content.description }}</p>
     <div class="thingPhotos">
       <h3>Фотографии:</h3>
-      <div class="photos">
-        <SuspenseImage v-for="photo in content.images" :imageUrl="photo" :key="photo.small" />
+      <div :class="['photos', { three: content.images.length === 3 }]">
+        <SuspenseImage v-for="photo in content.images" :imageUrl="photo" :key="photo.id" />
       </div>
     </div>
   </section>
@@ -26,13 +26,12 @@ export default Vue.extend({
 @import '@/variables';
 
 .postContainer {
-
   .thingPhotos {
     width: 100%;
 
     .photos {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       grid-auto-rows: 500px;
       grid-gap: 10px;
 
@@ -45,6 +44,9 @@ export default Vue.extend({
     h3 {
       @include font(24px, 30px, 500);
       padding-bottom: 10px;
+    }
+    .three{
+      grid-template-columns: 1fr 1fr 1fr;
     }
   }
 }

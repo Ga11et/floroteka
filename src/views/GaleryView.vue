@@ -4,7 +4,7 @@
     <SuspenseConteiner v-if="!isGaleryLoaded" />
     <NotFoundthing v-else-if="photos.length === 0" />
     <div v-else class="galeryImages">
-      <SuspenseImage class="image" v-for="item in photos" :imageUrl="item.image" alt="galeryImage" :key="item.id" />
+      <SuspenseImage class="image" v-for="item in photos" :imageUrl="item.image" alt="galeryImage" :key="item.id" :title="item.lastModified" />
     </div>
   </main>
 </template>

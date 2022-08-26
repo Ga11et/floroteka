@@ -1,6 +1,6 @@
 <template>
   <div class="openedTechnology">
-    <div class="contentContainer" v-for="item in content" :key="item.text.slice(3, 10)">
+    <div class="contentContainer" v-for="item in content" :key="item.image.id">
       <h3 class="step">{{ item.step }} шаг</h3>
       <div class="stepContainer">
         <SuspenseImage class="images" :imageUrl="item.image" alt="technology" />

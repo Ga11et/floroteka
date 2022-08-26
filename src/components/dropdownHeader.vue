@@ -89,6 +89,7 @@ export default Vue.extend({
     top: 50px;
     @include flex(column, flex-start, flex-start);
     width: max-content;
+    z-index: 2;
   }
 }
 </style>

@@ -19,6 +19,7 @@ export type thingsFormType = {
 }
 export type photosFormType = {
   photo: string
+  lastModified: string
 }
 export type plantFormType = {
   name: string
@@ -31,6 +32,11 @@ export type plantFormType = {
   having: boolean
   type: PlantType
   img: string[]
+}
+export type scienceActivityFormType = {
+  heading: string
+  description: string
+  img: string
 }
 
 export type ErrorMessagesBeforeAfterPost = {
@@ -77,6 +83,12 @@ export type plantErrorMessages = {
   from: string
   livingPlace: string
 }
+export type scienceActivityErrorMessages = {
+  [unit: string]: string
+  heading: string
+  description: string
+  img: string
+}
 
 export type deletePlantFormType = {
   id: string
@@ -88,3 +100,4 @@ export type updatePlantFormType = {
   pass: string
   plantId: string
 }
+

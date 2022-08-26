@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="{ 'disabledScroll': disabledScroll }">
-    <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" />
+    <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" :title="title" />
     <Header />
     <transition name="fadeFast" mode="out-in" apear>
       <router-view />
@@ -39,19 +39,22 @@ export default Vue.extend({
       isImageOpened: false,
       imageUrl: '',
       alt: '',
+      title: '',
       disabledScroll: false
     }
   },
   mounted: function () {
-    this.$root.$on('openImage', (url: string, alt: string) => {
+    this.$root.$on('openImage', (url: string, alt: string, title: string) => {
       this.imageUrl = url
       this.alt = alt
       this.isImageOpened = true
+      this.title = title
     })
     this.$root.$on('closeImage', () => {
       this.imageUrl = ''
       this.alt = ''
       this.isImageOpened = false
+      this.title = ''
     })
     this.$root.$on('disableScroll', () => {
       this.disabledScroll = true

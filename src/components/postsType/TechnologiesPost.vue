@@ -61,7 +61,7 @@ export default Vue.extend({
 @import '@/variables';
 
 .technologiesContainer {
-  margin: 100px 0 0;
+  margin: 0 0 100px;
   width: 1280px;
   @include flex(column, center, unset);
   position: relative;
@@ -152,7 +152,7 @@ export default Vue.extend({
 
 @media screen and (max-width: 1000px) {
   .technologiesContainer {
-    margin: 50px 0;
+    margin: 0 0 50px;
 
     .contentContainer {
       .stepContainer {

@@ -1,7 +1,9 @@
-import { plantErrorMessages } from './../store/models/formTypes'
+type errorMessagesType = {
+  [unit: string]: string;
+}
 
 export const formServises = {
-  plantErrorMapping (response: { param: string, msg: string }[], errorMessages: plantErrorMessages) {
+  errorMapping (response: { param: string, msg: string }[], errorMessages: errorMessagesType) {
     response.forEach(el => {
       const location = el.param.slice(5) as string
       errorMessages[location] = el.msg

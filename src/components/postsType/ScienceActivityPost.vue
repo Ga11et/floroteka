@@ -6,7 +6,9 @@
     </div>
     <div class="contentContainer">
       <SuspenseImage class="images" :imageUrl="content.images[0]" alt="Научная активность" />
-      <p class="paragraph">{{ content.description }}</p>
+      <div>
+        <p class="paragraph" v-for="(part, index) in content.description.split('\n')" :key="index">{{ part }}</p>
+      </div>
     </div>
   </section>
 </template>
@@ -49,7 +51,7 @@ export default Vue.extend({
     grid-gap: 20px;
     .paragraph {
       text-align: justify;
-      padding: 0;
+      padding: 5px 0;
       @include font(16px, 20px, 500);
     }
     .images {

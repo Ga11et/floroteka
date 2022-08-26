@@ -38,7 +38,7 @@ export default Vue.extend({
     }
   },
   mounted () {
-    this.formData = this.actualData
+    this.formData = { ...this.actualData }
   },
   methods: {
     modalSubmit: async function () {

@@ -23,4 +23,4 @@ export type LoginData = {
   login: string,
   password: string
 }
-export type FormType = 'studyProject' | 'photoForm' | 'thingsForm' | 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined
+export type FormType = 'scienceForm' | 'studyProject' | 'photoForm' | 'thingsForm' | 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined
