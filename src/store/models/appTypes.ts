@@ -9,7 +9,8 @@ export type PlantType = 'Деревья' | 'Декоративные куста�
 
 export type GaleryPhotoType = {
   id: string
-  image: string
+  image: imageType
+  lastModified: string
 }
 export type plantPropsType = {
   name: string
