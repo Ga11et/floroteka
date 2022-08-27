@@ -15,7 +15,7 @@ const GalerySlice: Module<IGalerySlice, IRootStore> = {
   getters: {
     photos: (state) => {
       return state.photos.sort((prev, next) => {
-        return prev.lastModified > next.lastModified ? -1 : 1
+        return next.lastModified > prev.lastModified ? -1 : 1
       })
     },
     galeryLoaded (state) {
