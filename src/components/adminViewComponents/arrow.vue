@@ -21,7 +21,7 @@ export default Vue.extend({
   }
 })
 </script>
-<style lang='scss'>
+<style lang='scss' scoped>
 @import '@/variables';
 .arrow {
     border: 1px solid $mainVeryDarkGreen;
