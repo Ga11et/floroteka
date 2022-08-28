@@ -1,10 +1,11 @@
 <template>
   <main class="container">
     <SidePathContainer path="Галерея" />
+    <Pagination :itemCount="photos.length" :itemsInPage="9" :activeItem="activePage" @setActive="setActiveHandler" />
     <SuspenseConteiner v-if="!isGaleryLoaded" />
     <NotFoundthing v-else-if="photos.length === 0" />
     <div v-else class="galeryImages">
-      <SuspenseImage class="image" v-for="item in photos" :imageUrl="item.image" alt="galeryImage" :key="item.id" :title="item.lastModified" />
+      <SuspenseImage class="image" v-for="item in photos.slice(activePage * 9 - 9, activePage * 9)" :imageUrl="item.image" alt="galeryImage" :key="item.id" :title="item.lastModified" />
     </div>
   </main>
 </template>
@@ -15,10 +16,11 @@ import SuspenseConteiner from '@/components/SuspenseConteiner.vue'
 import SidePathContainer from '@/components/sidePathContainer.vue'
 import SuspenseImage from '@/components/suspenseImage.vue'
 import NotFoundthing from '@/components/common/notFoundthing.vue'
+import Pagination from '@/components/secondary/pagination.vue'
 
 export default Vue.extend({
   name: 'galery-container',
-  components: { SuspenseConteiner, SidePathContainer, SuspenseImage, NotFoundthing },
+  components: { SuspenseConteiner, SidePathContainer, SuspenseImage, NotFoundthing, Pagination },
   computed: {
     photos () {
       return store.getters.photos
@@ -31,6 +33,16 @@ export default Vue.extend({
     if (!this.isGaleryLoaded) {
       store.dispatch('getGalery')
     }
+  },
+  data () {
+    return {
+      activePage: 1
+    }
+  },
+  methods: {
+    setActiveHandler (newActive: number) {
+      if (newActive !== 0 && newActive <= Math.ceil(this.photos.length / 9)) this.activePage = newActive
+    }
   }
 })
 </script>
@@ -40,7 +52,7 @@ export default Vue.extend({
 .container {
   .galeryImages {
     width: 1280px;
-    margin: 100px 0 0;
+    margin: 50px 0 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-auto-rows: 400px;

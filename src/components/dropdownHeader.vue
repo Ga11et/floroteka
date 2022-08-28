@@ -69,6 +69,7 @@ export default Vue.extend({
     svg {
       width: 30px;
       padding: 0 7px;
+      stroke: white;
     }
 
     &:hover {
