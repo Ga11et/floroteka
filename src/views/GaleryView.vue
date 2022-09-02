@@ -7,6 +7,7 @@
     <div v-else class="galeryImages">
       <SuspenseImage class="image" v-for="item in photos.slice(activePage * 9 - 9, activePage * 9)" :imageUrl="item.image" alt="galeryImage" :key="item.id" :title="item.lastModified" />
     </div>
+    <Pagination :itemCount="photos.length" :itemsInPage="9" :activeItem="activePage" @setActive="setActiveHandler" />
   </main>
 </template>
 <script lang="ts">
