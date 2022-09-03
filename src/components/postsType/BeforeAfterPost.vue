@@ -31,17 +31,11 @@ import SuspenseImage from '../suspenseImage.vue'
 import SvgIcons from '../common/svgIcons.vue'
 import CheckPass from '../modalWindow/checkPass.vue'
 import postMixin from '../../mixins/postMixin'
-import store from '@/store'
 
 export default defineComponent({
   name: 'before-after-post',
   mixins: [postMixin],
-  components: { SuspenseImage, SvgIcons, CheckPass },
-  computed: {
-    isAuth (): string {
-      return store.getters.isAuth
-    }
-  }
+  components: { SuspenseImage, SvgIcons, CheckPass }
 })
 </script>
 <style lang="scss">

@@ -14,6 +14,11 @@ export default defineComponent({
       modalError: ''
     }
   },
+  computed: {
+    isAuth () {
+      return store.getters.isAuth
+    }
+  },
   methods: {
     deletePostHandler () {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })

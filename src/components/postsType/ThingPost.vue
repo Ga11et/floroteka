@@ -14,7 +14,7 @@
         <SuspenseImage v-for="photo in content.images" :imageUrl="photo" :key="photo.id" />
       </div>
     </div>
-    <div class="bottom">
+    <div class="bottom" v-if="isAuth">
       <button class="deleteButton" @click="deletePostHandler">
         <SvgIcons type="delete" class="svg" />
       </button>

@@ -10,7 +10,7 @@
     <p class="paragraph">{{ content.description }}</p>
     <ClosedTechnology v-if="!isOpened" :content="postParts[0]" />
     <OpenedTechnology v-else :content="postParts" />
-    <div class="bottom">
+    <div class="bottom" v-if="isAuth">
       <button class="deleteButton" @click="deletePostHandler">
         <SvgIcons type="delete" class="svg" />
       </button>

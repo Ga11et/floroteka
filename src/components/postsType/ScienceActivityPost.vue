@@ -13,7 +13,7 @@
         <p class="paragraph" v-for="(part, index) in content.description.split('\n')" :key="index">{{ part }}</p>
       </div>
     </div>
-    <div class="bottom">
+    <div class="bottom" v-if="isAuth">
       <button class="deleteButton" @click="deletePostHandler">
         <SvgIcons type="delete" class="svg" />
       </button>
