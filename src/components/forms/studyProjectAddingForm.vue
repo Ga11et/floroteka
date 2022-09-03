@@ -1,8 +1,8 @@
 <template>
   <section class="addingFormContaner">
-    <SidePathContainer path="Добавить проект обучающегося" />
+    <SidePathContainer path="Добавить проект" />
     <form class="addingForm">
-      <h2 class="heading">Зарегистрировать новый пост "Проекты обучающихся"</h2>
+      <h2 class="heading">Зарегистрировать новый пост "Проекты"</h2>
       <span class="originError" v-if="errorMessages.origin">
       {{ errorMessages.origin }}
       </span>

@@ -25,5 +25,8 @@ const createDeleteRequest = async (requestData: deleteRequestData, path: string,
 export const deleteAPI = {
   deletePlant: async (formData: deletePlantFormType, token: string): APIResponseType => {
     return await createDeleteRequest(formData, '/plants', token)
+  },
+  async post (formData: deletePlantFormType, token: string): APIResponseType {
+    return await createDeleteRequest(formData, '/posts', token)
   }
 }

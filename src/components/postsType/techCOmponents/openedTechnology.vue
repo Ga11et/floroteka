@@ -1,6 +1,6 @@
 <template>
   <div class="openedTechnology">
-    <div class="contentContainer" v-for="item in content" :key="item.image.id">
+    <div class="oneTechnology" v-for="item in content" :key="item.image.id">
       <h3 class="step">{{ item.step }} шаг</h3>
       <div class="stepContainer">
         <SuspenseImage class="images" :imageUrl="item.image" alt="technology" />
@@ -22,4 +22,7 @@ export default Vue.extend({
 </script>
 <style lang='scss'>
 @import '@/variables';
+.openedTechnology{
+  width: 100%;
+}
 </style>

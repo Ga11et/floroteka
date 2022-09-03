@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { LoginData } from './models'
 import { florotekaAPI } from './api/api'
 import { postAPI } from './api/postAPI'
 import plantsSlice from './modules/plantsSlice'
 import PostsSlice from './modules/postsSlice'
 import GalerySlice from './modules/galerySlice'
+import { LoginData } from './models/appTypes'
 
 Vue.use(Vuex)
 
@@ -17,6 +17,9 @@ export default new Vuex.Store({
   getters: {
     getToken: (state) => {
       return state.token
+    },
+    isAuth (state) {
+      return state.isAuth
     }
   },
   mutations: {

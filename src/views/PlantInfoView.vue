@@ -138,11 +138,12 @@ export default Vue.extend({
       if (response === 'ok') {
         this.isUpdateModalOpen = false
         this.$root.$emit('ableScroll')
+        this.$store.dispatch('setPlants')
         setTimeout(() => {
           this.$root.$emit('scroll')
-        }, 300)
+        }, 600)
       } else {
-        formServises.plantErrorMapping(response, this.errorMessages)
+        formServises.errorMapping(response, this.errorMessages)
       }
     }
   },

@@ -1,30 +1,40 @@
 <template>
-  <section class="technologiesContainer">
+  <section class="postContainer">
+    <transition name="fade">
+      <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler" @close="isModalOpen = false" />
+    </transition>
     <div class="top">
       <h2 class="heading">{{ content.heading }}</h2>
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <p class="paragraph">{{ content.description }}</p>
-    <ClosedTechnology v-if="!isOpened" :content="postParts[0]" >
-      <button class="openButton" @click="setIsOpened(true)">Читать больше</button>
-    </ClosedTechnology>
-    <OpenedTechnology v-else :content="postParts" >
+    <ClosedTechnology v-if="!isOpened" :content="postParts[0]" />
+    <OpenedTechnology v-else :content="postParts" />
+    <div class="bottom">
+      <button class="deleteButton" @click="deletePostHandler">
+        <SvgIcons type="delete" class="svg" />
+      </button>
       <button v-if="isOpened" class="openButton" @click="setIsOpened(false)">Закрыть</button>
-    </OpenedTechnology>
+      <button v-else class="openButton" @click="setIsOpened(true)">Читать больше</button>
+    </div>
   </section>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import ClosedTechnology from './techCOmponents/closedTechnology.vue'
 import OpenedTechnology from './techCOmponents/openedTechnology.vue'
+import CheckPass from '../modalWindow/checkPass.vue'
+import SvgIcons from '../common/svgIcons.vue'
+import postMixin from '@/mixins/postMixin'
+import { imageType } from '@/store/models/appTypes'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'study-project-post',
-  props: ['content'],
+  mixins: [postMixin],
   data: function () {
     return {
       postParts: [] as {
-        image: string
+        image: imageType
         text: string
         step: number
       }[],
@@ -54,9 +64,9 @@ export default Vue.extend({
       })
     }
   },
-  components: { ClosedTechnology, OpenedTechnology }
+  components: { ClosedTechnology, OpenedTechnology, CheckPass, SvgIcons }
 })
 </script>
 <style lang="scss">
-@import '@/variables';
+@import './postStyles';
 </style>

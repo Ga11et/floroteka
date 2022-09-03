@@ -1,6 +1,6 @@
 import store from '..'
-import { LoginData } from '../models'
 import { APIResponseType } from '../models/apiTypes'
+import { LoginData } from '../models/appTypes'
 import { BeforeAfterFormType, photosFormType, plantFormType, scienceActivityFormType, technologiesFormType, thingsFormType } from '../models/formTypes'
 import { prod } from './api'
 

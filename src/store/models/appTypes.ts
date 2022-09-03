@@ -1,4 +1,4 @@
-type imageType = {
+export type imageType = {
   full: string
   small: string
   id: string
@@ -6,6 +6,10 @@ type imageType = {
 export type PlantType = 'Деревья' | 'Декоративные кустарники' | 'Плодово-ягодные деревья и кустарники' |
   'Ягодники' | 'Многолетние декоративные травянистые растения' | 'Однолетние декоративные травянистые растения' |
   'Почвопокровные растения' | 'Декоративные объекты' | 'Комнатные растения' | 'Овощные культуры'
+
+export type postType = 'studyProject' | 'scienceActivity' | 'beforeAfter' | 'technologies' | 'things'
+
+export type FormType = 'scienceForm' | 'studyProject' | 'photoForm' | 'thingsForm' | 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined
 
 export type GaleryPhotoType = {
   id: string
@@ -24,6 +28,21 @@ export type plantPropsType = {
   livingPlace: string
   having: boolean
   type: PlantType
+}
+export type postPropsType = {
+  id: string
+  description: string
+  heading: string
+  date: string
+  text: string
+  before: string
+  after: string
+  images: imageType[]
+  type: postType
+}
+export type LoginData = {
+  login: string,
+  password: string
 }
 
 export type IRootStore = {

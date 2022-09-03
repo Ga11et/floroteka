@@ -13,11 +13,11 @@ import BeforeAfrerPostForm from '@/components/forms/beforeAfterAddingForm.vue'
 import TechnologiesPostForm from '@/components/forms/technologyAddingForm.vue'
 import ThingsAddingForm from '@/components/forms/ThingsAddingForm.vue'
 import Navigation from '@/components/adminViewComponents/navigation.vue'
-import { FormType } from '@/store/models'
 import noFormContainerVue from '@/components/forms/noFormContainer.vue'
 import photoAddingFormVue from '@/components/forms/photoAddingForm.vue'
 import studyProjectAddingFormVue from '@/components/forms/studyProjectAddingForm.vue'
 import scienceActivityAddingForm from '@/components/forms/scienceActivityAddingForm.vue'
+import { FormType } from '@/store/models/appTypes'
 
 export default Vue.extend({
   name: 'admin-view',

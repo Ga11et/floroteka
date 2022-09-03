@@ -1,8 +1,8 @@
 <template>
   <main class="container">
-    <SidePathContainer path="Проекты обучающихся" />
+    <SidePathContainer path="Проекты" />
     <AdaptiveContainer>
-      <FilterPart heading="Проекты обучающихся" :isLoaded="isPostsLoaded" :refreshFunc="refreshPosts" >
+      <FilterPart heading="Проекты" :isLoaded="isPostsLoaded" :refreshFunc="refreshPosts" >
         <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
       </FilterPart>
     </AdaptiveContainer>

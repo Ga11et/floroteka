@@ -1,73 +1,39 @@
 <template>
   <section class="postContainer">
+    <transition name="fade">
+      <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler" @close="isModalOpen = false" />
+    </transition>
     <div class="top">
       <h2 class="heading">{{ content.heading }}</h2>
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <p class="paragraph">{{ content.description }}</p>
-    <div class="thingPhotos">
+    <div class="threePhotosContainer">
       <h3>Фотографии:</h3>
       <div :class="['photos', { three: content.images.length === 3 }]">
         <SuspenseImage v-for="photo in content.images" :imageUrl="photo" :key="photo.id" />
       </div>
     </div>
+    <div class="bottom">
+      <button class="deleteButton" @click="deletePostHandler">
+        <SvgIcons type="delete" class="svg" />
+      </button>
+    </div>
   </section>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import SuspenseImage from '../suspenseImage.vue'
-export default Vue.extend({
+import CheckPass from '../modalWindow/checkPass.vue'
+import SvgIcons from '../common/svgIcons.vue'
+import postMixin from '@/mixins/postMixin'
+
+export default defineComponent({
   name: 'before-after-post',
-  props: ['content'],
-  components: { SuspenseImage }
+  mixins: [postMixin],
+  components: { SuspenseImage, CheckPass, SvgIcons }
 })
 </script>
 <style lang="scss">
-@import '@/variables';
-
-.postContainer {
-  .thingPhotos {
-    width: 100%;
-
-    .photos {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-auto-rows: 500px;
-      grid-gap: 10px;
-
-      img {
-        display: block;
-        width: 100%;
-      }
-    }
-
-    h3 {
-      @include font(24px, 30px, 500);
-      padding-bottom: 10px;
-    }
-    .three{
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .postContainer{
-    .thingPhotos {
-      .photos{
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .postContainer{
-    .thingPhotos {
-      .photos{
-        grid-template-columns: 1fr;
-      }
-    }
-  }
-}
+@import './postStyles';
 </style>

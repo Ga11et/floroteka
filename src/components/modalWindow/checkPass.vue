@@ -37,6 +37,7 @@ export default Vue.extend({
     },
     closeHandler () {
       this.$root.$emit('closeCheckPass')
+      this.$emit('close')
       this.$root.$emit('ableScroll')
       setTimeout(() => {
         this.$root.$emit('scroll')

@@ -3,6 +3,9 @@
     <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" :title="title" />
     <Header />
     <transition name="fadeFast" mode="out-in" apear>
+      <GoUpButton v-if="needButton" />
+    </transition>
+    <transition name="fadeFast" mode="out-in" apear>
       <router-view />
     </transition>
     <Footer />
@@ -30,20 +33,27 @@ import Header from './views/Header.vue'
 import Footer from './views/Footer.vue'
 import OpenedImage from './components/openedImage.vue'
 import store from './store'
+import GoUpButton from './components/common/goUpButton.vue'
 
 export default Vue.extend({
   name: 'app',
-  components: { Header, Footer, OpenedImage },
+  components: { Header, Footer, OpenedImage, GoUpButton },
   data: function () {
     return {
       isImageOpened: false,
       imageUrl: '',
       alt: '',
       title: '',
-      disabledScroll: false
+      disabledScroll: false,
+      needButton: false
     }
   },
   mounted: function () {
+    document.onscroll = () => {
+      const fromTop = this.$el.getBoundingClientRect().top
+      if (this.needButton === false && fromTop < -1000) this.needButton = true
+      if (this.needButton === true && fromTop > -1000) this.needButton = false
+    }
     this.$root.$on('openImage', (url: string, alt: string, title: string) => {
       this.imageUrl = url
       this.alt = alt

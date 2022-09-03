@@ -1,5 +1,5 @@
 type errorMessagesType = {
-  [unit: string]: string;
+  [unit: string]: string
 }
 
 export const formServises = {

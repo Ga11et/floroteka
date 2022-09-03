@@ -1,5 +1,5 @@
 <template>
-  <div class="contentContainer">
+  <div class="oneTechnology">
     <h3 class="step">1 шаг</h3>
     <div class="stepContainer">
       <SuspenseImage class="images" :imageUrl="content ? content.image : ''" alt="technology" />
@@ -19,5 +19,5 @@ export default Vue.extend({
 })
 </script>
 <style lang='scss'>
-@import '@/variables';
+@import '../postStyles';
 </style>

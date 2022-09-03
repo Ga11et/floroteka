@@ -40,7 +40,7 @@ export default Vue.extend({
     }
   },
   mounted: function () {
-    this.$root.$on('renderResult', (value: string, photoId: string, lastModified: string) => {
+    this.$root.$on('renderResult', (value: string, photoId: string) => {
       const today = new Date()
       const OutputDate = `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(-2)}-${('0' + (today.getDate())).slice(-2)} ${('0' + (today.getHours())).slice(-2)}-${('0' + (today.getMinutes())).slice(-2)}-${('0' + (today.getSeconds())).slice(-2)}`
       if (photoId.indexOf('galeryPhoto') !== -1) this.formData = { photo: value, lastModified: OutputDate }

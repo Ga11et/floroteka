@@ -1,30 +1,40 @@
 <template>
-  <section class="technologiesContainer">
+  <section class="postContainer">
+    <transition name="fade">
+      <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler" @close="isModalOpen = false" />
+    </transition>
     <div class="top">
       <h2 class="heading">{{ content.heading }}</h2>
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <p class="paragraph">{{ content.description }}</p>
-    <ClosedTechnology v-if="!isOpened" :content="postParts[0]">
-      <button class="openButton" @click="setIsOpened(true)">Читать больше</button>
-    </ClosedTechnology>
-    <OpenedTechnology v-else :content="postParts">
+    <ClosedTechnology v-if="!isOpened" :content="postParts[0]" />
+    <OpenedTechnology v-else :content="postParts" />
+    <div class="bottom">
+      <button class="deleteButton" @click="deletePostHandler">
+        <SvgIcons type="delete" class="svg" />
+      </button>
       <button v-if="isOpened" class="openButton" @click="setIsOpened(false)">Закрыть</button>
-    </OpenedTechnology>
+      <button v-else class="openButton" @click="setIsOpened(true)">Читать больше</button>
+    </div>
   </section>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import postMixin from '@/mixins/postMixin'
+import { imageType } from '@/store/models/appTypes'
+import { defineComponent } from 'vue'
 import ClosedTechnology from './techCOmponents/closedTechnology.vue'
 import OpenedTechnology from './techCOmponents/openedTechnology.vue'
+import CheckPass from '../modalWindow/checkPass.vue'
+import SvgIcons from '../common/svgIcons.vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'technologies-post',
-  props: ['content'],
+  mixins: [postMixin],
   data: function () {
     return {
       postParts: [] as {
-        image: string
+        image: imageType
         text: string
         step: number
       }[],
@@ -54,144 +64,9 @@ export default Vue.extend({
       })
     }
   },
-  components: { ClosedTechnology, OpenedTechnology }
+  components: { ClosedTechnology, OpenedTechnology, CheckPass, SvgIcons }
 })
 </script>
 <style lang="scss">
-@import '@/variables';
-
-.technologiesContainer {
-  margin: 0 0 100px;
-  width: 1280px;
-  @include flex(column, center, unset);
-  position: relative;
-
-  .paragraph {
-    text-align: justify;
-    width: 100%;
-    padding: 0;
-    @include font(16px, 20px, 500);
-  }
-
-  .openedTechnology {
-    width: 100%;
-  }
-
-  .openButton {
-    padding: 15px 50px;
-    background-color: $mainDarkGreen;
-    border: 1px solid $mainVeryDarkGreen;
-    @include font(16px, 24px, 500);
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .top {
-    width: 100%;
-    @include flex(row, center, space-between);
-
-    .heading {
-      @include font(35px, 44px, 500);
-      padding-bottom: 20px;
-    }
-
-    .date {
-      @include font(16px, 20px, 400);
-      color: #000000bb;
-    }
-  }
-
-  .contentContainer {
-    width: 100%;
-    padding-bottom: 20px;
-
-    &:last-child {
-      padding-bottom: 0
-    }
-
-    .step {
-      @include font(20px, 30px, 700);
-    }
-
-    .stepContainer {
-      display: grid;
-      grid-template-columns: 40% 1fr;
-      grid-gap: 20px;
-
-      .paragraph {
-        text-align: justify;
-        width: 100%;
-        padding: 0;
-        @include font(16px, 20px, 500);
-      }
-
-      .images {
-        display: block;
-        width: 100%;
-        height: 350px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .technologiesContainer {
-    padding: 0 50px;
-    width: 100%;
-
-    .openButton {
-      right: 50px;
-    }
-  }
-}
-
-@media screen and (max-width: 1000px) {
-  .technologiesContainer {
-    margin: 0 0 50px;
-
-    .contentContainer {
-      .stepContainer {
-        grid-template-columns: 50% 1fr;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .technologiesContainer {
-    padding: 0 20px;
-    margin: 50px 0;
-
-    .openButton {
-      position: relative;
-      width: 100%;
-      margin-top: 10px;
-      right: 0;
-    }
-
-    .top {
-      @include flex(column, flex-start, flex-start);
-
-      .heading {
-        @include font(28px, 38px, 500);
-        padding-bottom: 10px;
-      }
-
-      .date {
-        padding-bottom: 20px;
-      }
-    }
-
-    .contentContainer {
-      .stepContainer {
-        grid-template-columns: 1fr;
-      }
-    }
-  }
-}
+@import './postStyles';
 </style>

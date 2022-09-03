@@ -1,10 +1,10 @@
 import { Module } from 'vuex'
 import { florotekaAPI } from '../api/api'
-import { PostPropsType } from '../models'
-import { IRootStore } from '../models/appTypes'
+import { deleteAPI } from '../api/deleteAPI'
+import { IRootStore, postPropsType } from '../models/appTypes'
 
 interface IPostsSlice {
-  allPosts: PostPropsType[]
+  allPosts: postPropsType[]
   postsLoaded: boolean
   postsFilterValue: string
 }
@@ -42,7 +42,7 @@ const PostsSlice: Module<IPostsSlice, IRootStore> = {
     }
   },
   mutations: {
-    setAllPosts (state, payload: PostPropsType[]) {
+    setAllPosts (state, payload: postPropsType[]) {
       state.allPosts = payload.sort((prev, next) => {
         return prev.date > next.date ? -1 : 1
       })
@@ -62,6 +62,14 @@ const PostsSlice: Module<IPostsSlice, IRootStore> = {
       const data = await florotekaAPI.fetchAllPostsData()
       commit('setAllPosts', data)
       commit('setPostsLoaded', true)
+    },
+    async deletePost ({ commit, rootState, state }, payload: { id: string, pass: string }) {
+      const response = await deleteAPI.post(payload, rootState.token)
+      if (response === 'ok') {
+        const newPosts = state.allPosts.filter(post => post.id !== payload.id)
+        commit('setAllPosts', newPosts)
+      }
+      return response
     }
   }
 }

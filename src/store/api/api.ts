@@ -1,5 +1,4 @@
-import { PostPropsType } from '../models'
-import { GaleryPhotoType, plantPropsType } from '../models/appTypes'
+import { GaleryPhotoType, plantPropsType, postPropsType } from '../models/appTypes'
 
 export const prod = process.env.VUE_APP_SERVER_URL || 'https://florotekaback.herokuapp.com'
 
@@ -14,7 +13,7 @@ export const florotekaAPI = {
       .then(resp => resp.json())
     return response
   },
-  async fetchAllPostsData (): Promise<PostPropsType[]> {
+  async fetchAllPostsData (): Promise<postPropsType[]> {
     const response = await fetch(prod + '/posts')
       .then(resp => resp.json())
     return response
