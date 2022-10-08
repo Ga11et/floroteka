@@ -1,9 +1,9 @@
 import store from '..'
-import { APIResponseType } from '../models/apiTypes'
+import { APIResponseType, IDeleteGalleryPhoto } from '../models/apiTypes'
 import { deletePlantFormType } from '../models/formTypes'
 import { prod } from './api'
 
-type deleteRequestData = deletePlantFormType
+type deleteRequestData = deletePlantFormType | IDeleteGalleryPhoto
 
 const createDeleteRequest = async (requestData: deleteRequestData, path: string, token: string) => {
   const response = await fetch(prod + path, {
@@ -28,5 +28,8 @@ export const deleteAPI = {
   },
   async post (formData: deletePlantFormType, token: string): APIResponseType {
     return await createDeleteRequest(formData, '/posts', token)
+  },
+  async galleryPhoto (formData: IDeleteGalleryPhoto, token: string): APIResponseType {
+    return await createDeleteRequest(formData, '/gallery', token)
   }
 }

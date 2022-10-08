@@ -1,5 +1,6 @@
 import { Module } from 'vuex'
 import { florotekaAPI } from '../api/api'
+import { deleteAPI } from '../api/deleteAPI'
 import { GaleryPhotoType, IRootStore } from '../models/appTypes'
 
 interface IGalerySlice {
@@ -37,6 +38,15 @@ const GalerySlice: Module<IGalerySlice, IRootStore> = {
       const returnData = await florotekaAPI.fetchGalery()
       commit('setPhotos', returnData)
       commit('setLoaded', true)
+    },
+    async deleteGalleryPhoto ({ rootGetters, dispatch, commit }, photoId: string) {
+      commit('setLoaded', false)
+      const response = await deleteAPI.galleryPhoto({ photoId }, rootGetters.getToken)
+      if (response !== 'ok') {
+        commit('setLoaded', true)
+        return null
+      }
+      dispatch('getGalery')
     }
   }
 }

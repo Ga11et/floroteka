@@ -4,3 +4,7 @@ type localResponseType = 'ok' | {
 }[]
 
 export type APIResponseType = Promise<localResponseType>
+
+export interface IDeleteGalleryPhoto {
+  photoId: string
+}
