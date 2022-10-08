@@ -1,5 +1,5 @@
 <template>
-  <button @click="onclick" class="customButton">
+  <button @click="$emit('click', $event)" :class="['customButton', color]">
     {{ content }}
   </button>
 </template>
@@ -8,30 +8,49 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'delete-button',
-  props: ['content', 'onclick']
+  props: {
+    content: {
+      type: String,
+      required: true
+    },
+    color: {
+      type: String,
+      validator: (value: string) => {
+        return [
+          'red'
+        ].includes(value)
+      }
+    }
+  }
 })
 </script>
 <style lang='scss' scoped>
 @import '@/variables';
-.customButton{
+.customButton {
   background-color: $mainDarkGreen;
   border: none;
   border-radius: 5px;
   @include font(18px, 30px, 500);
   padding: 15px 35px;
-  background-color: $mainRed;
   transition: 400ms;
 
   &:hover {
     cursor: pointer;
-    background-color: $secondaryRed;
     transition: 400ms;
+    background-color: $mainDarkGreenHover;
   }
 }
 
 @media screen and (max-width: 750px) {
-  .customButton{
+  .customButton {
     width: 100%;
   }
 }
+.red {
+    background-color: $mainRed;
+
+    &:hover {
+      background-color: $secondaryRed;
+    }
+  }
 </style>

@@ -13,32 +13,32 @@ const routes: Array<RouteConfig> = [
   {
     path: '/news',
     name: 'news',
-    component: () => import(/* webpackChunkName: "about" */ '../views/NewsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/NewsView.vue')
   },
   {
     path: '/science',
     name: 'science',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ScienceActivityView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/ScienceActivityView.vue')
   },
   {
     path: '/beforeAfter',
     name: 'beforeAfter',
-    component: () => import(/* webpackChunkName: "about" */ '../views/BeforeAfterView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/BeforeAfterView.vue')
   },
   {
     path: '/technologies',
     name: 'technologies',
-    component: () => import(/* webpackChunkName: "about" */ '../views/TechnologiesView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/TechnologiesView.vue')
   },
   {
     path: '/things',
     name: 'things',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ThingsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/ThingsView.vue')
   },
   {
     path: '/studyProjects',
     name: 'studyProjects',
-    component: () => import(/* webpackChunkName: "about" */ '../views/StudyProjectsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/StudyProjectsView.vue')
   },
   {
     path: '/galery',
@@ -58,7 +58,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/NewsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/news/NewsView.vue')
   }
 ]
 

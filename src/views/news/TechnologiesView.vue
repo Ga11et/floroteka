@@ -1,0 +1,21 @@
+<template>
+  <NewsLayout :posts="posts" name="Технологии" />
+</template>
+<script lang="ts">
+import Vue from 'vue'
+import store from '@/store'
+import NewsLayout from '@/components/news/NewsLayout.vue'
+
+export default Vue.extend({
+  name: 'before-after-container',
+  components: { NewsLayout },
+  computed: {
+    posts () {
+      return store.getters.technologyPosts
+    }
+  }
+})
+</script>
+<style lang="scss">
+@import '@/variables';
+</style>
