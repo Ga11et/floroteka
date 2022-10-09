@@ -1,15 +1,17 @@
 <template>
   <div class="dropdownHeader">
-    <button @click="ddHandler()" :class="['handler', { active: isActive }]">Категории
+    <button @click="linkClickHandler(false)" :class="['handler', { active: isActive }]">Категории
       <SvgIcon type="dropdown" />
     </button>
-    <transition name="dropdownAnimation">
+    <transition name="fade">
       <div v-if="isActive" class="container">
-        <router-link class="link" @click.native="ddHandler(true)" to="/beforeafter">Было / стало</router-link>
-        <router-link class="link" @click.native="ddHandler(true)" to="/technologies">Технологии</router-link>
-        <router-link class="link" @click.native="ddHandler(true)" to="/science">Научная деятельность</router-link>
-        <router-link class="link" @click.native="ddHandler(true)" to="/things">Дела</router-link>
-        <router-link class="link" @click.native="ddHandler(true)" to="/studyProjects">Проекты</router-link>
+        <router-link
+          v-for="link in links"
+          :key="link.id"
+          :to="link.to"
+          class="link"
+          @click.native="linkClickHandler(true)"
+        >{{ link.text }}</router-link>
       </div>
     </transition>
   </div>
@@ -19,17 +21,23 @@ import Vue from 'vue'
 import SvgIcon from '@/components/common/svgIcons.vue'
 
 export default Vue.extend({
-  name: 'dropdown-header',
-  props: ['scrollHandler'],
+  name: 'HeaderDesktopMenuDropdown',
   data: function () {
     return {
-      isActive: false
+      isActive: false,
+      links: [
+        { to: '/beforeafter', text: 'Было / стало', id: '1' },
+        { to: '/technologies', text: 'Технологии', id: '2' },
+        { to: '/science', text: 'Научная деятельность', id: '3' },
+        { to: '/things', text: 'Дела', id: '4' },
+        { to: '/studyProjects', text: 'Проекты', id: '5' }
+      ]
     }
   },
   methods: {
-    ddHandler: function (isAction = false) {
+    linkClickHandler (isAction: boolean) {
       this.isActive = !this.isActive
-      if (isAction) this.scrollHandler()
+      if (isAction) this.$emit('scroll')
     }
   },
   components: {
@@ -39,17 +47,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import '@/variables';
-
-.dropdownAnimation-enter-active,
-.dropdownAnimation-leave-active {
-  transition: all 600ms;
-}
-
-.dropdownAnimation-enter,
-.dropdownAnimation-leave-to {
-  opacity: 0;
-}
-
+@import '@/animations';
 .dropdownHeader {
   position: relative;
 
@@ -91,6 +89,20 @@ export default Vue.extend({
     @include flex(column, flex-start, flex-start);
     width: max-content;
     z-index: 2;
+
+    .link {
+      @include font(16px, 19px, 500);
+      color: inherit;
+      text-decoration: none;
+      padding: 5px 20px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .router-link-exact-active {
+      text-decoration: underline;
+    }
   }
 }
 </style>

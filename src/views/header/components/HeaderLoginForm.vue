@@ -22,7 +22,7 @@ import { loginErrorMessages } from '@/store/models/formTypes'
 import SvgIcons from '@/components/common/svgIcons.vue'
 
 export default Vue.extend({
-  name: 'login-view',
+  name: 'HeaderLoginForm',
   components: { CustomInput, SvgIcons },
   data: function () {
     return {
@@ -62,16 +62,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import '@/variables';
-
-.loginForm-enter-active,
-.loginForm-leave-active {
-  transition: transform 600ms;
-}
-
-.loginForm-enter,
-.loginForm-leave-to {
-  transform: translateX(100vw);
-}
+@import '@/animations';
 
 .loginContainer {
   position: absolute;

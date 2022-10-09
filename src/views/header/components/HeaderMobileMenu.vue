@@ -1,24 +1,20 @@
 <template>
-  <transition name="fade">
+  <transition name="fadeSlow" component="div" >
     <div v-if="isActive" class="mobileNavContainer">
       <div class="mobileNavContainer__top">
         ФлоротекаСЛИ
-        <SvgIcons type="menuAnabled" class="menuSvg black" v-on:click.native="setIsActive(false)" />
+        <SvgIcons type="menuAnabled" class="menuSvg black" @click.native="setIsActive(false)" />
       </div>
       <transition name="fromAbove">
         <nav v-if="isNavVisible" class="mobileNav">
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/">Каталог</router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/news">Новости</router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/beforeafter">Было / стало
-          </router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/technologies">Технологии</router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/science">Научная деятельность
-          </router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/things">Дела</router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/studyProjects">Проекты</router-link>
-          <router-link @click.native="setIsActive(false, true)" class="link" to="/galery">Галерея</router-link>
+          <router-link
+            v-for="link in links"
+            :key="link.id"
+            class="link"
+            :to="link.to"
+            @click.native="setIsActive(false, true)">{{ link.text }}</router-link>
           <router-link v-if="!isAuth" @click.native="setIsActive(false, false)" class="link" to="/login">Логин</router-link>
-          <router-link v-if="isAuth" @click.native="setIsActive(false, true)" class="link" to="/admin">Админская</router-link>
+          <router-link v-else @click.native="setIsActive(false, true)" class="link" to="/admin">Админская</router-link>
         </nav>
       </transition>
     </div>
@@ -31,15 +27,22 @@ import SvgIcons from '@/components/common/svgIcons.vue'
 import store from '@/store'
 
 export default Vue.extend({
-  name: 'mobile-menu',
-  props: ['scrollHandler'],
-  components: {
-    SvgIcons
-  },
+  name: 'HeaderMobileMenu',
+  components: { SvgIcons },
   data: function () {
     return {
       isActive: false,
-      isNavVisible: false
+      isNavVisible: false,
+      links: [
+        { to: '/', text: 'Каталог', id: '1' },
+        { to: '/news', text: 'Новости', id: '2' },
+        { to: '/beforeafter', text: 'Было / стало', id: '3' },
+        { to: '/technologies', text: 'Технологии', id: '4' },
+        { to: '/science', text: 'Научная деятельность', id: '5' },
+        { to: '/things', text: 'Дела', id: '6' },
+        { to: '/studyProjects', text: 'Проекты', id: '7' },
+        { to: '/galery', text: 'Галерея', id: '8' }
+      ]
     }
   },
   methods: {
@@ -55,7 +58,7 @@ export default Vue.extend({
           this.isActive = value
         }, 300)
       }
-      if (isAction) this.scrollHandler()
+      if (isAction) this.$emit('scroll')
     }
   },
   computed: {
@@ -67,28 +70,9 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import '@/variables';
-
-.fromAbove-enter-active,
-.fromAbove-leave-active {
-  transition: transform 600ms;
-}
-
-.fromAbove-enter,
-.fromAbove-leave-to {
-  transform: translateY(-100%);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 800ms;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
+@import '@/animations';
 .menuSvg {
+  display: none;
   width: 35px;
 
   path {
@@ -99,11 +83,9 @@ export default Vue.extend({
     cursor: pointer;
   }
 }
-
 .black>path {
   fill: black;
 }
-
 .mobileNavContainer {
   z-index: 1000;
   width: 100%;
@@ -111,6 +93,7 @@ export default Vue.extend({
   top: 0;
   left: 0;
   @include flex(column, flex-start, space-between);
+  display: none;
 
   .mobileNavContainer__top {
     z-index: 1001;
@@ -139,7 +122,14 @@ export default Vue.extend({
     }
   }
 }
-
+@media (max-width: 1000px) {
+  .mobileNavContainer {
+    display: flex;
+  }
+  .menuSvg{
+      display: flex;
+    }
+}
 @media screen and (max-width: 750px) {
   .mobileNavContainer {
     .mobileNav {
