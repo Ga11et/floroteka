@@ -1,6 +1,6 @@
 <template>
   <div class="plant">
-    <SuspenseImage class="image" :imageUrl="content.img[0]" alt="plant" />
+    <base-image class="image" :image="content.img[0]" alt="plant" :title="content.name" />
     <div class="content">
       <h3 class="heading">{{ content.name }}</h3>
       <p class="paragraph">{{ content.description.length > 120 ? content.description.slice(0, 120) + '...' : content.description }}</p>
@@ -9,15 +9,17 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import store from '@/store'
-import router from '@/router'
-import SuspenseImage from './suspenseImage.vue'
+import Vue, { PropType } from 'vue'
+import { plantPropsType } from '@/store/models/appTypes'
 
 export default Vue.extend({
-  name: 'plant-container',
-  props: ['content'],
-  components: { SuspenseImage },
+  name: 'CatalogPlant',
+  props: {
+    content: {
+      type: Object as PropType<plantPropsType>,
+      required: true
+    }
+  },
   data: function () {
     return {
       isLoaded: false
@@ -28,8 +30,8 @@ export default Vue.extend({
       this.isLoaded = true
     },
     linkHandler: function () {
-      store.commit('setActivePlant', this.content.id)
-      router.push('/plant')
+      this.$store.commit('setActivePlant', this.content.id)
+      this.$router.push('/plant')
       setTimeout(() => {
         this.$root.$emit('scroll')
       }, 300)
@@ -37,27 +39,23 @@ export default Vue.extend({
   }
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
-
 .plant {
   position: relative;
   height: 100%;
-
   .image {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-
   .span{
     background-color: grey;
     position: absolute;
     top: 0;
     z-index: 5;
   }
-
   .content {
     width: 100%;
     min-height: 40%;
@@ -69,17 +67,14 @@ export default Vue.extend({
     color: white;
     padding: 15px 20px;
     z-index: 10;
-
     .heading {
       @include font(24px, 30px, 500);
     }
-
     .paragraph {
       @include font(16px, 20px, 400);
       margin: 10px 0 15px;
       color: #ffffffbb;
     }
-
     .link {
       display: inline-block;
       text-decoration: none;

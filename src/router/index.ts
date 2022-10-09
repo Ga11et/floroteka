@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import CatalogView from '../views/CatalogView.vue'
+import CatalogView from '../views/catalog/CatalogView.vue'
 
 Vue.use(VueRouter)
 

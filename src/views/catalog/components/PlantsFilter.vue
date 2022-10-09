@@ -1,63 +1,57 @@
 <template>
   <section class="filter">
-    <FilterPart heading="Каталог растений" :isLoaded="isPlantsLoaded" :refreshFunc="refreshPlants" >
+    <filter-text heading="Каталог растений" :isLoaded="isPlantsLoaded" :refreshFunc="refreshPlants" >
       <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
-    </FilterPart>
-    <SuspenseConteiner v-if="!isPlantsLoaded" />
-    <NotFoundthing v-else-if="plants.length === 0" />
+    </filter-text>
+    <base-loading v-if="!isPlantsLoaded" />
+    <found-nothing-placeholder v-else-if="plants.length === 0" />
     <TransitionGroup name="flipList" tag="div" class="plantsContainer">
-      <Plant v-for="item in plants" :content="item" :key="item.id" />
+      <CatalogPlant v-for="item in plants" :content="item" :key="item.id" />
     </TransitionGroup>
   </section>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import Plant from '../components/Plant.vue'
-import store from '@/store'
-import NotFoundthing from './common/notFoundthing.vue'
-import SuspenseConteiner from './SuspenseConteiner.vue'
-import FilterPart from './secondary/filterPart.vue'
+import CatalogPlant from './CatalogPlant.vue'
 
 export default Vue.extend({
-  name: 'plants-filter',
+  name: 'PlantsFilter',
   computed: {
     plants () {
-      return store.getters.filteredPlants
+      return this.$store.getters.filteredPlants
     },
     filterValue () {
-      return store.getters.plantsFilterValue
+      return this.$store.getters.plantsFilterValue
     },
     isPlantsLoaded () {
-      return store.getters.plantsLoaded
+      return this.$store.getters.plantsLoaded
     }
   },
   mounted: async function () {
-    if (this.plants.length === 0) store.dispatch('setPlants')
+    if (this.plants.length === 0) this.$store.dispatch('setPlants')
   },
-  components: { Plant, NotFoundthing, SuspenseConteiner, FilterPart },
+  components: { CatalogPlant },
   methods: {
     inputChangeHandler: function (event: Event) {
       const target = event.target as HTMLInputElement
-      store.commit('setPlantsFilterValue', target.value)
+      this.$store.commit('setPlantsFilterValue', target.value)
     },
     refreshPlants () {
-      store.dispatch('setPlants')
+      this.$store.dispatch('setPlants')
     }
   }
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 .flipList-move {
   transition: transform 1s;
 }
-
 .filter {
   width: 1280px;
   padding: 100px 0 0;
   align-self: center;
   position: relative;
-
   .plantsContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -65,14 +59,12 @@ export default Vue.extend({
     grid-gap: 20px;
   }
 }
-
 @media screen and (max-width: 1400px) {
   .filter {
     width: 100%;
     padding: 100px 50px;
   }
 }
-
 @media screen and (max-width: 1000px) {
   .filter {
     padding: 50px 50px 0;
