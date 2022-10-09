@@ -1,31 +1,26 @@
 <template>
   <main class="container">
-    <SidePathContainer :path="name" />
-      <AdaptiveContainer>
-        <FilterPart :heading="name" :isLoaded="isPostsLoaded" :refreshFunc="refreshPosts" >
-          <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
-        </FilterPart>
-      </AdaptiveContainer>
-      <SuspenseConteiner v-if="!isPostsLoaded" />
-      <NotFoundthing v-else-if="posts.length === 0" />
-      <PostsInOne v-for="post in posts.slice(0, page * 5)" :key="post.id" :content="post" />
-      <MorePostsButton @click="pageUp" />
+    <side-path :path="name" />
+    <base-adaptive>
+      <filter-text :heading="name" :isLoaded="isPostsLoaded" @refresh="refreshPosts" >
+        <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
+      </filter-text>
+    </base-adaptive>
+    <base-loading v-if="!isPostsLoaded" />
+    <found-nothing-placeholder v-else-if="posts.length === 0" />
+    <NewsUniversalPost v-for="post in posts.slice(0, page * 5)" :key="post.id" :content="post" />
+    <NewsMoreButton v-if="posts.slice(0, page * 5).length % 5 === 0" @click="pageUp" />
   </main>
 </template>
 <script lang='ts'>
 import store from '@/store'
 import { postPropsType } from '@/store/models/appTypes'
 import Vue, { PropType } from 'vue'
-import SidePathContainer from '../sidePathContainer.vue'
-import AdaptiveContainer from '../common/adaptiveContainer.vue'
-import FilterPart from '../secondary/filterPart.vue'
-import SuspenseConteiner from '../SuspenseConteiner.vue'
-import NotFoundthing from '../common/notFoundthing.vue'
-import PostsInOne from '../PostsInOne.vue'
-import MorePostsButton from './morePostsButton.vue'
+import NewsUniversalPost from './NewsUniversalPost.vue'
+import NewsMoreButton from './NewsMoreButton.vue'
 
 export default Vue.extend({
-  name: 'news-layout',
+  name: 'NewsLayout',
   props: {
     name: {
       type: String,
@@ -36,7 +31,7 @@ export default Vue.extend({
       required: true
     }
   },
-  components: { SidePathContainer, AdaptiveContainer, FilterPart, SuspenseConteiner, NotFoundthing, PostsInOne, MorePostsButton },
+  components: { NewsUniversalPost, NewsMoreButton },
   computed: {
     isPostsLoaded () {
       return store.getters.postsLoaded

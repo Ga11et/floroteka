@@ -1,15 +1,29 @@
 <template>
   <div class="suspenseImage" :title="title ? title : ''">
-    <img class="image" :src="imageUrl.small" :alt="alt" @load="loaded" @click="$root.$emit('openImage', imageUrl.full, alt, title)" />
+    <img class="image" :src="image.small" :alt="alt" @load="loaded" @click="$root.$emit('openImage', image.full, alt, title)" />
     <span class="image span" v-if="!isLoaded"></span>
   </div>
 </template>
 <script lang='ts'>
-import Vue from 'vue'
+import { imageType } from '@/store/models/appTypes'
+import Vue, { PropType } from 'vue'
 
 export default Vue.extend({
-  name: 'suspense-image',
-  props: ['imageUrl', 'alt', 'title'],
+  name: 'base-image',
+  props: {
+    image: {
+      type: Object as PropType<imageType>,
+      required: true
+    },
+    alt: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    }
+  },
   data: function () {
     return {
       isLoaded: false

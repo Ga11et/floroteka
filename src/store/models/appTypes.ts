@@ -35,8 +35,8 @@ export type postPropsType = {
   heading: string
   date: string
   text: string
-  before: string
-  after: string
+  before: imageType
+  after: imageType
   images: imageType[]
   type: postType
 }
@@ -48,4 +48,10 @@ export type LoginData = {
 export type IRootStore = {
   token: string
   isAuth: boolean
+}
+export interface IOpenablePart {
+  image: imageType
+  text: string
+  step: number
+  stepWord: 'шаг' | 'этап'
 }

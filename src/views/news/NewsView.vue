@@ -4,7 +4,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import store from '@/store'
-import NewsLayout from '@/components/news/NewsLayout.vue'
+import NewsLayout from './components/NewsLayout.vue'
 
 export default Vue.extend({
   name: 'news-container',
