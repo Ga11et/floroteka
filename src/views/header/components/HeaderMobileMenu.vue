@@ -3,46 +3,56 @@
     <div v-if="isActive" class="mobileNavContainer">
       <div class="mobileNavContainer__top">
         ФлоротекаСЛИ
-        <SvgIcons type="menuAnabled" class="menuSvg black" @click.native="setIsActive(false)" />
+        <base-svg type="menuAnabled" class="menuSvg black" @click.native="setIsActive(false)" />
       </div>
       <transition name="fromAbove">
-        <nav v-if="isNavVisible" class="mobileNav">
-          <router-link
-            v-for="link in links"
-            :key="link.id"
-            class="link"
-            :to="link.to"
-            @click.native="setIsActive(false, true)">{{ link.text }}</router-link>
-          <router-link v-if="!isAuth" @click.native="setIsActive(false, false)" class="link" to="/login">Логин</router-link>
-          <router-link v-else @click.native="setIsActive(false, true)" class="link" to="/admin">Админская</router-link>
-        </nav>
+        <ul v-if="isNavVisible" class="mobileNav">
+          <MobileMenuLink :content="links.catalog" />
+          <MobileMenuLink :content="links.news.value" />
+          <ul>
+            <MobileMenuLink
+              v-for="link in links.news.children"
+              :content="link"
+              @click="setIsActive(false, true)"
+              :key="link.id"
+            />
+          </ul>
+          <MobileMenuLink :content="links.media[0]" />
+          <MobileMenuLink v-if="!isAuth" @click.native="setIsActive(false, false)" :content="{ id: '1', to: '/login', text: 'Логин' }" />
+          <MobileMenuLink v-else @click.native="setIsActive(false, true)" :content="{ id: '1', to: '/admin', text: 'Админская' }" />
+        </ul>
       </transition>
     </div>
-    <SvgIcons v-else v-on:click.native="setIsActive(true)" type="menuDisabled" class="menuSvg" />
+    <base-svg v-else @click.native="setIsActive(true)" type="menuDisabled" class="menuSvg" />
   </transition>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SvgIcons from '@/components/common/svgIcons.vue'
-import store from '@/store'
+import MobileMenuLink from './MobileMenuLink.vue'
 
 export default Vue.extend({
   name: 'HeaderMobileMenu',
-  components: { SvgIcons },
+  components: { MobileMenuLink },
   data: function () {
     return {
       isActive: false,
       isNavVisible: false,
-      links: [
-        { to: '/', text: 'Каталог', id: '1' },
-        { to: '/news', text: 'Новости', id: '2' },
-        { to: '/beforeafter', text: 'Было / стало', id: '3' },
-        { to: '/technologies', text: 'Технологии', id: '4' },
-        { to: '/science', text: 'Научная деятельность', id: '5' },
-        { to: '/things', text: 'Дела', id: '6' },
-        { to: '/studyProjects', text: 'Проекты', id: '7' },
-        { to: '/galery', text: 'Галерея', id: '8' }
-      ]
+      links: {
+        catalog: { to: '/', text: 'Каталог', id: '1' },
+        news: {
+          value: { to: '/news', text: 'Новости', id: '2' },
+          children: [
+            { to: '/beforeafter', text: 'Было / стало', id: '3' },
+            { to: '/technologies', text: 'Технологии', id: '4' },
+            { to: '/science', text: 'Научная деятельность', id: '5' },
+            { to: '/things', text: 'Дела', id: '6' },
+            { to: '/studyProjects', text: 'Проекты', id: '7' }
+          ]
+        },
+        media: [
+          { to: '/galery', text: 'Галерея', id: '8' }
+        ]
+      }
     }
   },
   methods: {
@@ -63,27 +73,24 @@ export default Vue.extend({
   },
   computed: {
     isAuth () {
-      return store.state.isAuth
+      return this.$store.state.isAuth
     }
   }
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 @import '@/animations';
 .menuSvg {
   display: none;
   width: 35px;
-
-  path {
-    fill: white;
-  }
+  fill: white;
 
   &:hover {
     cursor: pointer;
   }
 }
-.black>path {
+.black {
   fill: black;
 }
 .mobileNavContainer {
@@ -110,13 +117,6 @@ export default Vue.extend({
     background-color: white;
     width: 100%;
     padding: 20px 50px;
-
-    .link {
-      color: black;
-      text-decoration: none;
-      @include font(20px, 35px, 500);
-    }
-
     .router-link-exact-active {
       text-decoration: underline;
     }

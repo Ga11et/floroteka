@@ -10,8 +10,6 @@
   </div>
 </template>
 <script lang='ts'>
-import router from '@/router'
-import store from '@/store'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -23,8 +21,8 @@ export default Vue.extend({
   },
   methods: {
     submitHandler: function () {
-      store.commit('setPlantsFilterValue', this.filterValue)
-      if (this.$route.path !== '/') router.push('/')
+      this.$store.commit('setPlantsFilterValue', this.filterValue)
+      if (this.$route.path !== '/') this.$router.push('/')
       setTimeout(() => {
         this.$root.$emit('scroll')
       }, 300)

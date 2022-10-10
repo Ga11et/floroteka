@@ -9,7 +9,6 @@
   </nav>
 </template>
 <script lang='ts'>
-import store from '@/store'
 import Vue from 'vue'
 import HeaderDesktopMenuDropdown from './HeaderDesktopMenuDropdown.vue'
 
@@ -18,7 +17,7 @@ export default Vue.extend({
   components: { HeaderDesktopMenuDropdown },
   computed: {
     isAuth () {
-      return store.state.isAuth
+      return this.$store.state.isAuth
     }
   }
 })

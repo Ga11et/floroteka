@@ -1,7 +1,7 @@
 <template>
   <div class="dropdownHeader">
     <button @click="linkClickHandler(false)" :class="['handler', { active: isActive }]">Категории
-      <SvgIcon type="dropdown" />
+      <base-svg type="dropdown" />
     </button>
     <transition name="fade">
       <div v-if="isActive" class="container">
@@ -18,7 +18,6 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SvgIcon from '@/components/common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'HeaderDesktopMenuDropdown',
@@ -39,9 +38,6 @@ export default Vue.extend({
       this.isActive = !this.isActive
       if (isAction) this.$emit('scroll')
     }
-  },
-  components: {
-    SvgIcon
   }
 })
 </script>
