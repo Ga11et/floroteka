@@ -1,8 +1,24 @@
 <template>
   <section class="filter">
-    <filter-text heading="Каталог растений" :isLoaded="isPlantsLoaded" :refreshFunc="refreshPlants" >
-      <input :value="filterValue" @input="inputChangeHandler" class="input" placeholder="Что вы ищете?" />
+    <filter-text
+      heading="Каталог растений"
+      :isLoaded="isPlantsLoaded"
+      @refresh="refreshPlants"
+    >
+      <input
+        :value="filterValue"
+        @input="inputChangeHandler"
+        class="input"
+        placeholder="Что вы ищете?"
+      />
     </filter-text>
+    <CatalogAdditionalFilter title="Дополнительная фильтрация">
+      <base-checkbox
+        :checked="canBuy"
+        @change="$store.commit('setPlantsFilterCanBuy', $event.target.checked)"
+        text="Доступно к приобретению"
+      />
+    </CatalogAdditionalFilter>
     <base-loading v-if="!isPlantsLoaded" />
     <found-nothing-placeholder v-else-if="plants.length === 0" />
     <TransitionGroup name="flipList" tag="div" class="plantsContainer">
@@ -13,6 +29,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import CatalogPlant from './CatalogPlant.vue'
+import CatalogAdditionalFilter from './CatalogAdditionalFilter.vue'
 
 export default Vue.extend({
   name: 'PlantsFilter',
@@ -23,6 +40,9 @@ export default Vue.extend({
     filterValue () {
       return this.$store.getters.plantsFilterValue
     },
+    canBuy () {
+      return this.$store.getters.plantsFilterCanBuy
+    },
     isPlantsLoaded () {
       return this.$store.getters.plantsLoaded
     }
@@ -30,7 +50,7 @@ export default Vue.extend({
   mounted: async function () {
     if (this.plants.length === 0) this.$store.dispatch('setPlants')
   },
-  components: { CatalogPlant },
+  components: { CatalogPlant, CatalogAdditionalFilter },
   methods: {
     inputChangeHandler: function (event: Event) {
       const target = event.target as HTMLInputElement

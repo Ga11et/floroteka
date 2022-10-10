@@ -10,6 +10,7 @@ export interface IPlantSlice {
   plants: plantPropsType[]
   plantsLoaded: boolean
   plantsFilterValue: string
+  plantsFilterCanBuy: boolean
   activePlantId: string
 }
 
@@ -18,11 +19,14 @@ const PlantSlice: Module<IPlantSlice, IRootStore> = {
     plants: [],
     plantsLoaded: false,
     plantsFilterValue: '',
+    plantsFilterCanBuy: false,
     activePlantId: '1'
   },
   getters: {
     filteredPlants (state) {
-      return state.plants.filter(el => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
+      return state.plants
+        .filter(el => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
+        .filter(el => state.plantsFilterCanBuy ? el.having : true)
     },
     activePlant: (state) => {
       return state.plants.find(el => el.id === state.activePlantId)
@@ -41,6 +45,9 @@ const PlantSlice: Module<IPlantSlice, IRootStore> = {
     plantsFilterValue: (state) => {
       return state.plantsFilterValue
     },
+    plantsFilterCanBuy: (state) => {
+      return state.plantsFilterCanBuy
+    },
     plantsLoaded: (state) => {
       return state.plantsLoaded
     }
@@ -57,6 +64,9 @@ const PlantSlice: Module<IPlantSlice, IRootStore> = {
     },
     setActivePlant (state, payload: string) {
       state.activePlantId = payload
+    },
+    setPlantsFilterCanBuy (state, payload: boolean) {
+      state.plantsFilterCanBuy = payload
     }
   },
   actions: {
