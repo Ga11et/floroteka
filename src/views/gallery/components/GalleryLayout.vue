@@ -1,14 +1,14 @@
 <template>
-  <main class="container">
-    <SidePathContainer path="Галерея" />
-    <Pagination
+  <main class="galleryLayout">
+    <side-path path="Галерея" />
+    <base-pagination
       :itemCount="photos.length"
       :itemsInPage="9"
       :activeItem="activePage"
       @setActive="setActiveHandler"
     />
-    <SuspenseConteiner v-if="!isGaleryLoaded" />
-    <NotFoundthing v-else-if="photos.length === 0" />
+    <base-loading v-if="!isGaleryLoaded" />
+    <found-nothing-placeholder v-else-if="photos.length === 0" />
     <div v-else class="galeryImages">
       <GalleryPhoto
         v-for="item in photos.slice(activePage * 9 - 9, activePage * 9)"
@@ -16,32 +16,31 @@
         :content="item"
       />
     </div>
-    <Pagination :itemCount="photos.length" :itemsInPage="9" :activeItem="activePage" @setActive="setActiveHandler" />
+    <base-pagination
+      :itemCount="photos.length"
+      :itemsInPage="9"
+      :activeItem="activePage"
+      @setActive="setActiveHandler"
+    />
   </main>
 </template>
 <script lang='ts'>
 import Vue from 'vue'
-import SidePathContainer from '../sidePathContainer.vue'
-import Pagination from '../secondary/pagination.vue'
-import SuspenseConteiner from '../SuspenseConteiner.vue'
-import NotFoundthing from '../common/notFoundthing.vue'
-import store from '@/store'
 import GalleryPhoto from './GalleryPhoto.vue'
-
 export default Vue.extend({
   name: 'GalleryLayout',
-  components: { SidePathContainer, Pagination, SuspenseConteiner, NotFoundthing, GalleryPhoto },
+  components: { GalleryPhoto },
   computed: {
     photos () {
-      return store.getters.photos
+      return this.$store.getters.photos
     },
     isGaleryLoaded () {
-      return store.getters.galeryLoaded
+      return this.$store.getters.galeryLoaded
     }
   },
-  mounted: async function () {
+  mounted () {
     if (!this.isGaleryLoaded) {
-      store.dispatch('getGalery')
+      this.$store.dispatch('getGalery')
     }
   },
   data () {
@@ -58,7 +57,8 @@ export default Vue.extend({
 </script>
 <style lang='scss' scoped>
 @import '@/variables';
-.container {
+.galleryLayout {
+  @include flex(column, center, unset);
   .galeryImages {
     width: 1280px;
     margin: 50px 0 0;
@@ -70,7 +70,7 @@ export default Vue.extend({
 }
 
 @media screen and (max-width: 1400px) {
-  .container{
+  .galleryLayout{
     .galeryImages{
       width: 100%;
       padding: 0 50px;
@@ -78,14 +78,14 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 1200px) {
-  .container{
+  .galleryLayout{
     .galeryImages{
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
 }
 @media screen and (max-width: 1000px) {
-  .container{
+  .galleryLayout{
     .galeryImages{
       grid-template-columns: 1fr 1fr;
       margin: 50px 0;
@@ -93,7 +93,7 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 750px) {
-  .container{
+  .galleryLayout{
     .galeryImages{
       grid-template-columns: 1fr;
       margin: 0;

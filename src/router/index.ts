@@ -43,7 +43,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/galery',
     name: 'galery',
-    component: () => import(/* webpackChunkName: "about" */ '../views/GaleryView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/gallery/GaleryView.vue')
   },
   {
     path: '/admin',

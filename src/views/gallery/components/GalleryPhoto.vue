@@ -1,6 +1,6 @@
 <template>
   <div class="galleryPhotoContainer">
-    <SuspenseImage :imageUrl="content.image" alt="Фото" :title="content.lastModified" />
+    <base-image class="image" :image="$props.content.image" alt="Фото" :title="$props.content.lastModified" />
     <div class="actions" v-if="isAuth">
       <button class="btn" @click="deleteHandler">
         <base-svg type="delete" class="svg" />
@@ -9,14 +9,10 @@
   </div>
 </template>
 <script lang='ts'>
-import store from '@/store'
 import { GaleryPhotoType } from '@/store/models/appTypes'
 import Vue, { PropType } from 'vue'
-import SuspenseImage from '../suspenseImage.vue'
-
 export default Vue.extend({
   name: 'GalleryPhoto',
-  components: { SuspenseImage },
   props: {
     content: {
       type: Object as PropType<GaleryPhotoType>,
@@ -24,13 +20,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    isAuth () {
-      return store.getters.isAuth
+    isAuth (): boolean {
+      return this.$store.getters.isAuth
     }
   },
   methods: {
     deleteHandler () {
-      store.dispatch('deleteGalleryPhoto', this.content.id)
+      this.$store.dispatch('deleteGalleryPhoto', this.$props.content.id)
     }
   }
 })
@@ -38,6 +34,10 @@ export default Vue.extend({
 <style lang='scss' scoped>
 @import '@/variables';
 .galleryPhotoContainer{
+  .image{
+    width: 100%;
+    height: 400px;
+  }
   .actions{
     display: flex;
     justify-content: flex-end;

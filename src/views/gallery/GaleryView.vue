@@ -2,13 +2,11 @@
   <GalleryLayout />
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import GalleryLayout from '@/components/gallery/GalleryLayout.vue'
-
-export default Vue.extend({
+import GalleryLayout from './components/GalleryLayout.vue'
+export default {
   name: 'GalleryView',
   components: { GalleryLayout }
-})
+}
 </script>
 <style lang="scss">
 @import '@/variables';
