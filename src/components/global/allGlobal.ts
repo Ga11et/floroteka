@@ -15,9 +15,7 @@ import BaseLoading from '@/components/global/base/BaseLoading.vue'
 const components = {
   BaseButton,
   BaseSvg,
-  BaseImage,
   BaseAdaptive,
-  BaseInputText,
   BaseLoading,
   BasePagination,
   BaseCheckbox,
@@ -28,3 +26,7 @@ const components = {
 }
 
 Object.entries(components).forEach(([name, component]) => Vue.component(name, component))
+
+// need to fix this later
+Vue.component('base-input-text', BaseInputText)
+Vue.component('base-image', BaseImage)

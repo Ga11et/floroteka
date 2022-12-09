@@ -6,32 +6,32 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'base-input-text',
   model: {
     event: 'change',
-    prop: 'value'
+    prop: 'value',
   },
   props: {
     text: {
       type: String,
-      required: true
+      required: true,
     },
     value: {
       type: String,
-      required: true
+      required: true,
     },
     errorMessage: String,
-    type: String
+    type: String,
   },
   methods: {
     inputHandler: function (event: Event) {
       const target = event.target as HTMLInputElement
       this.$emit('change', target.value)
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>
@@ -51,13 +51,13 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 1000px) {
-  .item{
+  .item {
     padding-bottom: 10px;
-    .text{
+    .text {
       font-size: 16px;
       padding-bottom: 5px;
     }
-    .input{
+    .input {
       font-size: 16px;
       padding: 0 10px;
     }

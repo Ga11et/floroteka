@@ -1,21 +1,24 @@
 <template>
   <label class="baseCheckbox">
-    <input class="checkbox" type="checkbox" :checked="$props.checked" @change="$emit('change', $event)" />
+    <input
+      class="checkbox"
+      type="checkbox"
+      :checked="$props.checked"
+      @change="$emit('change', $event)"
+    />
     {{ $props.text }}
   </label>
 </template>
-<script lang='ts'>
-import Vue from 'vue'
-
-export default Vue.extend({
+<script lang="ts">
+export default {
   name: 'base-checkbox',
   props: {
     checked: Boolean,
-    text: String
-  }
-})
+    text: String,
+  },
+}
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 .baseCheckbox {
   @include font(16px, 24px, 400);

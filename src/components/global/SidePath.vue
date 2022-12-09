@@ -9,15 +9,15 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({
+export default {
   name: 'side-path',
   props: {
     path: {
       type: String,
-      required: true
-    }
-  }
-})
+      required: true,
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 @import '@/variables';
