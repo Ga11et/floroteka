@@ -2,7 +2,7 @@
   <nav class="headerDesktopMenu">
     <router-link class="link" @click.native="$emit('scroll')" to="/">Каталог</router-link>
     <router-link class="link" @click.native="$emit('scroll')" to="/news">Новости</router-link>
-    <HeaderDesktopMenuDropdown :scrollHandler="$emit('scroll')" />
+    <HeaderDesktopMenuDropdown @scroll="$emit('scroll')" />
     <router-link class="link" @click.native="$emit('scroll')" to="/galery">Галерея</router-link>
     <router-link v-if="!isAuth" class="link" to="/login">Логин</router-link>
     <router-link v-if="isAuth" class="link" @click.native="$emit('scroll')" to="/admin">Админская</router-link>
