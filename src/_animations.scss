@@ -1,3 +1,21 @@
+// login animation
+.loginForm-enter-active,
+.loginForm-leave-active {
+  transition: transform 600ms;
+}
+.loginForm-enter,
+.loginForm-leave-to {
+  transform: translateX(100vw);
+}
+// fade animations
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 600ms;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 .fadeFast-enter-active,
 .fadeFast-leave-active {
   transition: opacity 300ms;
@@ -5,4 +23,21 @@
 .fadeFast-enter,
 .fadeFast-leave-to {
   opacity: 0;
+}
+.fadeSlow-enter-active,
+.fadeSlow-leave-active {
+  transition: opacity 800ms;
+}
+.fadeSlow-enter,
+.fadeSlow-leave-to {
+  opacity: 0;
+}
+// fromAbove
+.fromAbove-enter-active,
+.fromAbove-leave-active {
+  transition: transform 600ms;
+}
+.fromAbove-enter,
+.fromAbove-leave-to {
+  transform: translateY(-100%);
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="{ 'disabledScroll': disabledScroll }">
     <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" :title="title" />
-    <Header />
+    <TheHeader />
     <transition name="fadeFast" mode="out-in" apear>
       <GoUpButton v-if="needButton" />
     </transition>
@@ -29,15 +29,15 @@
 </style>
 <script lang="ts">
 import Vue from 'vue'
-import Header from './views/Header.vue'
 import Footer from './views/Footer.vue'
 import OpenedImage from './components/openedImage.vue'
 import store from './store'
 import GoUpButton from './components/common/goUpButton.vue'
+import TheHeader from './views/header/TheHeader.vue'
 
 export default Vue.extend({
   name: 'app',
-  components: { Header, Footer, OpenedImage, GoUpButton },
+  components: { Footer, OpenedImage, GoUpButton, TheHeader },
   data: function () {
     return {
       isImageOpened: false,

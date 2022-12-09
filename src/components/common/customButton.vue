@@ -11,7 +11,7 @@ export default Vue.extend({
   props: ['content', 'onclick']
 })
 </script>
-<style lang='scss'>
+<style lang='scss' scoped>
 @import '@/variables';
 .customButton{
   background-color: $mainDarkGreen;

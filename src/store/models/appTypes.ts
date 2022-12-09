@@ -3,13 +3,34 @@ export type imageType = {
   small: string
   id: string
 }
-export type PlantType = 'Деревья' | 'Декоративные кустарники' | 'Плодово-ягодные деревья и кустарники' |
-  'Ягодники' | 'Многолетние декоративные травянистые растения' | 'Однолетние декоративные травянистые растения' |
-  'Почвопокровные растения' | 'Декоративные объекты' | 'Комнатные растения' | 'Овощные культуры'
+export type PlantType =
+  | 'Деревья'
+  | 'Декоративные кустарники'
+  | 'Плодово-ягодные деревья и кустарники'
+  | 'Ягодники'
+  | 'Многолетние декоративные травянистые растения'
+  | 'Однолетние декоративные травянистые растения'
+  | 'Почвопокровные растения'
+  | 'Декоративные объекты'
+  | 'Комнатные растения'
+  | 'Овощные культуры'
 
-export type postType = 'studyProject' | 'scienceActivity' | 'beforeAfter' | 'technologies' | 'things'
+export type postType =
+  | 'studyProject'
+  | 'scienceActivity'
+  | 'beforeAfter'
+  | 'technologies'
+  | 'things'
 
-export type FormType = 'scienceForm' | 'studyProject' | 'photoForm' | 'thingsForm' | 'plantForm' | 'beforeAfterPostForm' | 'technologiesForm' | undefined
+export type FormType =
+  | 'scienceForm'
+  | 'studyProject'
+  | 'photoForm'
+  | 'thingsForm'
+  | 'plantForm'
+  | 'beforeAfterPostForm'
+  | 'technologiesForm'
+  | undefined
 
 export type GaleryPhotoType = {
   id: string
@@ -35,17 +56,23 @@ export type postPropsType = {
   heading: string
   date: string
   text: string
-  before: string
-  after: string
+  before: imageType
+  after: imageType
   images: imageType[]
   type: postType
 }
 export type LoginData = {
-  login: string,
+  login: string
   password: string
 }
 
 export type IRootStore = {
   token: string
   isAuth: boolean
+}
+export interface IOpenablePart {
+  image: imageType
+  text: string
+  step: number
+  stepWord: 'шаг' | 'этап'
 }
