@@ -11,7 +11,7 @@ interface IGalerySlice {
 const GalerySlice: Module<IGalerySlice, IRootStore> = {
   state: {
     galeryLoaded: false,
-    photos: []
+    photos: [],
   },
   getters: {
     photos: (state) => {
@@ -19,27 +19,27 @@ const GalerySlice: Module<IGalerySlice, IRootStore> = {
         return next.lastModified < prev.lastModified ? -1 : 1
       })
     },
-    galeryLoaded (state) {
+    galeryLoaded(state) {
       return state.galeryLoaded
-    }
+    },
   },
   mutations: {
-    setPhotos (state, payload: GaleryPhotoType[]) {
+    setPhotos(state, payload: GaleryPhotoType[]) {
       state.photos = payload
     },
-    setLoaded (state, payload: boolean) {
+    setLoaded(state, payload: boolean) {
       state.galeryLoaded = payload
-    }
+    },
   },
   actions: {
-    async getGalery ({ commit }) {
+    async getGalery({ commit }) {
       commit('setPhotos', [])
       commit('setLoaded', false)
       const returnData = await florotekaAPI.fetchGalery()
       commit('setPhotos', returnData)
       commit('setLoaded', true)
     },
-    async deleteGalleryPhoto ({ rootGetters, dispatch, commit }, photoId: string) {
+    async deleteGalleryPhoto({ rootGetters, dispatch, commit }, photoId: string) {
       commit('setLoaded', false)
       const response = await deleteAPI.galleryPhoto({ photoId }, rootGetters.getToken)
       if (response !== 'ok') {
@@ -47,8 +47,8 @@ const GalerySlice: Module<IGalerySlice, IRootStore> = {
         return null
       }
       dispatch('getGalery')
-    }
-  }
+    },
+  },
 }
 
 export default GalerySlice

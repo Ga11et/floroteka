@@ -15,13 +15,15 @@ const createUpdateRequest = async (requestData: updateRequestData, path: string,
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ data: requestData })
+    body: JSON.stringify({ data: requestData }),
   }).then(async (resp) => {
     if (resp.status !== 401) return resp.json()
     store.dispatch('getRefresh')
-    return [{ param: 'data.origin', msg: 'Токен устарел и был обновлен, подтвердите форму еще раз' }]
+    return [
+      { param: 'data.origin', msg: 'Токен устарел и был обновлен, подтвердите форму еще раз' },
+    ]
   })
   return response
 }
@@ -29,5 +31,5 @@ const createUpdateRequest = async (requestData: updateRequestData, path: string,
 export const updateAPI = {
   updatePlant: async (formData: updateRequestData, token: string): APIResponseType => {
     return await createUpdateRequest(formData, '/plants', token)
-  }
+  },
 }

@@ -12,26 +12,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: '',
-    isAuth: false
+    isAuth: false,
   },
   getters: {
     getToken: (state) => {
       return state.token
     },
-    isAuth (state) {
+    isAuth(state) {
       return state.isAuth
-    }
+    },
   },
   mutations: {
-    setToken (state, payload: string) {
+    setToken(state, payload: string) {
       state.token = payload
     },
-    getAuth (state, payload: boolean) {
+    getAuth(state, payload: boolean) {
       state.isAuth = payload
-    }
+    },
   },
   actions: {
-    async getAuth ({ commit }, data: LoginData) {
+    async getAuth({ commit }, data: LoginData) {
       const returnData = await postAPI.getAutherisied(data)
       if (returnData.token) {
         commit('setToken', returnData.token)
@@ -40,7 +40,7 @@ export default new Vuex.Store({
       }
       return returnData
     },
-    async getRefresh ({ commit }) {
+    async getRefresh({ commit }) {
       const returnData = await florotekaAPI.isAutherisied()
       if (returnData.token) {
         commit('setToken', returnData.token)
@@ -48,11 +48,11 @@ export default new Vuex.Store({
         return 'ok'
       }
       return returnData
-    }
+    },
   },
   modules: {
     plantsSlice: plantsSlice,
     postsSlice: PostsSlice,
-    galerySlice: GalerySlice
-  }
+    galerySlice: GalerySlice,
+  },
 })

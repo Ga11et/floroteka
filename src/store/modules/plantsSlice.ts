@@ -20,22 +20,22 @@ const PlantSlice: Module<IPlantSlice, IRootStore> = {
     plantsLoaded: false,
     plantsFilterValue: '',
     plantsFilterCanBuy: false,
-    activePlantId: '1'
+    activePlantId: '1',
   },
   getters: {
-    filteredPlants (state) {
+    filteredPlants(state) {
       return state.plants
-        .filter(el => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
-        .filter(el => state.plantsFilterCanBuy ? el.having : true)
+        .filter((el) => el.name.toLowerCase().indexOf(state.plantsFilterValue.toLowerCase()) !== -1)
+        .filter((el) => (state.plantsFilterCanBuy ? el.having : true))
     },
     activePlant: (state) => {
-      return state.plants.find(el => el.id === state.activePlantId)
+      return state.plants.find((el) => el.id === state.activePlantId)
     },
     randomPlants: (state) => (count: number) => {
       const reccomendations: plantPropsType[] = []
       for (let index = 0; index < count; index++) {
         let index = Math.floor((Math.random() * 100) % state.plants.length)
-        while (reccomendations.find(el => el.id === state.plants[index].id) !== undefined) {
+        while (reccomendations.find((el) => el.id === state.plants[index].id) !== undefined) {
           index = Math.floor((Math.random() * 100) % state.plants.length)
         }
         reccomendations.push(state.plants[index])
@@ -50,37 +50,37 @@ const PlantSlice: Module<IPlantSlice, IRootStore> = {
     },
     plantsLoaded: (state) => {
       return state.plantsLoaded
-    }
+    },
   },
   mutations: {
-    setPlants (state, payload) {
+    setPlants(state, payload) {
       state.plants = payload
     },
-    setplantsLoaded (state, payload: boolean) {
+    setplantsLoaded(state, payload: boolean) {
       state.plantsLoaded = payload
     },
-    setPlantsFilterValue (state, payload: string) {
+    setPlantsFilterValue(state, payload: string) {
       state.plantsFilterValue = payload
     },
-    setActivePlant (state, payload: string) {
+    setActivePlant(state, payload: string) {
       state.activePlantId = payload
     },
-    setPlantsFilterCanBuy (state, payload: boolean) {
+    setPlantsFilterCanBuy(state, payload: boolean) {
       state.plantsFilterCanBuy = payload
-    }
+    },
   },
   actions: {
-    async setPlants ({ commit }) {
+    async setPlants({ commit }) {
       commit('setPlants', [])
       commit('setplantsLoaded', false)
       const data = await florotekaAPI.fetchPlantsData()
       commit('setPlants', data)
       commit('setplantsLoaded', true)
     },
-    async deletePlant ({ commit, state, rootState }, data: deletePlantFormType) {
+    async deletePlant({ commit, state, rootState }, data: deletePlantFormType) {
       const returnData = await deleteAPI.deletePlant(data, rootState.token)
       if (returnData === 'ok') {
-        const newState = state.plants.filter(el => el.id !== data.id)
+        const newState = state.plants.filter((el) => el.id !== data.id)
         router.push('./')
         commit('setPlants', newState)
         return 'ok'
@@ -88,12 +88,12 @@ const PlantSlice: Module<IPlantSlice, IRootStore> = {
         return returnData
       }
     },
-    async updatePlant ({ rootState }, data: updateRequestData) {
+    async updatePlant({ rootState }, data: updateRequestData) {
       const returnData = await updateAPI.updatePlant(data, rootState.token)
       if (returnData === 'ok') return 'ok'
       return returnData
-    }
-  }
+    },
+  },
 }
 
 export default PlantSlice

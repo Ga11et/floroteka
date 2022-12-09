@@ -24,7 +24,7 @@ const components = {
   BaseErrorSpan,
   FoundNothingPlaceholder,
   SidePath,
-  FilterText
+  FilterText,
 }
 
 Object.entries(components).forEach(([name, component]) => Vue.component(name, component))

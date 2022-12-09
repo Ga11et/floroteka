@@ -100,4 +100,3 @@ export type updatePlantFormType = {
   pass: string
   plantId: string
 }
-

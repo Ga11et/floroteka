@@ -5,29 +5,29 @@ export default defineComponent({
   props: {
     content: {
       type: Object as PropType<postPropsType>,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       isModalOpen: false,
-      modalError: ''
+      modalError: '',
     }
   },
   computed: {
-    isAuth () {
+    isAuth() {
       return store.getters.isAuth
-    }
+    },
   },
   methods: {
-    deletePostHandler () {
+    deletePostHandler() {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })
       setTimeout(() => {
         this.$data.isModalOpen = true
         this.$root?.$emit('disableScroll')
       }, 500)
     },
-    async submitModalhandler (pass: string) {
+    async submitModalhandler(pass: string) {
       const response = await store.dispatch('deletePost', { id: this.$props.content.id, pass })
       if (response === 'ok') {
         this.$data.isModalOpen = false
@@ -38,6 +38,6 @@ export default defineComponent({
         return
       }
       this.$data.modalError = response[0].msg
-    }
-  }
+    },
+  },
 })
