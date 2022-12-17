@@ -1,23 +1,27 @@
 <template>
-  <label
-    :class="['dropFileContainer', { active: isActive }]"
-    @dragenter.prevent="toggleActive(true)"
-    @dragleave.prevent="toggleActive(false)"
-    @dragover.prevent
-    @drop.prevent="dropHandlerLocal($event)"
-  >
-    <p class="innerContent">Перетащите сюда</p>
-    <p class="innerContent">или</p>
-    <p class="innerContent">Кликните</p>
-    <input class="innerContent fileInput" @change="changeHandler" type="file" ref="file" />
-    <img v-if="imageUrl" :src="imageUrl" alt="Dropped" class="background" />
-  </label>
+  <div class="baseInputText">
+    <p class="text">{{ text }}</p>
+    <label
+      :class="['baseDropfileContainer', { active: isActive }]"
+      @dragenter.prevent="toggleActive(true)"
+      @dragleave.prevent="toggleActive(false)"
+      @dragover.prevent
+      @drop.prevent="dropHandlerLocal($event)"
+    >
+      <p class="innerContent">Перетащите сюда</p>
+      <p class="innerContent">или</p>
+      <p class="innerContent">Кликните</p>
+      <input class="innerContent fileInput" @change="changeHandler" type="file" ref="file" />
+      <img v-if="imageUrl" :src="imageUrl" alt="Dropped" class="background" />
+    </label>
+    <base-error-span v-if="errorMessage" :message="errorMessage" />
+  </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 
-export default Vue.extend({
-  name: 'drop-file-container',
+export default defineComponent({
+  name: 'base-dropfile-container',
   data: function () {
     return {
       isActive: false,
@@ -25,7 +29,17 @@ export default Vue.extend({
       file: '',
     }
   },
-  props: ['photoId'],
+  props: {
+    text: {
+      type: String,
+      required: true,
+    },
+    photoId: {
+      type: String,
+      required: true,
+    },
+    errorMessage: String,
+  },
   mounted: function () {
     this.$root.$on('renderResult', (value: string, id: string) => {
       if (id === this.photoId) this.imageUrl = value
@@ -52,10 +66,10 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
-
-.dropFileContainer {
+@import './input.scss';
+.baseDropfileContainer {
   background-color: #8bab9415;
   border: 1px dotted #8bab94;
   width: 400px;
@@ -67,7 +81,6 @@ export default Vue.extend({
     cursor: pointer;
     border-color: $mainVeryDarkGreen;
   }
-
   .background {
     width: 100%;
     height: 100%;
@@ -76,12 +89,9 @@ export default Vue.extend({
     position: absolute;
     opacity: 0.3;
   }
-
   .innerContent {
     z-index: 10;
-    // pointer-events: none;
   }
-
   .fileInput {
     display: none;
   }
@@ -90,18 +100,16 @@ export default Vue.extend({
     width: 100%;
   }
 }
-
 .active {
   background-color: #8bab94;
 }
-
 @media screen and (max-width: 1000px) {
-  .dropFileContainer {
+  .baseDropfileContainer {
     width: 100%;
   }
 }
 @media screen and (max-width: 750px) {
-  .dropFileContainer {
+  .baseDropfileContainer {
     height: 200px;
   }
 }

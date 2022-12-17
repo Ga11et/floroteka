@@ -11,11 +11,11 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'form-part-container',
-  props: ['name']
+  props: ['name'],
 })
 </script>
-<style lang="scss">
-@import "@/variables";
+<style lang="scss" scoped>
+@import '@/variables';
 
 .formPartContainer {
   display: grid;
@@ -28,15 +28,15 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 1000px) {
-  .formPartContainer{
+  .formPartContainer {
     grid-template-columns: 300px 1fr;
-    .containerName{
+    .containerName {
       font-size: 16px;
     }
   }
 }
 @media screen and (max-width: 750px) {
-  .formPartContainer{
+  .formPartContainer {
     grid-template-columns: 1fr;
     padding: 10px 0;
   }

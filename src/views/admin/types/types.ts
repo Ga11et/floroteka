@@ -1,0 +1,41 @@
+export type FormType =
+  | 'scienceForm'
+  | 'studyProject'
+  | 'photoForm'
+  | 'thingsForm'
+  | 'plantForm'
+  | 'beforeAfterPostForm'
+  | 'technologiesForm'
+  | undefined
+export type PlantType =
+  | 'Деревья'
+  | 'Декоративные кустарники'
+  | 'Плодово-ягодные деревья и кустарники'
+  | 'Ягодники'
+  | 'Многолетние декоративные травянистые растения'
+  | 'Однолетние декоративные травянистые растения'
+  | 'Почвопокровные растения'
+  | 'Декоративные объекты'
+  | 'Комнатные растения'
+  | 'Овощные культуры'
+
+// Before and After Form
+export interface IBeforeAfterPostForm {
+  heading: string
+  description: string
+  before: string
+  after: string
+}
+// Plant Form
+export interface IPlantForm {
+  name: string
+  latin: string
+  description: string
+  date: string
+  family: string
+  from: string
+  livingPlace: string
+  having: boolean
+  type: PlantType
+  img: string[]
+}

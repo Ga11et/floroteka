@@ -49,7 +49,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminView.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/admin/AdminView.vue'),
   },
   {
     path: '/plant',

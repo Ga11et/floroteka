@@ -4,30 +4,49 @@
     <form class="addingForm">
       <h2 class="heading">Зарегистрировать новый пост "Дела"</h2>
       <span class="originError" v-if="errorMessages.origin">
-      {{ errorMessages.origin }}
+        {{ errorMessages.origin }}
       </span>
       <FormPartContainer name="Основная информация">
-        <CustomInput :errorMessage="errorMessages.heading" v-model="formData.heading" text="Введите заголовок"
-          type="normal" />
-        <CustomInput :errorMessage="errorMessages.describtion" v-model="formData.description" text="Введите описание"
-          type="textarea" />
+        <CustomInput
+          :errorMessage="errorMessages.heading"
+          v-model="formData.heading"
+          text="Введите заголовок"
+          type="normal"
+        />
+        <CustomInput
+          :errorMessage="errorMessages.describtion"
+          v-model="formData.description"
+          text="Введите описание"
+          type="textarea"
+        />
       </FormPartContainer>
-      <FormPartContainer name="Фотографии" >
-        <CustomInput v-for="step in steps" :key="step" :errorMessage="errorMessages.photos" v-model="formData.photos[step - 1]" text="Добавьте фото (одно)"
-          type="photo" :photoId="'thingPhoto' + step" />
+      <FormPartContainer name="Фотографии">
+        <CustomInput
+          v-for="step in steps"
+          :key="step"
+          :errorMessage="errorMessages.photos"
+          v-model="formData.photos[step - 1]"
+          text="Добавьте фото (одно)"
+          type="photo"
+          :photoId="'thingPhoto' + step"
+        />
       </FormPartContainer>
-      <button v-if="steps.length !== 3" class="plusPhoto" type="button" @click.prevent="addStep">Добавить фото</button>
+      <button v-if="steps.length !== 3" class="plusPhoto" type="button" @click.prevent="addStep">
+        Добавить фото
+      </button>
       <div class="buttons">
         <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
-        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>
+        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">
+          Отправить на сервер
+        </button>
       </div>
     </form>
   </section>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
 import SidePathContainer from '../sidePathContainer.vue'
-import FormPartContainer from '../formPartContainer.vue'
+import FormPartContainer from './components/formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { technologiesErrorMessages, thingsFormType } from '@/store/models/formTypes'
 import SvgIcons from '../common/svgIcons.vue'
@@ -41,11 +60,11 @@ export default Vue.extend({
       formData: {
         heading: '',
         description: '',
-        photos: ['']
+        photos: [''],
       } as thingsFormType,
       errorMessages: {} as technologiesErrorMessages,
       steps: [1],
-      sumbitLoading: false
+      sumbitLoading: false,
     }
   },
   mounted: function () {
@@ -54,9 +73,9 @@ export default Vue.extend({
     })
   },
   computed: {
-    token () {
+    token() {
       return this.$store.getters.getToken
-    }
+    },
   },
   methods: {
     addStep: function () {
@@ -68,7 +87,7 @@ export default Vue.extend({
       const response = await postAPI.postThingsPostData(this.formData, this.token)
       this.errorMessages = {} as technologiesErrorMessages
       if (response !== 'ok') {
-        response.forEach((el: { param: string, msg: string }) => {
+        response.forEach((el: { param: string; msg: string }) => {
           const location = el.param.slice(5) as string
           this.errorMessages[location] = el.msg
         })
@@ -82,11 +101,11 @@ export default Vue.extend({
         }, 300)
         this.sumbitLoading = false
       }
-    }
-  }
+    },
+  },
 })
 </script>
-<style lang='scss'>
+<style lang="scss">
 @import '@/variables';
 
 .plusPhoto {
@@ -94,14 +113,14 @@ export default Vue.extend({
   height: 60px;
   margin-top: 30px;
   @include font(20px, 30px, 400);
-  border: 1px solid #8BAB94;
+  border: 1px solid #8bab94;
   border-radius: 4px;
-  background-color: #8BAB9444;
+  background-color: #8bab9444;
   transition: 300ms;
 
   &:hover {
     cursor: pointer;
-    background-color: #8BAB94;
+    background-color: #8bab94;
     transition: 300ms;
   }
 }

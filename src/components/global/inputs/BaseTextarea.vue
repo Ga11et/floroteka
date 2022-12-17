@@ -1,7 +1,7 @@
 <template>
   <div class="baseInputText">
     <p class="text">{{ text }}</p>
-    <input :value="value" :type="type ? type : 'text'" @input="inputHandler" class="input" />
+    <textarea :value="value" @input="inputHandler" class="input heightMore"></textarea>
     <base-error-span v-if="errorMessage" :message="errorMessage" />
   </div>
 </template>
@@ -9,7 +9,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'base-input-text',
+  name: 'base-textarea',
   model: {
     event: 'change',
     prop: 'value',
@@ -24,7 +24,6 @@ export default defineComponent({
       required: true,
     },
     errorMessage: String,
-    type: String,
   },
   methods: {
     inputHandler: function (event: Event) {
@@ -36,31 +35,13 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 @import '@/variables';
+@import './input.scss';
 .baseInputText {
-  padding: 0 0 20px;
-  position: relative;
-  .text {
-    @include font(20px, 30px, 500);
-    padding-bottom: 10px;
-  }
-  .input {
-    width: 100%;
-    height: 50px;
-    @include font(20px, 30px, 500);
-    padding: 0 20px;
-  }
-}
-@media screen and (max-width: 1000px) {
-  .item {
-    padding-bottom: 10px;
-    .text {
-      font-size: 16px;
-      padding-bottom: 5px;
-    }
-    .input {
-      font-size: 16px;
-      padding: 0 10px;
-    }
+  .input.heightMore {
+    height: 200px;
+    padding: 20px;
+    resize: none;
+    font-family: inherit;
   }
 }
 </style>

@@ -16,25 +16,14 @@ export default Vue.extend({
   data: function () {
     return {
       ArrowComponent: Arrow,
-      NavigationComponent: FormsNavigationContainer
+      NavigationComponent: FormsNavigationContainer,
     }
-  }
+  },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
-
-.formNavAnim-enter-active,
-.formNavAnim-leave-active {
-  transition: all 600ms;
-}
-
-.formNavAnim-enter,
-.formNavAnim-leave-to {
-  opacity: 0;
-  transform: translateX(-100px);
-}
-
+@import '@/animations';
 .adminViewNavigation {
   width: 1280px;
   margin-top: 30px;
@@ -50,14 +39,14 @@ export default Vue.extend({
     flex-wrap: wrap;
   }
 }
-@media screen and (max-width: 1400px) {
-  .adminViewNavigation{
+@media (max-width: 1400px) {
+  .adminViewNavigation {
     width: 100%;
     padding: 0 50px;
   }
 }
-@media screen and (max-width: 750px) {
-  .adminViewNavigation{
+@media (max-width: 750px) {
+  .adminViewNavigation {
     padding: 0 20px;
   }
 }

@@ -3,7 +3,7 @@
     <NavPart v-for="item in navParts" class="item" :content="item" :key="item.en" />
   </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
 import NavPart from './navPart.vue'
 
@@ -17,14 +17,14 @@ export default Vue.extend({
         { rus: 'Научная деятельность', en: 'scienceForm' },
         { rus: 'Проект', en: 'studyProject' },
         { rus: 'Дела', en: 'thingsForm' },
-        { rus: 'Растения', en: 'plantsForm' },
-        { rus: 'Галерея', en: 'photoForm' }
-      ]
+        { rus: 'Растения', en: 'plantForm' },
+        { rus: 'Галерея', en: 'photoForm' },
+      ],
     }
   },
-  components: { NavPart }
+  components: { NavPart },
 })
 </script>
-<style lang='scss'>
+<style lang="scss" scoped>
 @import '@/variables';
 </style>

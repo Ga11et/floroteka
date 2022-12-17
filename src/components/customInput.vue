@@ -1,13 +1,23 @@
 <template>
   <div class="item">
     <p class="text">{{ text }}</p>
-    <input v-if="type === 'normal'" :value="value" :type="inputType || 'text'" @input="inputHandler" class="input" />
-    <textarea v-else-if="type === 'textarea'" :value="value" @input="inputHandler" class="input heightMore"></textarea>
+    <input
+      v-if="type === 'normal'"
+      :value="value"
+      :type="inputType || 'text'"
+      @input="inputHandler"
+      class="input"
+    />
     <label v-else-if="type === 'checkbox'" class="checkbox">
       <input :checked="value" @change="checkboxHandler" type="checkbox" class="checkboxInput" />
       Присутствует
     </label>
-    <select v-else-if="type === 'select'" class="select input" :value="value" @change="inputHandler">
+    <select
+      v-else-if="type === 'select'"
+      class="select input"
+      :value="value"
+      @change="inputHandler"
+    >
       <option v-for="option in options" :key="option">{{ option }}</option>
     </select>
     <DropFileContainer v-else-if="type === 'photo'" :photo="value" :photoId="photoId" />
@@ -23,7 +33,7 @@ export default Vue.extend({
   name: 'cunsom-input',
   model: {
     event: 'change',
-    prop: 'value'
+    prop: 'value',
   },
   props: ['text', 'type', 'value', 'errorMessage', 'inputType', 'photoId'],
   data: function () {
@@ -38,8 +48,8 @@ export default Vue.extend({
         'Почвопокровные растения',
         'Декоративные объекты',
         'Комнатные растения',
-        'Овощные культуры'
-      ]
+        'Овощные культуры',
+      ],
     }
   },
   components: { DropFileContainer, ErrorSpanContainer },
@@ -51,11 +61,11 @@ export default Vue.extend({
     checkboxHandler: function (event: Event) {
       const target = event.target as HTMLInputElement
       this.$emit('change', target.checked)
-    }
-  }
+    },
+  },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 
 .item {
@@ -78,7 +88,7 @@ export default Vue.extend({
     height: 200px;
     padding: 20px;
     resize: none;
-    font-family: inherit
+    font-family: inherit;
   }
 
   .checkbox {
@@ -93,17 +103,17 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 1000px) {
-  .item{
+  .item {
     padding-bottom: 10px;
-    .text{
+    .text {
       font-size: 16px;
       padding-bottom: 5px;
     }
-    .input{
+    .input {
       font-size: 16px;
       padding: 0 10px;
     }
-    .checkbox{
+    .checkbox {
       font-size: 16px;
     }
   }

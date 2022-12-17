@@ -22,16 +22,6 @@ export type postType =
   | 'technologies'
   | 'things'
 
-export type FormType =
-  | 'scienceForm'
-  | 'studyProject'
-  | 'photoForm'
-  | 'thingsForm'
-  | 'plantForm'
-  | 'beforeAfterPostForm'
-  | 'technologiesForm'
-  | undefined
-
 export type GaleryPhotoType = {
   id: string
   image: imageType

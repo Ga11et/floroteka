@@ -7,26 +7,41 @@
         {{ errorMessages.origin }}
       </span>
       <FormPartContainer name="Основная информация">
-        <CustomInput :errorMessage="errorMessages.heading" v-model="formData.heading" text="Введите название поста"
-          type="normal" />
-        <CustomInput :errorMessage="errorMessages.description" v-model="formData.description"
-          text="Введите описание" type="textarea" />
+        <CustomInput
+          :errorMessage="errorMessages.heading"
+          v-model="formData.heading"
+          text="Введите название поста"
+          type="normal"
+        />
+        <CustomInput
+          :errorMessage="errorMessages.description"
+          v-model="formData.description"
+          text="Введите описание"
+          type="textarea"
+        />
       </FormPartContainer>
       <FormPartContainer name="Фотографии">
-        <CustomInput :errorMessage="errorMessages.img" v-model="formData.img" text="Добавьте фото (одно)"
-          type="photo" photoId='scienceActivity' />
+        <CustomInput
+          :errorMessage="errorMessages.img"
+          v-model="formData.img"
+          text="Добавьте фото (одно)"
+          type="photo"
+          photoId="scienceActivity"
+        />
       </FormPartContainer>
       <div class="buttons">
         <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
-        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">Отправить на сервер</button>
+        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">
+          Отправить на сервер
+        </button>
       </div>
     </form>
   </section>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
 import SidePathContainer from '../sidePathContainer.vue'
-import FormPartContainer from '../formPartContainer.vue'
+import FormPartContainer from './components/formPartContainer.vue'
 import CustomInput from '../customInput.vue'
 import { scienceActivityFormType, scienceActivityErrorMessages } from '@/store/models/formTypes'
 import store from '@/store'
@@ -37,17 +52,17 @@ import SvgIcons from '../common/svgIcons.vue'
 export default Vue.extend({
   name: 'science-activity-adding-form',
   components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
-  data () {
+  data() {
     return {
       formData: {} as scienceActivityFormType,
       errorMessages: {} as scienceActivityErrorMessages,
-      sumbitLoading: false
+      sumbitLoading: false,
     }
   },
   computed: {
-    token () {
+    token() {
       return store.getters.getToken
-    }
+    },
   },
   mounted: function () {
     this.$root.$on('renderResult', (value: string, photoId: string) => {
@@ -71,10 +86,10 @@ export default Vue.extend({
         this.$root.$emit('scroll')
         this.sumbitLoading = false
       }
-    }
-  }
+    },
+  },
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 </style>

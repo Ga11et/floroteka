@@ -15,11 +15,11 @@ export default Vue.extend({
       setTimeout(() => {
         this.$root.$emit('scroll')
       }, 300)
-    }
-  }
+    },
+  },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 
 .navPart {
@@ -41,7 +41,7 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 750px) {
-  .navPart{
+  .navPart {
     width: 100%;
     margin: 0 0 10px 0;
   }

@@ -11,7 +11,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'side-path-component',
-  props: ['path']
+  props: ['path'],
 })
 </script>
 <style lang="scss">
