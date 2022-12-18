@@ -1,38 +1,35 @@
 <template>
-  <div class="arrow" @click="clickHandler">
-    <base-svg type="arrow" />
-    Назад
+  <div class="navPart" @click="clickHandler">
+    {{ content.rus }}
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'navigation-back-arrow',
+  name: 'admin-view-nav-part',
+  props: ['content'],
   methods: {
-    clickHandler() {
-      this.$root.$emit('changeForm', undefined)
-      setTimeout(() => {
-        this.$root.$emit('scroll')
-      }, 300)
+    clickHandler: function () {
+      this.$store.commit('setFormType', this.content.en)
+      setTimeout(() => this.$root.$emit('scroll'), 300)
     },
   },
 })
 </script>
 <style lang="scss" scoped>
 @import '@/variables';
-.arrow {
+
+.navPart {
   border: 1px solid $mainVeryDarkGreen;
   border-radius: 6px;
-  width: fit-content;
-  padding: 25px;
+  padding: 25px 50px;
   margin: 20px 20px 0 0;
   transition: 600ms;
   background-color: $mainBackGreen;
-  @include flex(row, center, center);
 
-  svg {
-    margin-right: 25px;
+  &:last-child {
+    margin-right: 0;
   }
 
   &:hover {
@@ -42,8 +39,9 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 750px) {
-  .arrow {
-    margin-top: 0;
+  .navPart {
+    width: 100%;
+    margin: 0 0 10px 0;
   }
 }
 </style>

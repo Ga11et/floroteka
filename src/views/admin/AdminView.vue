@@ -9,8 +9,7 @@
 <script lang="ts">
 import NoFormContainer from './components/forms/noFormContainer.vue'
 import Vue from 'vue'
-import Navigation from './components/navigation.vue'
-import { FormType } from './types/types'
+import Navigation from './components/navigation/navigation.vue'
 import { changeFormSwitch } from './servises/changeFormSwitch'
 
 export default Vue.extend({
@@ -19,23 +18,17 @@ export default Vue.extend({
   data: function () {
     return {
       form: NoFormContainer,
-      formName: undefined as FormType,
     }
   },
-  methods: {
-    changeForm: function (value: FormType) {
-      this.formName = value
-      this.form = changeFormSwitch(value)
+  computed: {
+    formName() {
+      this.form = changeFormSwitch(this.$store.getters.formType)
+      return this.$store.getters.formType
     },
-  },
-  mounted: function () {
-    this.$root.$on('changeForm', (value: FormType) => {
-      this.changeForm(value)
-    })
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 @import '@/animations';
 .adminViewContainer {

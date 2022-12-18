@@ -1,4 +1,4 @@
-import { IProjectPostForm, IScienceActivityPostForm } from './../types/admin'
+import { adminNavLink, IProjectPostForm, IScienceActivityPostForm } from './../types/admin'
 import { IThingsPostForm } from './../../views/admin/types/types'
 import { formServises } from './../../servises/formServises'
 import { Module } from 'vuex'
@@ -16,6 +16,7 @@ interface IAdminSlice {
   errorMessages: IErrorMessages
   isAdminLoading: boolean
   formType: FormType
+  navLinks: adminNavLink[]
 }
 
 const AdminSlice: Module<IAdminSlice, IRootStore> = {
@@ -23,6 +24,14 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     errorMessages: {} as IErrorMessages,
     isAdminLoading: false,
     formType: undefined,
+    navLinks: [
+      { rus: 'Было / Стало', en: 'beforeAfterPostForm', id: '1' },
+      { rus: 'Технологии', en: 'technologiesForm', id: '2' },
+      { rus: 'Научная деятельность', en: 'scienceForm', id: '3' },
+      { rus: 'Проект', en: 'studyProject', id: '4' },
+      { rus: 'Дела', en: 'thingsForm', id: '5' },
+      { rus: 'Растения', en: 'plantForm', id: '6' },
+    ],
   },
   getters: {
     errorMessages(state) {
@@ -32,7 +41,10 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
       return state.isAdminLoading
     },
     formType(state) {
-      return state.isAdminLoading
+      return state.formType
+    },
+    navLinks(state) {
+      return state.navLinks
     },
   },
   mutations: {

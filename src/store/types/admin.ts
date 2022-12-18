@@ -10,6 +10,12 @@ export type FormType =
   | 'technologiesForm'
   | undefined
 
+export interface adminNavLink {
+  rus: string
+  en: string
+  id: string
+}
+
 export interface IErrorMessages {
   [unit: string]: string
 }

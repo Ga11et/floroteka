@@ -7,8 +7,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import Arrow from './arrow.vue'
-import FormsNavigationContainer from './formsNavigationContainer.vue'
+import Arrow from './components/arrow.vue'
+import FormsNavigationContainer from './components/linksContainer/formsNavigationContainer.vue'
 
 export default Vue.extend({
   name: 'admin-page-navigation',
@@ -29,15 +29,6 @@ export default Vue.extend({
   margin-top: 30px;
   display: flex;
   flex-direction: column;
-
-  .active {
-    transform: scale(1.1);
-  }
-
-  .navigationContainer {
-    display: flex;
-    flex-wrap: wrap;
-  }
 }
 @media (max-width: 1400px) {
   .adminViewNavigation {
