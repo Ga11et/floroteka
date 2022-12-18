@@ -1,4 +1,4 @@
-type localResponseType =
+export type localResponseType =
   | 'ok'
   | {
       param: string
