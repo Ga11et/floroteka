@@ -1,127 +1,93 @@
 <template>
-  <section class="addingFormContaner">
-    <SidePathContainer path="Добавить пост Дела" />
-    <form class="addingForm">
-      <h2 class="heading">Зарегистрировать новый пост "Дела"</h2>
-      <span class="originError" v-if="errorMessages.origin">
-        {{ errorMessages.origin }}
-      </span>
+  <FormContainer heading="Дела" :errorMessage="errorMessages.origin">
+    <template #content>
       <FormPartContainer name="Основная информация">
-        <CustomInput
+        <base-input-text
           :errorMessage="errorMessages.heading"
           v-model="formData.heading"
           text="Введите заголовок"
-          type="normal"
         />
-        <CustomInput
-          :errorMessage="errorMessages.describtion"
+        <base-textarea
+          :errorMessage="errorMessages.description"
           v-model="formData.description"
           text="Введите описание"
-          type="textarea"
         />
       </FormPartContainer>
       <FormPartContainer name="Фотографии">
-        <CustomInput
+        <base-dropfile-container
           v-for="step in steps"
           :key="step"
           :errorMessage="errorMessages.photos"
           v-model="formData.photos[step - 1]"
           text="Добавьте фото (одно)"
-          type="photo"
           :photoId="'thingPhoto' + step"
         />
       </FormPartContainer>
-      <button v-if="steps.length !== 3" class="plusPhoto" type="button" @click.prevent="addStep">
-        Добавить фото
-      </button>
-      <div class="buttons">
-        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
-        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">
-          Отправить на сервер
-        </button>
-      </div>
-    </form>
-  </section>
+    </template>
+    <template #actions>
+      <base-button
+        v-if="steps.length < 3"
+        type="button"
+        @click.prevent="addStep"
+        content="Добавить фото"
+      />
+      <base-svg v-if="isLoading" type="loading" class="suspense" />
+      <base-button
+        type="submit"
+        :disabled="isLoading"
+        @click.prevent="submitForm"
+        content="Отправить на сервер"
+      />
+    </template>
+  </FormContainer>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SidePathContainer from '../sidePathContainer.vue'
+import FormContainer from './components/formContainer.vue'
 import FormPartContainer from './components/formPartContainer.vue'
-import CustomInput from '../customInput.vue'
-import { technologiesErrorMessages, thingsFormType } from '@/store/models/formTypes'
-import SvgIcons from '../common/svgIcons.vue'
-import { postAPI } from '@/store/api/postAPI'
+import { IThingsPostForm } from '../../types/types'
 
 export default Vue.extend({
   name: 'technology-adding-form',
-  components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
+  components: { FormContainer, FormPartContainer },
   data: function () {
     return {
       formData: {
         heading: '',
         description: '',
         photos: [''],
-      } as thingsFormType,
-      errorMessages: {} as technologiesErrorMessages,
+      } as IThingsPostForm,
       steps: [1],
-      sumbitLoading: false,
     }
   },
   mounted: function () {
     this.$root.$on('renderResult', (value: string, photoId: string) => {
       if (photoId.indexOf('thingPhoto') !== -1) this.formData.photos[+photoId[10] - 1] = value
     })
+    this.$store.commit('setErrorMessages', [])
   },
   computed: {
-    token() {
-      return this.$store.getters.getToken
+    errorMessages() {
+      return this.$store.getters.errorMessages
+    },
+    isLoading() {
+      return this.$store.getters.adminLoading
     },
   },
   methods: {
     addStep: function () {
-      this.steps.push(this.steps.length + 1)
-      this.formData.photos.push('')
+      if (this.steps.length < 3) {
+        this.steps.push(this.steps.length + 1)
+        this.formData.photos.push('')
+      }
     },
     submitForm: async function () {
-      this.sumbitLoading = true
-      const response = await postAPI.postThingsPostData(this.formData, this.token)
-      this.errorMessages = {} as technologiesErrorMessages
-      if (response !== 'ok') {
-        response.forEach((el: { param: string; msg: string }) => {
-          const location = el.param.slice(5) as string
-          this.errorMessages[location] = el.msg
-        })
-        this.$root.$emit('scroll')
-        this.sumbitLoading = false
-      }
-      if (response === 'ok') {
-        this.$root.$emit('changeForm', undefined)
-        setTimeout(() => {
-          this.$root.$emit('scroll')
-        }, 300)
-        this.sumbitLoading = false
-      }
+      this.$store.dispatch('addThingsPost', this.formData)
+      setTimeout(() => this.$root.$emit('scroll'), 300)
     },
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
-
-.plusPhoto {
-  width: 300px;
-  height: 60px;
-  margin-top: 30px;
-  @include font(20px, 30px, 400);
-  border: 1px solid #8bab94;
-  border-radius: 4px;
-  background-color: #8bab9444;
-  transition: 300ms;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #8bab94;
-    transition: 300ms;
-  }
-}
 </style>

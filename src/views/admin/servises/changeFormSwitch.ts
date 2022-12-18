@@ -15,10 +15,8 @@ export const changeFormSwitch = (formType: FormType) => {
       return BeforeAfrerPostForm
     case 'technologiesForm':
       return TechnologiesPostForm
-    // case undefined:
-    //   return noFormContainerVue
-    // case 'thingsForm':
-    //   return ThingsAddingForm
+    case 'thingsForm':
+      return ThingsAddingForm
     // case 'studyProject':
     //   return studyProjectAddingFormVue
     // case 'scienceForm':

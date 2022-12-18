@@ -33,6 +33,12 @@ export interface ITechnologiesPostForm {
   stepPhotos: string[]
   stepTexts: string[]
 }
+// Things Form
+export interface IThingsPostForm {
+  heading: string
+  description: string
+  photos: string[]
+}
 // Plant Form
 export interface IPlantForm {
   name: string

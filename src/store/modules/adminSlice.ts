@@ -1,10 +1,10 @@
+import { IThingsPostForm } from './../../views/admin/types/types'
 import { formServises } from './../../servises/formServises'
 import { Module } from 'vuex'
 import { postAPI } from '../api/postAPI'
 import { IRootStore } from '../models/appTypes'
 import {
   FormType,
-  IBeforeAfterPostErrorMessages,
   IBeforeAfterPostForm,
   IErrorMessages,
   IPlantForm,
@@ -12,14 +12,14 @@ import {
 } from '../types/admin'
 
 interface IAdminSlice {
-  errorMessages: IBeforeAfterPostErrorMessages
+  errorMessages: IErrorMessages
   isAdminLoading: boolean
   formType: FormType
 }
 
 const AdminSlice: Module<IAdminSlice, IRootStore> = {
   state: {
-    errorMessages: {} as IBeforeAfterPostErrorMessages,
+    errorMessages: {} as IErrorMessages,
     isAdminLoading: false,
     formType: undefined,
   },
@@ -35,7 +35,7 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     },
   },
   mutations: {
-    setErrorMessages(state, payload: IBeforeAfterPostErrorMessages) {
+    setErrorMessages(state, payload: IErrorMessages) {
       state.errorMessages = payload
     },
     setAdminLoading(state, payload: boolean) {
@@ -75,6 +75,19 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     async addTechnologyPost({ commit, rootState }, payload: ITechnologiesPostForm) {
       commit('setAdminLoading', true)
       const response = await postAPI.postTechnologiesPostData(payload, rootState.token)
+      if (response !== 'ok') {
+        const errors = formServises.errorMapping(response)
+        commit('setErrorMessages', errors)
+        commit('setAdminLoading', false)
+      }
+      if (response === 'ok') {
+        commit('setFormType', undefined)
+        commit('setAdminLoading', false)
+      }
+    },
+    async addThingsPost({ commit, rootState }, payload: IThingsPostForm) {
+      commit('setAdminLoading', true)
+      const response = await postAPI.postThingsPostData(payload, rootState.token)
       if (response !== 'ok') {
         const errors = formServises.errorMapping(response)
         commit('setErrorMessages', errors)
