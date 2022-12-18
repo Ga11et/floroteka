@@ -1,4 +1,4 @@
-import { IProjectPostForm } from './../types/admin'
+import { IProjectPostForm, IScienceActivityPostForm } from './../types/admin'
 import { IThingsPostForm } from './../../views/admin/types/types'
 import { formServises } from './../../servises/formServises'
 import { Module } from 'vuex'
@@ -102,6 +102,19 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     async addProjectPost({ commit, rootState }, payload: IProjectPostForm) {
       commit('setAdminLoading', true)
       const response = await postAPI.postProjectPostData(payload, rootState.token)
+      if (response !== 'ok') {
+        const errors = formServises.errorMapping(response)
+        commit('setErrorMessages', errors)
+        commit('setAdminLoading', false)
+      }
+      if (response === 'ok') {
+        commit('setFormType', undefined)
+        commit('setAdminLoading', false)
+      }
+    },
+    async addScienceActivityPost({ commit, rootState }, payload: IScienceActivityPostForm) {
+      commit('setAdminLoading', true)
+      const response = await postAPI.postScienceActivityPostData(payload, rootState.token)
       if (response !== 'ok') {
         const errors = formServises.errorMapping(response)
         commit('setErrorMessages', errors)

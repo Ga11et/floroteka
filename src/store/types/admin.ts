@@ -61,3 +61,9 @@ export interface IProjectPostForm {
   stepPhotos: string[]
   stepTexts: string[]
 }
+// Science Activity Form
+export interface IScienceActivityPostForm {
+  heading: string
+  description: string
+  img: string
+}

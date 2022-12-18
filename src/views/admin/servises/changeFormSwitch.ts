@@ -19,8 +19,8 @@ export const changeFormSwitch = (formType: FormType) => {
       return ThingsAddingForm
     case 'studyProject':
       return studyProjectAddingFormVue
-    // case 'scienceForm':
-    //   return scienceActivityAddingForm
+    case 'scienceForm':
+      return scienceActivityAddingForm
     default:
       return noFormContainerVue
   }

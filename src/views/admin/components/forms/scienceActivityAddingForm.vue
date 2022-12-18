@@ -1,91 +1,70 @@
 <template>
-  <section class="addingFormContaner">
-    <SidePathContainer path="Добавить научную деятельность" />
-    <form class="addingForm">
-      <h2 class="heading">Зарегистрировать новый пост научной деятельности</h2>
-      <span class="originError" v-if="errorMessages.origin">
-        {{ errorMessages.origin }}
-      </span>
+  <FormContainer heading="Науч. деятельность" :errorMessage="errorMessages.origin">
+    <template #content>
       <FormPartContainer name="Основная информация">
-        <CustomInput
+        <base-input-text
           :errorMessage="errorMessages.heading"
           v-model="formData.heading"
           text="Введите название поста"
-          type="normal"
         />
-        <CustomInput
+        <base-textarea
           :errorMessage="errorMessages.description"
           v-model="formData.description"
           text="Введите описание"
-          type="textarea"
         />
       </FormPartContainer>
       <FormPartContainer name="Фотографии">
-        <CustomInput
+        <base-dropfile-container
           :errorMessage="errorMessages.img"
           v-model="formData.img"
           text="Добавьте фото (одно)"
-          type="photo"
           photoId="scienceActivity"
         />
       </FormPartContainer>
-      <div class="buttons">
-        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
-        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">
-          Отправить на сервер
-        </button>
-      </div>
-    </form>
-  </section>
+    </template>
+    <template #actions>
+      <base-svg v-if="isLoading" type="loading" class="suspense" />
+      <base-button
+        type="submit"
+        :disabled="isLoading"
+        @click.prevent="submitForm"
+        content="Отправить на сервер"
+      />
+    </template>
+  </FormContainer>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SidePathContainer from '../sidePathContainer.vue'
+import { IScienceActivityPostForm } from '../../types/types'
+import FormContainer from './components/formContainer.vue'
 import FormPartContainer from './components/formPartContainer.vue'
-import CustomInput from '../customInput.vue'
-import { scienceActivityFormType, scienceActivityErrorMessages } from '@/store/models/formTypes'
-import store from '@/store'
-import { postAPI } from '@/store/api/postAPI'
-import { formServises } from '@/servises/formServises'
-import SvgIcons from '../common/svgIcons.vue'
 
 export default Vue.extend({
   name: 'science-activity-adding-form',
-  components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
+  components: { FormContainer, FormPartContainer },
   data() {
     return {
-      formData: {} as scienceActivityFormType,
-      errorMessages: {} as scienceActivityErrorMessages,
-      sumbitLoading: false,
+      formData: {} as IScienceActivityPostForm,
     }
   },
   computed: {
-    token() {
-      return store.getters.getToken
+    errorMessages() {
+      return this.$store.getters.errorMessages
+    },
+    isLoading() {
+      return this.$store.getters.adminLoading
     },
   },
   mounted: function () {
     this.$root.$on('renderResult', (value: string, photoId: string) => {
       if (photoId.indexOf('scienceActivity') !== -1) this.formData.img = value
     })
+    this.$store.commit('setErrorMessages', [])
   },
   methods: {
     submitForm: async function () {
-      this.sumbitLoading = true
-      const response = await postAPI.postScienceActivityPostData(this.formData, this.token)
-      this.errorMessages = {} as scienceActivityErrorMessages
-      if (response === 'ok') {
-        this.$root.$emit('changeForm', undefined)
-        setTimeout(() => {
-          this.$root.$emit('scroll')
-        }, 300)
-        this.sumbitLoading = false
-      }
-      if (response !== 'ok') {
-        formServises.errorMappingOld(response, this.errorMessages)
-        this.$root.$emit('scroll')
-        this.sumbitLoading = false
-      }
+      this.$store.dispatch('addScienceActivityPost', this.formData)
+      setTimeout(() => this.$root.$emit('scroll'), 300)
     },
   },
 })
