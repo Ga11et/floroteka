@@ -54,7 +54,7 @@ export const postAPI = {
   async postPhotoPostData(formData: photosFormType, token: string): APIResponseType {
     return await createPostRequest(formData, '/galery', token)
   },
-  async postStudyProjectPostData(formData: technologiesFormType, token: string): APIResponseType {
+  async postProjectPostData(formData: technologiesFormType, token: string): APIResponseType {
     return await createPostRequest(formData, '/studyProject', token)
   },
   async postScienceActivityPostData(

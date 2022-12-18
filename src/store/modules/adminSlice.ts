@@ -1,3 +1,4 @@
+import { IProjectPostForm } from './../types/admin'
 import { IThingsPostForm } from './../../views/admin/types/types'
 import { formServises } from './../../servises/formServises'
 import { Module } from 'vuex'
@@ -88,6 +89,19 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     async addThingsPost({ commit, rootState }, payload: IThingsPostForm) {
       commit('setAdminLoading', true)
       const response = await postAPI.postThingsPostData(payload, rootState.token)
+      if (response !== 'ok') {
+        const errors = formServises.errorMapping(response)
+        commit('setErrorMessages', errors)
+        commit('setAdminLoading', false)
+      }
+      if (response === 'ok') {
+        commit('setFormType', undefined)
+        commit('setAdminLoading', false)
+      }
+    },
+    async addProjectPost({ commit, rootState }, payload: IProjectPostForm) {
+      commit('setAdminLoading', true)
+      const response = await postAPI.postProjectPostData(payload, rootState.token)
       if (response !== 'ok') {
         const errors = formServises.errorMapping(response)
         commit('setErrorMessages', errors)

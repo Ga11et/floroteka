@@ -39,6 +39,13 @@ export interface IThingsPostForm {
   description: string
   photos: string[]
 }
+// Project Form
+export interface IProjectPostForm {
+  heading: string
+  description: string
+  stepPhotos: string[]
+  stepTexts: string[]
+}
 // Plant Form
 export interface IPlantForm {
   name: string
