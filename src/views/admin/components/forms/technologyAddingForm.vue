@@ -1,62 +1,61 @@
 <template>
-  <section class="addingFormContaner">
-    <SidePathContainer path="Добавить пост Технологии" />
-    <form class="addingForm">
-      <h2 class="heading">Зарегистрировать новый пост "Технологии"</h2>
-      <span class="originError" v-if="errorMessages.origin">
-        {{ errorMessages.origin }}
-      </span>
+  <FormContainer heading="Технологии" :errorMessage="errorMessages.origin">
+    <template #content>
       <FormPartContainer name="Основная информация">
-        <CustomInput
+        <base-input-text
           :errorMessage="errorMessages.heading"
           v-model="formData.heading"
           text="Введите заголовок"
-          type="normal"
         />
-        <CustomInput
+        <base-textarea
           :errorMessage="errorMessages.description"
           v-model="formData.description"
           text="Введите описание"
-          type="textarea"
         />
       </FormPartContainer>
       <FormPartContainer :name="'Этап ' + step" v-for="step in steps" :key="step">
-        <CustomInput
+        <base-dropfile-container
           :errorMessage="errorMessages.stepPhotos"
           v-model="formData.stepPhotos[step - 1]"
           text="Добавьте фото (одно)"
-          type="photo"
           :photoId="'step' + step"
         />
-        <CustomInput
+        <base-textarea
           :errorMessage="errorMessages.stepTexts"
           v-model="formData.stepTexts[step - 1]"
           text="Введите описание этапа"
-          type="textarea"
         />
       </FormPartContainer>
-      <button class="plusStep" type="button" @click.prevent="addStep">Добавить этап</button>
-      <div class="buttons">
-        <SvgIcons v-if="sumbitLoading" type="loading" class="suspense" />
-        <button class="button" type="submit" :disabled="sumbitLoading" @click.prevent="submitForm">
-          Отправить на сервер
-        </button>
-      </div>
-    </form>
-  </section>
+      <p class="morethenfive">
+        *Если хотите добавить больше 5 этапов, то это можно сделать в меню админки
+      </p>
+    </template>
+    <template #actions>
+      <base-button
+        v-if="steps.length < 5"
+        type="button"
+        @click.prevent="addStep"
+        content="Добавить этап"
+      />
+      <base-svg v-if="isLoading" type="loading" class="suspense" />
+      <base-button
+        type="submit"
+        :disabled="isLoading"
+        @click.prevent="submitForm"
+        content="Отправить на сервер"
+      />
+    </template>
+  </FormContainer>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import SidePathContainer from '../sidePathContainer.vue'
+import FormContainer from './components/formContainer.vue'
 import FormPartContainer from './components/formPartContainer.vue'
-import CustomInput from '../customInput.vue'
-import { technologiesErrorMessages, technologiesFormType } from '@/store/models/formTypes'
-import SvgIcons from '../common/svgIcons.vue'
-import { postAPI } from '@/store/api/postAPI'
+import { ITechnologiesPostForm } from '../../types/types'
 
 export default Vue.extend({
   name: 'technology-adding-form',
-  components: { SidePathContainer, FormPartContainer, CustomInput, SvgIcons },
+  components: { FormContainer, FormPartContainer },
   data: function () {
     return {
       formData: {
@@ -64,70 +63,42 @@ export default Vue.extend({
         description: '',
         stepPhotos: [''],
         stepTexts: [''],
-      } as technologiesFormType,
-      errorMessages: {} as technologiesErrorMessages,
+      } as ITechnologiesPostForm,
       steps: [1],
-      sumbitLoading: false,
     }
   },
   mounted: function () {
     this.$root.$on('renderResult', (value: string, photoId: string) => {
       if (photoId.indexOf('step') !== -1) this.formData.stepPhotos[+photoId[4] - 1] = value
     })
+    this.$store.commit('setErrorMessages', [])
   },
   computed: {
-    token() {
-      return this.$store.getters.getToken
+    errorMessages() {
+      return this.$store.getters.errorMessages
+    },
+    isLoading() {
+      return this.$store.getters.adminLoading
     },
   },
   methods: {
     addStep: function () {
-      this.steps.push(this.steps.length + 1)
-      this.formData.stepPhotos.push('')
-      this.formData.stepTexts.push('')
+      if (this.steps.length < 5) {
+        this.steps.push(this.steps.length + 1)
+        this.formData.stepPhotos.push('')
+        this.formData.stepTexts.push('')
+      }
     },
     submitForm: async function () {
-      this.sumbitLoading = true
-      const response = await postAPI.postTechnologiesPostData(this.formData, this.token)
-      console.log(response)
-      this.errorMessages = {} as technologiesErrorMessages
-      if (response !== 'ok') {
-        response.forEach((el: { param: string; msg: string }) => {
-          const location = el.param.slice(5) as string
-          this.errorMessages[location] = el.msg
-        })
-        console.log(this.errorMessages)
-        this.$root.$emit('scroll')
-        this.sumbitLoading = false
-      }
-      if (response === 'ok') {
-        this.$root.$emit('changeForm', undefined)
-        setTimeout(() => {
-          this.$root.$emit('scroll')
-        }, 300)
-        this.sumbitLoading = false
-      }
+      this.$store.dispatch('addTechnologyPost', this.formData)
+      setTimeout(() => this.$root.$emit('scroll'), 300)
     },
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
-
-.plusStep {
-  width: 300px;
-  height: 60px;
-  margin-top: 30px;
-  @include font(20px, 30px, 400);
-  border: 1px solid #8bab94;
-  border-radius: 4px;
-  background-color: #8bab9444;
-  transition: 300ms;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #8bab94;
-    transition: 300ms;
-  }
+.morethenfive {
+  text-align: end;
 }
 </style>

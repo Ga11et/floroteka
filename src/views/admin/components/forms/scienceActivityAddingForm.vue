@@ -82,7 +82,7 @@ export default Vue.extend({
         this.sumbitLoading = false
       }
       if (response !== 'ok') {
-        formServises.errorMapping(response, this.errorMessages)
+        formServises.errorMappingOld(response, this.errorMessages)
         this.$root.$emit('scroll')
         this.sumbitLoading = false
       }

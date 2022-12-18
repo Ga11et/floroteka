@@ -41,4 +41,10 @@ export interface IBeforeAfterPostErrorMessages {
   before: string
   after: string
 }
-//
+// Technologies Form
+export interface ITechnologiesPostForm {
+  heading: string
+  description: string
+  stepPhotos: string[]
+  stepTexts: string[]
+}

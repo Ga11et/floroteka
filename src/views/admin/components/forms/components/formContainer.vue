@@ -41,6 +41,7 @@ export default {
     .buttons {
       @include flex(row, center, flex-end);
       margin-top: 30px;
+      gap: 20px;
       .suspense {
         height: 60px;
         width: 60px;
@@ -67,6 +68,9 @@ export default {
       .heading {
         font-size: 28px;
       }
+      .buttons {
+        justify-content: space-between;
+      }
     }
   }
 }
@@ -81,6 +85,7 @@ export default {
       }
       .buttons {
         position: relative;
+        flex-direction: column;
         .suspense {
           position: absolute;
           top: 60px;

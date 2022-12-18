@@ -1,10 +1,19 @@
 <template>
-  <main class='plantInfoContainer' v-if="plantsLoaded">
+  <main class="plantInfoContainer" v-if="plantsLoaded">
     <transition name="fade">
-      <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler" />
+      <CheckPass
+        v-if="isModalOpen"
+        :errorMessage="modalError"
+        :submitCallback="submitModalhandler"
+      />
     </transition>
     <transition name="fade">
-      <UpdatePlant v-if="isUpdateModalOpen" :errorMessages="errorMessages" :submitCallback="submitUpdateHandler" :actualData="plantInfo" />
+      <UpdatePlant
+        v-if="isUpdateModalOpen"
+        :errorMessages="errorMessages"
+        :submitCallback="submitUpdateHandler"
+        :actualData="plantInfo"
+      />
     </transition>
     <SidePathContainer :path="plantInfo.name" />
     <div class="contentContainer">
@@ -13,8 +22,7 @@
           <h2 class="name">{{ plantInfo.name }}</h2>
           <h2 class="latinName">{{ plantInfo.latin }}</h2>
         </div>
-        <div class="spans">
-        </div>
+        <div class="spans"></div>
       </div>
       <p class="description">
         {{ plantInfo.description }}
@@ -44,19 +52,33 @@
         <p>{{ plantInfo.having ? 'Да' : 'Нет' }}</p>
       </div>
       <div v-if="isAuth" class="optionButtons">
-        <button class="button" @click="updateHandler"><SvgIcons class="change" type="change" /></button>
-        <button class="button" @click="deleteHandler"><SvgIcons class="delete" type="delete" /></button>
+        <button class="button" @click="updateHandler">
+          <SvgIcons class="change" type="change" />
+        </button>
+        <button class="button" @click="deleteHandler">
+          <SvgIcons class="delete" type="delete" />
+        </button>
       </div>
       <div class="photoContainer">
-        <SuspenseImage v-for="image in plantInfo.img" class="image" :imageUrl="image" :alt="plantInfo.name"
-          :key="plantInfo.img.indexOf(image)" />
+        <SuspenseImage
+          v-for="image in plantInfo.img"
+          class="image"
+          :imageUrl="image"
+          :alt="plantInfo.name"
+          :key="plantInfo.img.indexOf(image)"
+        />
       </div>
       <div class="recommendstionContainer">
         <h3 class="title">Также рекомендуем:</h3>
         <div class="reccomendations">
-          <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id" >
+          <div class="reccomendation" v-for="plant in randomPlants" :key="plant.id">
             <h4 class="heading">{{ plant.name }}</h4>
-            <img @click.prevent="imageClickHandler(plant.id)" :src="plant.img[0].small" :alt="plant.name" class="image" />
+            <img
+              @click.prevent="imageClickHandler(plant.id)"
+              :src="plant.img[0].small"
+              :alt="plant.name"
+              class="image"
+            />
           </div>
         </div>
       </div>
@@ -80,15 +102,15 @@ export default Vue.extend({
   name: 'plant-info-container',
   components: { SidePathContainer, SuspenseImage, CheckPass, UpdatePlant, SvgIcons },
   computed: {
-    plantInfo () {
+    plantInfo() {
       return store.getters.activePlant as plantPropsType
     },
-    plantsLoaded () {
+    plantsLoaded() {
       return store.getters.plantsLoaded
     },
-    isAuth () {
+    isAuth() {
       return store.state.isAuth
-    }
+    },
   },
   mounted: async function () {
     if (!this.plantsLoaded) return router.push('./')
@@ -101,28 +123,28 @@ export default Vue.extend({
     })
   },
   methods: {
-    imageClickHandler (plantId: string) {
+    imageClickHandler(plantId: string) {
       store.commit('setActivePlant', plantId)
       setTimeout(() => {
         this.$root.$emit('scroll')
         this.randomPlants = store.getters.randomPlants(3) as plantPropsType[]
       }, 300)
     },
-    deleteHandler () {
+    deleteHandler() {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })
       setTimeout(() => {
         this.isModalOpen = true
         this.$root.$emit('disableScroll')
       }, 500)
     },
-    updateHandler () {
+    updateHandler() {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })
       setTimeout(() => {
         this.isUpdateModalOpen = true
         this.$root.$emit('disableScroll')
       }, 500)
     },
-    async submitModalhandler (pass: string) {
+    async submitModalhandler(pass: string) {
       const response = await store.dispatch('deletePlant', { id: this.plantInfo.id, pass: pass })
       if (response === 'ok') {
         this.isModalOpen = false
@@ -133,8 +155,12 @@ export default Vue.extend({
       }
       this.modalError = response[0].msg
     },
-    async submitUpdateHandler (data: plantFormType, password: string) {
-      const response = await store.dispatch('updatePlant', { formData: data, pass: password, plantId: this.plantInfo.id })
+    async submitUpdateHandler(data: plantFormType, password: string) {
+      const response = await store.dispatch('updatePlant', {
+        formData: data,
+        pass: password,
+        plantId: this.plantInfo.id,
+      })
       if (response === 'ok') {
         this.isUpdateModalOpen = false
         this.$root.$emit('ableScroll')
@@ -143,9 +169,9 @@ export default Vue.extend({
           this.$root.$emit('scroll')
         }, 600)
       } else {
-        formServises.errorMapping(response, this.errorMessages)
+        formServises.errorMappingOld(response, this.errorMessages)
       }
-    }
+    },
   },
   data: function () {
     return {
@@ -153,9 +179,9 @@ export default Vue.extend({
       isModalOpen: false,
       isUpdateModalOpen: false,
       modalError: '',
-      errorMessages: {} as plantErrorMessages
+      errorMessages: {} as plantErrorMessages,
     }
-  }
+  },
 })
 </script>
 <style lang="scss">
@@ -169,36 +195,36 @@ export default Vue.extend({
     width: 1280px;
     @include flex(column, flex-start, flex-start);
     margin: 100px 0 0;
-    .optionButtons{
+    .optionButtons {
       @include flex(row, center, flex-end);
       padding-bottom: 20px;
-      .button{
+      .button {
         border: none;
         background-color: transparent;
         width: 80px;
         height: 80px;
-        svg{
+        svg {
           width: 100%;
           height: 100%;
         }
-        .change{
-          path{
+        .change {
+          path {
             fill: $mainBlue;
           }
-          &:hover{
+          &:hover {
             cursor: pointer;
-            path{
+            path {
               fill: $mainBlueHover;
             }
           }
         }
-        .delete{
-          path{
+        .delete {
+          path {
             fill: $mainRed;
           }
-          &:hover{
+          &:hover {
             cursor: pointer;
-            path{
+            path {
               fill: $mainRedHover;
             }
           }
@@ -261,30 +287,30 @@ export default Vue.extend({
     .recommendstionContainer {
       width: 100%;
       padding: 50px 0;
-      .title{
+      .title {
         @include font(36px, 46px, 500);
       }
-      .reccomendations{
+      .reccomendations {
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 20px;
-        .reccomendation{
+        .reccomendation {
           border: 1px solid transparent;
           border-radius: 14px;
           padding: 5px;
           transition: 600ms;
-          .heading{
+          .heading {
             @include font(28px, 38px, 500);
-            padding-bottom: 10px
+            padding-bottom: 10px;
           }
-          .image{
+          .image {
             display: block;
             width: 100%;
             height: 400px;
             object-fit: cover;
           }
-          &:hover{
+          &:hover {
             cursor: pointer;
             border-color: black;
             transition: 600ms;
@@ -295,32 +321,32 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 1400px) {
-  .plantInfoContainer{
-    .contentContainer{
+  .plantInfoContainer {
+    .contentContainer {
       width: 100%;
       padding: 0 50px;
-      .optionButtons{
+      .optionButtons {
         right: 50px;
       }
     }
   }
 }
 @media screen and (max-width: 1000px) {
-  .plantInfoContainer{
-    .contentContainer{
+  .plantInfoContainer {
+    .contentContainer {
       margin-top: 50px;
 
-      .optionButtons{
+      .optionButtons {
         position: relative;
         width: 100%;
         right: 0;
         margin-bottom: 10px;
       }
-      .recommendstionContainer{
-        .reccomendations{
+      .recommendstionContainer {
+        .reccomendations {
           grid-template-columns: 1fr 1fr;
-          .reccomendation{
-            &:nth-child(3n){
+          .reccomendation {
+            &:nth-child(3n) {
               display: none;
             }
           }
@@ -330,50 +356,50 @@ export default Vue.extend({
   }
 }
 @media screen and (max-width: 750px) {
-  .plantInfoContainer{
-    .contentContainer{
+  .plantInfoContainer {
+    .contentContainer {
       margin-top: 20px;
       padding: 0 20px;
-      .optionButtons{
+      .optionButtons {
         padding-bottom: 0px;
       }
-      .top{
-        .headings{
-          .name{
+      .top {
+        .headings {
+          .name {
             font-size: 30px;
           }
         }
       }
-      .description{
+      .description {
         padding: 10px 0;
       }
-      .item{
+      .item {
         padding-bottom: 10px;
-        h3{
+        h3 {
           font-size: 16px;
         }
-        p{
+        p {
           font-size: 18px;
         }
       }
-      .photoContainer{
-        .image{
+      .photoContainer {
+        .image {
           width: 100%;
           margin-right: 0;
         }
       }
-      .recommendstionContainer{
-        .title{
+      .recommendstionContainer {
+        .title {
           font-size: 26px;
         }
-        .reccomendations{
+        .reccomendations {
           grid-template-columns: 1fr;
-          .reccomendation{
-            .heading{
+          .reccomendation {
+            .heading {
               font-size: 20px;
               padding-bottom: 5px;
             }
-            .image{
+            .image {
               width: 100%;
             }
           }

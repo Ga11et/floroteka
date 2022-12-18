@@ -61,13 +61,19 @@
       </FormPartContainer>
     </template>
     <template #actions>
-      <button class="plusStep" v-if="steps.length !== 3" type="button" @click.prevent="addStep">
-        Добавить этап
-      </button>
+      <base-button
+        v-if="steps.length !== 3"
+        type="button"
+        @click.prevent="addStep"
+        content="Добавить этап"
+      />
       <base-svg v-if="isLoading" type="loading" class="suspense" />
-      <button class="button" type="submit" :disabled="isLoading" @click.prevent="submitForm">
-        Отправить на сервер
-      </button>
+      <base-button
+        type="submit"
+        :disabled="isLoading"
+        @click.prevent="submitForm"
+        content="Отправить на сервер"
+      />
     </template>
   </FormContainer>
 </template>

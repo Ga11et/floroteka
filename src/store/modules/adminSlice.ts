@@ -1,3 +1,4 @@
+import { formServises } from './../../servises/formServises'
 import { Module } from 'vuex'
 import { postAPI } from '../api/postAPI'
 import { IRootStore } from '../models/appTypes'
@@ -7,6 +8,7 @@ import {
   IBeforeAfterPostForm,
   IErrorMessages,
   IPlantForm,
+  ITechnologiesPostForm,
 } from '../types/admin'
 
 interface IAdminSlice {
@@ -48,11 +50,7 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
       commit('setAdminLoading', true)
       const response = await postAPI.postBeforeAfterPostData(payload, rootState.token)
       if (response !== 'ok') {
-        const errors = {} as IBeforeAfterPostErrorMessages
-        response.forEach((el: { param: string; msg: string }) => {
-          const location = el.param.slice(5) as string
-          errors[location] = el.msg
-        })
+        const errors = formServises.errorMapping(response)
         commit('setErrorMessages', errors)
         commit('setAdminLoading', false)
       }
@@ -65,12 +63,20 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
       commit('setAdminLoading', true)
       const response = await postAPI.postPlantData(payload, rootState.token)
       if (response !== 'ok') {
-        const errors = {} as IErrorMessages
-        response.forEach((el: { param: string; msg: string }) => {
-          const location = el.param.slice(5) as string
-          if (location.slice(0, 3) === 'img') errors.img = el.msg
-          else errors[location] = el.msg
-        })
+        const errors = formServises.errorMappingWithImg(response)
+        commit('setErrorMessages', errors)
+        commit('setAdminLoading', false)
+      }
+      if (response === 'ok') {
+        commit('setFormType', undefined)
+        commit('setAdminLoading', false)
+      }
+    },
+    async addTechnologyPost({ commit, rootState }, payload: ITechnologiesPostForm) {
+      commit('setAdminLoading', true)
+      const response = await postAPI.postTechnologiesPostData(payload, rootState.token)
+      if (response !== 'ok') {
+        const errors = formServises.errorMapping(response)
         commit('setErrorMessages', errors)
         commit('setAdminLoading', false)
       }
