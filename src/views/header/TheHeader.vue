@@ -2,7 +2,7 @@
   <header class="header">
     <img src="./assets/headerPic1.jpg" alt="background picture" class="image" />
     <div class="top">
-      ФлоротекаСЛИ
+      Флоротека
       <HeaderDesktopMenu @scroll="scrollHandler" />
       <HeaderMobileMenu @scroll="scrollHandler" />
     </div>
@@ -27,10 +27,12 @@ export default Vue.extend({
       setTimeout(() => {
         window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
       }, 300)
-    }
+    },
   },
   mounted: function () {
-    this.$root.$on('scroll', () => window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' }))
+    this.$root.$on('scroll', () =>
+      window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' }),
+    )
     this.$root.$on('dropHandler', (file: File, photoId: string) => {
       console.log(file)
       if (file) {
@@ -43,10 +45,10 @@ export default Vue.extend({
     })
   },
   computed: {
-    isLogin () {
+    isLogin() {
       return this.$route.path === '/login'
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss">

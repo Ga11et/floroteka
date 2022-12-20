@@ -1,8 +1,8 @@
 <template>
-  <transition name="fadeSlow" component="div" >
+  <transition name="fadeSlow" component="div">
     <div v-if="isActive" class="mobileNavContainer">
       <div class="mobileNavContainer__top">
-        ФлоротекаСЛИ
+        Флоротека
         <base-svg type="menuAnabled" class="menuSvg black" @click.native="setIsActive(false)" />
       </div>
       <transition name="fromAbove">
@@ -18,8 +18,16 @@
             />
           </ul>
           <MobileMenuLink :content="links.media[0]" />
-          <MobileMenuLink v-if="!isAuth" @click.native="setIsActive(false, false)" :content="{ id: '1', to: '/login', text: 'Логин' }" />
-          <MobileMenuLink v-else @click.native="setIsActive(false, true)" :content="{ id: '1', to: '/admin', text: 'Админская' }" />
+          <MobileMenuLink
+            v-if="!isAuth"
+            @click.native="setIsActive(false, false)"
+            :content="{ id: '1', to: '/login', text: 'Логин' }"
+          />
+          <MobileMenuLink
+            v-else
+            @click.native="setIsActive(false, true)"
+            :content="{ id: '1', to: '/admin', text: 'Админская' }"
+          />
         </ul>
       </transition>
     </div>
@@ -46,13 +54,11 @@ export default Vue.extend({
             { to: '/technologies', text: 'Технологии', id: '4' },
             { to: '/science', text: 'Научная деятельность', id: '5' },
             { to: '/things', text: 'Дела', id: '6' },
-            { to: '/studyProjects', text: 'Проекты', id: '7' }
-          ]
+            { to: '/studyProjects', text: 'Проекты', id: '7' },
+          ],
         },
-        media: [
-          { to: '/galery', text: 'Галерея', id: '8' }
-        ]
-      }
+        media: [{ to: '/galery', text: 'Галерея', id: '8' }],
+      },
     }
   },
   methods: {
@@ -69,13 +75,13 @@ export default Vue.extend({
         }, 300)
       }
       if (isAction) this.$emit('scroll')
-    }
+    },
   },
   computed: {
-    isAuth () {
+    isAuth() {
       return this.$store.state.isAuth
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>
@@ -126,9 +132,9 @@ export default Vue.extend({
   .mobileNavContainer {
     display: flex;
   }
-  .menuSvg{
-      display: flex;
-    }
+  .menuSvg {
+    display: flex;
+  }
 }
 @media screen and (max-width: 750px) {
   .mobileNavContainer {
