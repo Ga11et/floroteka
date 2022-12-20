@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <p class="content">Личная практическая деятельность 2022</p>
+    <p class="content">Сивкова Елена Николаевна 2022</p>
   </footer>
 </template>
 <script lang="ts">

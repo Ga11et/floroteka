@@ -1,6 +1,7 @@
 <template>
   <div class="dropdownHeader">
-    <button @click="linkClickHandler(false)" :class="['handler', { active: isActive }]">Категории
+    <button @click="linkClickHandler(false)" :class="['handler', { active: isActive }]">
+      Категории
       <base-svg type="dropdown" />
     </button>
     <transition name="fade">
@@ -11,7 +12,8 @@
           :to="link.to"
           class="link"
           @click.native="linkClickHandler(true)"
-        >{{ link.text }}</router-link>
+          >{{ link.text }}</router-link
+        >
       </div>
     </transition>
   </div>
@@ -27,18 +29,18 @@ export default Vue.extend({
       links: [
         { to: '/beforeafter', text: 'Было / стало', id: '1' },
         { to: '/technologies', text: 'Технологии', id: '2' },
-        { to: '/science', text: 'Научная деятельность', id: '3' },
+        { to: '/science', text: 'Экспериментальная деятельность', id: '3' },
         { to: '/things', text: 'Дела', id: '4' },
-        { to: '/studyProjects', text: 'Проекты', id: '5' }
-      ]
+        { to: '/studyProjects', text: 'Проекты', id: '5' },
+      ],
     }
   },
   methods: {
-    linkClickHandler (isAction: boolean) {
+    linkClickHandler(isAction: boolean) {
       this.isActive = !this.isActive
       if (isAction) this.$emit('scroll')
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss">
@@ -72,9 +74,9 @@ export default Vue.extend({
       transition: 300ms;
     }
   }
-  .active{
+  .active {
     border-color: white;
-    svg{
+    svg {
       transform: rotate(180deg);
     }
   }

@@ -52,7 +52,7 @@ export default Vue.extend({
           children: [
             { to: '/beforeafter', text: 'Было / стало', id: '3' },
             { to: '/technologies', text: 'Технологии', id: '4' },
-            { to: '/science', text: 'Научная деятельность', id: '5' },
+            { to: '/science', text: 'Экспериментальная деятельность', id: '5' },
             { to: '/things', text: 'Дела', id: '6' },
             { to: '/studyProjects', text: 'Проекты', id: '7' },
           ],
