@@ -1,22 +1,29 @@
 <template>
   <div class="content">
-    <h1 class="heading">Растения дендроучастка Сыктывкарского Лесного Института</h1>
-    <p class="paragraph">Представляем наш проект, где вы можете увидеть разнообразие растений, высаженных на
-      дендрологическом участке Сыктывкарского лесного института.</p>
+    <h1 class="heading">САЙТ СИВКОВОЙ ЕЛЕНЫ НИКОЛАЕВНЫ</h1>
+    <p class="paragraph">
+      Представляю вашему вниманию сайт, на котором публикуется информация о моей работе и растениях,
+      которые я выращиваю.
+    </p>
     <form class="inputContainer" @submit.prevent="submitHandler">
-      <input type="text" v-model="filterValue" placeholder="Попробуем найти что-то конкретное?" class="input" />
+      <input
+        type="text"
+        v-model="filterValue"
+        placeholder="Попробуем найти что-то конкретное?"
+        class="input"
+      />
       <router-link class="link" @click.native="submitHandler" to="/">Что у нас есть</router-link>
     </form>
   </div>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
   name: 'HeaderContent',
   data: function () {
     return {
-      filterValue: ''
+      filterValue: '',
     }
   },
   methods: {
@@ -26,11 +33,11 @@ export default Vue.extend({
       setTimeout(() => {
         this.$root.$emit('scroll')
       }, 300)
-    }
-  }
+    },
+  },
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 .content {
   @include flex(column, flex-start, center);

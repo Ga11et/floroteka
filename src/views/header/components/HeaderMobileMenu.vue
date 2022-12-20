@@ -2,7 +2,7 @@
   <transition name="fadeSlow" component="div">
     <div v-if="isActive" class="mobileNavContainer">
       <div class="mobileNavContainer__top">
-        ФлоротекаСЛИ
+        Флоротека
         <base-svg type="menuAnabled" class="menuSvg black" @click.native="setIsActive(false)" />
       </div>
       <transition name="fromAbove">
