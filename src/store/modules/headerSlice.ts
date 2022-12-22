@@ -28,7 +28,7 @@ const HeaderSlice: Module<IHeaderSlice, IRootStore> = {
           },
           {
             id: '7',
-            en: '/scienceactivity',
+            en: '/science',
             ru: 'Экспериментальная деятельность',
           },
           {
@@ -38,7 +38,7 @@ const HeaderSlice: Module<IHeaderSlice, IRootStore> = {
           },
           {
             id: '9',
-            en: '/projects',
+            en: '/studyProjects',
             ru: 'Проекты',
           },
         ],

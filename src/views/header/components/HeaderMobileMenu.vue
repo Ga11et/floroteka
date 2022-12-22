@@ -7,26 +7,31 @@
       </div>
       <transition name="fromAbove">
         <ul v-if="isNavVisible" class="mobileNav">
-          <MobileMenuLink :content="links.catalog" @click.native="setIsActive(false, true)" />
-          <MobileMenuLink :content="links.news.value" @click.native="setIsActive(false, true)" />
-          <ul>
+          <template v-for="link in nav">
             <MobileMenuLink
-              v-for="link in links.news.children"
+              v-if="!link.children"
               :content="link"
-              @click="setIsActive(false, true)"
+              @click.native="setIsActive(false, true)"
               :key="link.id"
             />
-          </ul>
-          <MobileMenuLink :content="links.media[0]" @click.native="setIsActive(false, true)" />
+            <ul v-else class="deepNav">
+              <MobileMenuLink
+                v-for="item in link.children"
+                :content="item"
+                @click="setIsActive(false, true)"
+                :key="item.id"
+              />
+            </ul>
+          </template>
           <MobileMenuLink
             v-if="!isAuth"
             @click.native="setIsActive(false, false)"
-            :content="{ id: '1', to: '/login', text: 'Логин' }"
+            :content="{ id: '1', en: '/login', ru: 'Логин' }"
           />
           <MobileMenuLink
             v-else
             @click.native="setIsActive(false, true)"
-            :content="{ id: '1', to: '/admin', text: 'Админская' }"
+            :content="{ id: '1', en: '/admin', ru: 'Админская' }"
           />
         </ul>
       </transition>
@@ -45,41 +50,26 @@ export default Vue.extend({
     return {
       isActive: false,
       isNavVisible: false,
-      links: {
-        catalog: { to: '/', text: 'Каталог', id: '1' },
-        news: {
-          value: { to: '/news', text: 'Новости', id: '2' },
-          children: [
-            { to: '/beforeafter', text: 'Было / стало', id: '3' },
-            { to: '/technologies', text: 'Технологии', id: '4' },
-            { to: '/science', text: 'Научная деятельность', id: '5' },
-            { to: '/things', text: 'Дела', id: '6' },
-            { to: '/studyProjects', text: 'Проекты', id: '7' },
-          ],
-        },
-        media: [{ to: '/galery', text: 'Галерея', id: '8' }],
-      },
     }
   },
   methods: {
     setIsActive: function (value: boolean, isAction = false) {
       if (value) {
         this.isActive = value
-        setTimeout(() => {
-          this.isNavVisible = value
-        }, 300)
+        setTimeout(() => (this.isNavVisible = value), 300)
       } else {
         this.isNavVisible = value
-        setTimeout(() => {
-          this.isActive = value
-        }, 300)
+        setTimeout(() => (this.isActive = value), 300)
       }
       if (isAction) this.$root.$emit('scroll')
     },
   },
   computed: {
     isAuth() {
-      return this.$store.state.isAuth
+      return this.$store.getters.isAuth
+    },
+    nav() {
+      return this.$store.getters.getHeaderNav
     },
   },
 })
@@ -107,7 +97,6 @@ export default Vue.extend({
   left: 0;
   @include flex(column, flex-start, space-between);
   display: none;
-
   .mobileNavContainer__top {
     z-index: 1001;
     background-color: white;
@@ -117,14 +106,13 @@ export default Vue.extend({
     width: 100%;
     @include flex(row, center, space-between);
   }
-
   .mobileNav {
     @include flex(column, flex-start, space-between);
     background-color: white;
     width: 100%;
     padding: 20px 50px;
-    .router-link-exact-active {
-      text-decoration: underline;
+    .deepNav {
+      padding-left: 20px;
     }
   }
 }
@@ -141,7 +129,6 @@ export default Vue.extend({
     .mobileNav {
       padding: 20px;
     }
-
     .mobileNavContainer__top {
       padding: 20px;
     }

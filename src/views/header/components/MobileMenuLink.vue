@@ -1,9 +1,11 @@
 <template>
-  <li>
-    <router-link :to="content.to" class="routerLink" @click.native="$emit('click')" >{{ content.text }}</router-link>
+  <li class="routerLinkLi">
+    <router-link :to="content.en" class="routerLink" @click.native="$emit('click')">
+      {{ content.ru }}
+    </router-link>
   </li>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue, { PropType } from 'vue'
 import { ILink } from '../types/HeaderTypes'
 
@@ -12,19 +14,25 @@ export default Vue.extend({
   props: {
     content: {
       type: Object as PropType<ILink>,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
-.routerLink {
-  color: black;
-  text-decoration: none;
-  @include font(20px, 35px, 500);
+.routerLinkLi {
+  @include font(16px, 25px, 500);
+  .routerLink {
+    color: black;
+    text-decoration: none;
+    @include font(16px, 16px, 500);
 
-  &:hover {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .router-link-exact-active {
     text-decoration: underline;
   }
 }

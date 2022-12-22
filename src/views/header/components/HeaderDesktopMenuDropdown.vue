@@ -1,52 +1,57 @@
 <template>
   <div class="dropdownHeader">
-    <button @click="linkClickHandler(false)" :class="['handler', { active: isActive }]">Категории
-      <base-svg type="dropdown" />
+    <button @click="linkClickHandler(false)" :class="['handler', { active: isActive }]">
+      {{ text }}
+      <base-svg class="svg" type="dropdown" />
     </button>
     <transition name="fade">
       <div v-if="isActive" class="container">
         <router-link
-          v-for="link in links"
+          v-for="link in content"
           :key="link.id"
-          :to="link.to"
+          :to="link.en"
           class="link"
           @click.native="linkClickHandler(true)"
-        >{{ link.text }}</router-link>
+          >{{ link.ru }}</router-link
+        >
       </div>
     </transition>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
+import { ILink } from '../types/HeaderTypes'
 
 export default Vue.extend({
   name: 'HeaderDesktopMenuDropdown',
   data: function () {
     return {
       isActive: false,
-      links: [
-        { to: '/beforeafter', text: 'Было / стало', id: '1' },
-        { to: '/technologies', text: 'Технологии', id: '2' },
-        { to: '/science', text: 'Научная деятельность', id: '3' },
-        { to: '/things', text: 'Дела', id: '4' },
-        { to: '/studyProjects', text: 'Проекты', id: '5' }
-      ]
     }
   },
+  props: {
+    content: {
+      type: Object as PropType<ILink[]>,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
-    linkClickHandler (isAction: boolean) {
+    linkClickHandler(isAction: boolean) {
       this.isActive = !this.isActive
-      if (isAction) this.$emit('scroll')
-    }
-  }
+      if (isAction) this.$root.$emit('scroll')
+    },
+  },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 @import '@/animations';
 .dropdownHeader {
   position: relative;
-
   .handler {
     @include flex(row, center, space-between);
     @include font(16px, 20px, 500);
@@ -59,8 +64,7 @@ export default Vue.extend({
     border: 1px solid transparent;
     border-radius: 20px;
     transition: 300ms;
-
-    svg {
+    .svg {
       width: 30px;
       padding: 0 7px;
       stroke: white;
@@ -72,20 +76,18 @@ export default Vue.extend({
       transition: 300ms;
     }
   }
-  .active{
+  .active {
     border-color: white;
-    svg{
+    svg {
       transform: rotate(180deg);
     }
   }
-
   .container {
     position: absolute;
     top: 50px;
     @include flex(column, flex-start, flex-start);
     width: max-content;
     z-index: 2;
-
     .link {
       @include font(16px, 19px, 500);
       color: inherit;

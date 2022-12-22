@@ -1,21 +1,26 @@
 <template>
   <nav class="headerDesktopMenu">
     <template v-for="link in nav">
-      <HeaderRouterLink v-if="!link.children" :text="link.ru" :to="link.en" />
-      <HeaderDesktopMenuDropdown v-else :content="link" @scroll="$root.$emit('scroll')" />
+      <DesctopMenuLink v-if="!link.children" :text="link.ru" :to="link.en" />
+      <HeaderDesktopMenuDropdown
+        v-else
+        :content="link.children"
+        :text="link.ru"
+        @scroll="$root.$emit('scroll')"
+      />
     </template>
-    <HeaderRouterLink v-if="!isAuth" text="Логин" to="/login" :not-action="true" />
-    <HeaderRouterLink v-if="isAuth" text="Админская" to="/admin" />
+    <DesctopMenuLink v-if="!isAuth" text="Логин" to="/login" :not-action="true" />
+    <DesctopMenuLink v-if="isAuth" text="Админская" to="/admin" />
   </nav>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import HeaderDesktopMenuDropdown from './HeaderDesktopMenuDropdown.vue'
-import HeaderRouterLink from './HeaderRouterLink.vue'
+import DesctopMenuLink from './DesctopMenuLink.vue'
 
 export default Vue.extend({
   name: 'HeaderDesktopMenu',
-  components: { HeaderDesktopMenuDropdown, HeaderRouterLink },
+  components: { HeaderDesktopMenuDropdown, DesctopMenuLink },
   computed: {
     isAuth() {
       return this.$store.getters.isAuth
