@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'disabledScroll': disabledScroll }">
+  <div id="app" :class="{ disabledScroll: disabledScroll }">
     <OpenedImage v-if="isImageOpened" :imageUrl="imageUrl" :alt="alt" :title="title" />
     <TheHeader />
     <transition name="fadeFast" mode="out-in" apear>
@@ -24,7 +24,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $mainBackGreen;
-
 }
 </style>
 <script lang="ts">
@@ -32,7 +31,7 @@ import Vue from 'vue'
 import Footer from './views/Footer.vue'
 import OpenedImage from './components/openedImage.vue'
 import store from './store'
-import GoUpButton from './components/common/goUpButton.vue'
+import GoUpButton from './components/goUpButton.vue'
 import TheHeader from './views/header/TheHeader.vue'
 
 export default Vue.extend({
@@ -45,7 +44,7 @@ export default Vue.extend({
       alt: '',
       title: '',
       disabledScroll: false,
-      needButton: false
+      needButton: false,
     }
   },
   mounted: function () {
@@ -73,6 +72,6 @@ export default Vue.extend({
       this.disabledScroll = false
     })
     store.dispatch('getRefresh')
-  }
+  },
 })
 </script>

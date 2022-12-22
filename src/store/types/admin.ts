@@ -73,3 +73,8 @@ export interface IScienceActivityPostForm {
   description: string
   img: string
 }
+// Login Form
+export interface ILoginForm {
+  login: string
+  pass: string
+}

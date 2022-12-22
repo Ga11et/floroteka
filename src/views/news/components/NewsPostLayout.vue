@@ -1,34 +1,23 @@
 <template>
   <section class="postContainer">
-    <transition name="fade">
-      <CheckPass v-if="isModalOpen" :errorMessage="modalError" :submitCallback="submitModalhandler"
-        @close="isModalOpen = false" />
-    </transition>
     <div class="top">
       <h2 class="heading">{{ content.heading }}</h2>
       <p class="date">{{ new Date(content.date).toLocaleDateString() }}</p>
     </div>
     <p class="paragraph">{{ content.description }}</p>
     <slot></slot>
-    <div class="bottom" v-if="isAuth">
-      <button class="deleteButton" @click="deletePostHandler">
-        <base-svg type="delete" class="svg" />
-      </button>
-    </div>
   </section>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import DeletePostMixin from '../mixins/DeletePostMixin'
-import CheckPass from '@/components/modalWindow/checkPass.vue'
 
 export default defineComponent({
   name: 'NewsPostLayout',
   mixins: [DeletePostMixin],
-  components: { CheckPass }
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 @import '@/animations';
 .postContainer {

@@ -10,7 +10,7 @@ export default Vue.extend({
   name: 'custom-footer',
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 .footer {
   width: 100%;

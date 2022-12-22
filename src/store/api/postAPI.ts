@@ -1,5 +1,5 @@
 import store from '..'
-import { APIResponseType } from '../models/apiTypes'
+import { APIResponseType, ILoginFormResponse } from '../models/apiTypes'
 import { LoginData } from '../models/appTypes'
 import {
   BeforeAfterFormType,
@@ -63,7 +63,7 @@ export const postAPI = {
   ): APIResponseType {
     return await createPostRequest(formData, '/scienceActivity', token)
   },
-  async getAutherisied(data: LoginData): Promise<{ token: string }> {
+  async getAutherisied(data: LoginData): Promise<ILoginFormResponse> {
     const returnData = await fetch(prod + '/login', {
       method: 'POST',
       mode: 'cors',

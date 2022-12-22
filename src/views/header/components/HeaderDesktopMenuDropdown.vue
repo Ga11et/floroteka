@@ -31,7 +31,7 @@ export default Vue.extend({
   },
   props: {
     content: {
-      type: Object as PropType<ILink[]>,
+      type: Array as PropType<ILink[]>,
       required: true,
     },
     text: {

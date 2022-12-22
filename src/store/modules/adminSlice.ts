@@ -1,4 +1,9 @@
-import { adminNavLink, IProjectPostForm, IScienceActivityPostForm } from './../types/admin'
+import {
+  adminNavLink,
+  ILoginForm,
+  IProjectPostForm,
+  IScienceActivityPostForm,
+} from './../types/admin'
 import { IThingsPostForm } from './../../views/admin/types/types'
 import { Module } from 'vuex'
 import { postAPI } from '../api/postAPI'

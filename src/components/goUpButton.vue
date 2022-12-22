@@ -1,23 +1,21 @@
 <template>
   <button class="goBackButton" @click="clickHandler">
-    <SvgIcons type="dropdown" class="svg" />
+    <base-svg type="dropdown" class="svg" />
   </button>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
-import SvgIcons from './svgIcons.vue'
 
 export default Vue.extend({
   name: 'go-up-button',
   methods: {
-    clickHandler () {
+    clickHandler() {
       this.$root.$emit('scroll')
-    }
+    },
   },
-  components: { SvgIcons }
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 
 .goBackButton {
@@ -33,7 +31,7 @@ export default Vue.extend({
   z-index: 100;
   transition: 300ms;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
     background-color: $mainGreenHover;
     transition: 300ms;
@@ -47,7 +45,7 @@ export default Vue.extend({
   }
 }
 @media (max-width: 750px) {
-  .goBackButton{
+  .goBackButton {
     right: 20px;
   }
 }
