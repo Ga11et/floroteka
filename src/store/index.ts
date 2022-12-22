@@ -7,6 +7,7 @@ import PostsSlice from './modules/postsSlice'
 import GalerySlice from './modules/galerySlice'
 import { LoginData } from './models/appTypes'
 import AdminSlice from './modules/adminSlice'
+import HeaderSlice from './modules/headerSlice'
 
 Vue.use(Vuex)
 
@@ -56,5 +57,6 @@ export default new Vuex.Store({
     postsSlice: PostsSlice,
     galerySlice: GalerySlice,
     adminSlice: AdminSlice,
+    headerSlice: HeaderSlice,
   },
 })

@@ -7,8 +7,8 @@
       </div>
       <transition name="fromAbove">
         <ul v-if="isNavVisible" class="mobileNav">
-          <MobileMenuLink :content="links.catalog" />
-          <MobileMenuLink :content="links.news.value" />
+          <MobileMenuLink :content="links.catalog" @click.native="setIsActive(false, true)" />
+          <MobileMenuLink :content="links.news.value" @click.native="setIsActive(false, true)" />
           <ul>
             <MobileMenuLink
               v-for="link in links.news.children"
@@ -17,7 +17,7 @@
               :key="link.id"
             />
           </ul>
-          <MobileMenuLink :content="links.media[0]" />
+          <MobileMenuLink :content="links.media[0]" @click.native="setIsActive(false, true)" />
           <MobileMenuLink
             v-if="!isAuth"
             @click.native="setIsActive(false, false)"
@@ -74,7 +74,7 @@ export default Vue.extend({
           this.isActive = value
         }, 300)
       }
-      if (isAction) this.$emit('scroll')
+      if (isAction) this.$root.$emit('scroll')
     },
   },
   computed: {
