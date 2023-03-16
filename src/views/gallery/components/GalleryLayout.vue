@@ -1,6 +1,10 @@
 <template>
   <main class="galleryLayout">
     <side-path path="Галерея" />
+    <base-adaptive>
+      <p>На данный момент в этом разделе пусто, фотографии можно посмотреть по ссылке:</p>
+      <a href="https://vk.com/club213860886" target="_blank">https://vk.com/club213860886</a>
+    </base-adaptive>
     <base-pagination
       :itemCount="photos.length"
       :itemsInPage="9"
@@ -24,38 +28,39 @@
     />
   </main>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
 import GalleryPhoto from './GalleryPhoto.vue'
 export default Vue.extend({
   name: 'GalleryLayout',
   components: { GalleryPhoto },
   computed: {
-    photos () {
+    photos() {
       return this.$store.getters.photos
     },
-    isGaleryLoaded () {
+    isGaleryLoaded() {
       return this.$store.getters.galeryLoaded
-    }
+    },
   },
-  mounted () {
+  mounted() {
     if (!this.isGaleryLoaded) {
       this.$store.dispatch('getGalery')
     }
   },
-  data () {
+  data() {
     return {
-      activePage: 1
+      activePage: 1,
     }
   },
   methods: {
-    setActiveHandler (newActive: number) {
-      if (newActive !== 0 && newActive <= Math.ceil(this.photos.length / 9)) this.activePage = newActive
-    }
-  }
+    setActiveHandler(newActive: number) {
+      if (newActive !== 0 && newActive <= Math.ceil(this.photos.length / 9))
+        this.activePage = newActive
+    },
+  },
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 .galleryLayout {
   @include flex(column, center, unset);
@@ -70,31 +75,31 @@ export default Vue.extend({
 }
 
 @media screen and (max-width: 1400px) {
-  .galleryLayout{
-    .galeryImages{
+  .galleryLayout {
+    .galeryImages {
       width: 100%;
       padding: 0 50px;
     }
   }
 }
 @media screen and (max-width: 1200px) {
-  .galleryLayout{
-    .galeryImages{
+  .galleryLayout {
+    .galeryImages {
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
 }
 @media screen and (max-width: 1000px) {
-  .galleryLayout{
-    .galeryImages{
+  .galleryLayout {
+    .galeryImages {
       grid-template-columns: 1fr 1fr;
       margin: 50px 0;
     }
   }
 }
 @media screen and (max-width: 750px) {
-  .galleryLayout{
-    .galeryImages{
+  .galleryLayout {
+    .galeryImages {
       grid-template-columns: 1fr;
       margin: 0;
       padding: 20px;

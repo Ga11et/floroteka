@@ -18,7 +18,6 @@ import HeaderMobileMenu from './components/HeaderMobileMenu.vue'
 import HeaderLoginForm from './components/HeaderLoginForm.vue'
 import HeaderContent from './components/HeaderContent.vue'
 import HeaderDesktopMenu from './components/HeaderDesktopMenu.vue'
-
 export default Vue.extend({
   name: 'TheHeader',
   components: { HeaderMobileMenu, HeaderLoginForm, HeaderContent, HeaderDesktopMenu },
