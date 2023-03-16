@@ -1,5 +1,5 @@
 <template>
-  <div class="baseInputText">
+  <div :class="['baseInputText', { small: size === 'small' }]">
     <p class="text">{{ text }}</p>
     <textarea :value="value" @input="inputHandler" class="input heightMore"></textarea>
     <base-error-span v-if="errorMessage" :message="errorMessage" />
@@ -24,6 +24,7 @@ export default defineComponent({
       required: true,
     },
     errorMessage: String,
+    size: String,
   },
   methods: {
     inputHandler: function (event: Event) {
@@ -42,6 +43,13 @@ export default defineComponent({
     padding: 20px;
     resize: none;
     font-family: inherit;
+  }
+}
+.small {
+  font-size: 16px;
+  .input.heightMore {
+    height: 68px;
+    padding: 3px 10px;
   }
 }
 </style>

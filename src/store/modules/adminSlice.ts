@@ -1,8 +1,8 @@
 import {
   adminNavLink,
-  ILoginForm,
   IProjectPostForm,
   IScienceActivityPostForm,
+  IUniversalForm,
 } from './../types/admin'
 import { IThingsPostForm } from './../../views/admin/types/types'
 import { Module } from 'vuex'
@@ -16,12 +16,16 @@ import {
   ITechnologiesPostForm,
 } from '../types/admin'
 import { storeServises } from '../servises/storeServises'
+import { AdminFormAPI } from '../api/adminFormAPI'
+import { IPost } from '@/views/admin/components/forms/components/table/types/fetchTypes'
 
 interface IAdminSlice {
   errorMessages: IErrorMessages
   isAdminLoading: boolean
   formType: FormType
   navLinks: adminNavLink[]
+  activePostForm: IUniversalForm
+  isFormLoading: boolean
 }
 
 const AdminSlice: Module<IAdminSlice, IRootStore> = {
@@ -37,6 +41,8 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
       { rus: 'Дела', en: 'thingsForm', id: '5' },
       { rus: 'Растения', en: 'plantForm', id: '6' },
     ],
+    activePostForm: {} as IUniversalForm,
+    isFormLoading: false,
   },
   getters: {
     errorMessages(state) {
@@ -51,6 +57,12 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     navLinks(state) {
       return state.navLinks
     },
+    getActivePostFormValues(state) {
+      return state.activePostForm
+    },
+    formLoading(state) {
+      return state.isFormLoading
+    },
   },
   mutations: {
     setErrorMessages(state, payload: IErrorMessages) {
@@ -61,6 +73,18 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     },
     setFormType(state, payload: FormType) {
       state.formType = payload
+    },
+    setActivePostForm(state, payload: IUniversalForm) {
+      state.activePostForm = payload
+    },
+    setActivePostFormHeading(state, payload: string) {
+      state.activePostForm.heading = payload
+    },
+    setActivePostFormDescription(state, payload: string) {
+      state.activePostForm.description = payload
+    },
+    setFormLoading(state, payload: boolean) {
+      state.isFormLoading = payload
     },
   },
   actions: {
@@ -93,6 +117,22 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
       commit('setAdminLoading', true)
       const response = await postAPI.postScienceActivityPostData(payload, rootState.token)
       storeServises.postFormCommits(response, commit)
+    },
+    async getPostById({ commit }, payload: string) {
+      commit('setFormLoading', true)
+      const response = await AdminFormAPI.getPostById(payload)
+      commit('setActivePostForm', response)
+      commit('setFormLoading', false)
+    },
+    async postPostById({ commit, rootState }, payload: { postId: string; data: IUniversalForm }) {
+      commit('setFormLoading', true)
+      const response = await AdminFormAPI.postPostById(
+        payload.postId,
+        payload.data,
+        rootState.token,
+      )
+      console.log('postPostById response', response)
+      commit('setFormLoading', false)
     },
   },
 }

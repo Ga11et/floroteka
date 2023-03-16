@@ -1,14 +1,18 @@
 <template>
   <div class="noFormContainer">
     <h2>Добро пожаловать в админку</h2>
-    <h2>Выберите нужную вам форму из предложенных выше</h2>
+    <h2>Выберите нужную вам форму из предложенных выше для добавления новой записи</h2>
+    <h2>Или воспользуйтесь инструментом снизу для администрирования уже существующих записей</h2>
+    <AdminTable />
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import AdminTable from './components/table/table.vue'
 
 export default Vue.extend({
   name: 'no-form-container',
+  components: { AdminTable },
 })
 </script>
 <style lang="scss" scoped>
@@ -16,8 +20,10 @@ export default Vue.extend({
 .noFormContainer {
   margin: 50px 0 500px;
   width: 1280px;
+  display: grid;
+  gap: 20px;
   h2 {
-    @include font(32px, 44px, 500);
+    @include font(26px, 26px, 500);
   }
 }
 @media screen and (max-width: 1400px) {

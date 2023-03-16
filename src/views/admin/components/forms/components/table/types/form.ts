@@ -1,31 +1,22 @@
-import { PlantType } from './plants'
-
-export type FormType =
-  | 'scienceForm'
-  | 'studyProject'
-  | 'photoForm'
-  | 'thingsForm'
-  | 'plantForm'
-  | 'beforeAfterPostForm'
-  | 'technologiesForm'
-  | undefined
-
-export interface adminNavLink {
-  rus: string
-  en: string
-  id: string
-}
-
-export interface IErrorMessages {
-  [unit: string]: string
-}
+export type PlantType =
+  | 'Деревья'
+  | 'Декоративные кустарники'
+  | 'Плодово-ягодные деревья и кустарники'
+  | 'Ягодники'
+  | 'Многолетние декоративные травянистые растения'
+  | 'Однолетние декоративные травянистые растения'
+  | 'Почвопокровные растения'
+  | 'Декоративные объекты'
+  | 'Комнатные растения'
+  | 'Овощные культуры'
 
 // Universal Form
 export type IUniversalForm =
+  | IThingsPostForm
+  | IPlantForm
   | IBeforeAfterPostForm
   | IBeforeAfterPostErrorMessages
   | ITechnologiesPostForm
-  | IThingsPostForm
   | IProjectPostForm
   | IScienceActivityPostForm
 

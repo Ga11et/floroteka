@@ -1,5 +1,5 @@
 <template>
-  <div class="baseInputText">
+  <div :class="['baseInputText', { small: size === 'small' }]">
     <p class="text">{{ text }}</p>
     <input :value="value" :type="type ? type : 'text'" @input="inputHandler" class="input" />
     <base-error-span v-if="errorMessage" :message="errorMessage" />
@@ -25,6 +25,7 @@ export default defineComponent({
     },
     errorMessage: String,
     type: String,
+    size: String,
   },
   methods: {
     inputHandler: function (event: Event) {
@@ -37,4 +38,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '@/variables';
 @import './input.scss';
+.small {
+  font-size: 16px;
+  .input {
+    height: 34px;
+    padding-left: 10px;
+  }
+}
 </style>

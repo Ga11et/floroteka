@@ -1,3 +1,4 @@
+import { SortOptionType } from './../types/posts'
 import { Module } from 'vuex'
 import { florotekaAPI } from '../api/api'
 import { deleteAPI } from '../api/deleteAPI'
@@ -7,13 +8,19 @@ interface IPostsSlice {
   allPosts: postPropsType[]
   postsLoaded: boolean
   postsFilterValue: string
+  postsSortOption: SortOptionType
+  isReversed: boolean
+  activePostId: string
 }
 
 const PostsSlice: Module<IPostsSlice, IRootStore> = {
   state: {
     allPosts: [],
     postsFilterValue: '',
+    postsSortOption: 'Дата',
+    isReversed: false,
     postsLoaded: false,
+    activePostId: '',
   },
   getters: {
     beforeAfterPosts(state) {
@@ -52,15 +59,35 @@ const PostsSlice: Module<IPostsSlice, IRootStore> = {
       )
     },
     filteredPosts(state) {
-      return state.allPosts.filter(
-        (el) => el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1,
-      )
+      const filteredPosts = state.allPosts
+        .filter(
+          (el) => el.heading.toLowerCase().indexOf(state.postsFilterValue.toLowerCase()) !== -1,
+        )
+        .sort((a, b) => {
+          if (state.postsSortOption === 'Название') return a.heading.localeCompare(b.heading)
+          if (state.postsSortOption === 'Описание')
+            return a.description.localeCompare(b.description)
+          if (state.postsSortOption === 'Тип') return a.type.localeCompare(b.type)
+          // date option
+          return +b.date - +a.date
+        })
+      if (state.isReversed) return filteredPosts.reverse()
+      return filteredPosts
     },
     postsFilterValue(state) {
       return state.postsFilterValue
     },
     postsLoaded(state) {
       return state.postsLoaded
+    },
+    isPostsReversed(state) {
+      return state.isReversed
+    },
+    postsSortOption(state) {
+      return state.postsSortOption
+    },
+    activeAdminPostId(state) {
+      return state.activePostId
     },
   },
   mutations: {
@@ -75,6 +102,15 @@ const PostsSlice: Module<IPostsSlice, IRootStore> = {
     },
     setPostsFilterValue(state, payload: string) {
       state.postsFilterValue = payload
+    },
+    setSortOption(state, payload: SortOptionType) {
+      state.postsSortOption = payload
+    },
+    setReversed(state, payload?: boolean) {
+      state.isReversed = payload === undefined ? !state.isReversed : payload
+    },
+    setActivePostId(state, payload: string) {
+      state.activePostId = payload
     },
   },
   actions: {
