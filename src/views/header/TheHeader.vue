@@ -3,8 +3,8 @@
     <img src="./assets/headerPic1.jpg" alt="background picture" class="image" />
     <div class="top">
       Флоротека
-      <HeaderDesktopMenu @scroll="scrollHandler" />
-      <HeaderMobileMenu @scroll="scrollHandler" />
+      <HeaderDesktopMenu />
+      <HeaderMobileMenu />
     </div>
     <HeaderLoginForm v-if="isLogin" />
     <transition name="fade">
@@ -18,17 +18,9 @@ import HeaderMobileMenu from './components/HeaderMobileMenu.vue'
 import HeaderLoginForm from './components/HeaderLoginForm.vue'
 import HeaderContent from './components/HeaderContent.vue'
 import HeaderDesktopMenu from './components/HeaderDesktopMenu.vue'
-
 export default Vue.extend({
   name: 'TheHeader',
   components: { HeaderMobileMenu, HeaderLoginForm, HeaderContent, HeaderDesktopMenu },
-  methods: {
-    scrollHandler: function () {
-      setTimeout(() => {
-        window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' })
-      }, 300)
-    },
-  },
   mounted: function () {
     this.$root.$on('scroll', () =>
       window.scroll({ left: 0, top: this.$el.clientHeight, behavior: 'smooth' }),
@@ -51,7 +43,7 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 @import '@/animations';
 .header {
@@ -59,12 +51,10 @@ export default Vue.extend({
   width: 100%;
   color: $mainWhite;
   position: relative;
-
   .image {
     display: block;
     width: 100%;
   }
-
   .top {
     @include flex(row, center, space-between);
     @include font(28px, 36px, 500);
@@ -73,7 +63,6 @@ export default Vue.extend({
     position: absolute;
   }
 }
-
 @media screen and (max-width: 1400px) {
   .header {
     .top {
@@ -82,7 +71,6 @@ export default Vue.extend({
     }
   }
 }
-
 @media screen and (max-width: 750px) {
   .header {
     .top {

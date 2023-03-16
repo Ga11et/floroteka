@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <p class="content">Сивкова Елена Николаевна 2022</p>
+  <p class="content">Сивкова Елена Николаевна 2023</p>
   </footer>
 </template>
 <script lang="ts">
@@ -10,7 +10,7 @@ export default Vue.extend({
   name: 'custom-footer',
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/variables';
 .footer {
   width: 100%;

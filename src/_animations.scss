@@ -41,3 +41,21 @@
 .fromAbove-leave-to {
   transform: translateY(-100%);
 }
+// admin navigation animation
+.formComponentAmination-enter-active,
+.formComponentAmination-leave-active {
+  transition: opacity 600ms;
+}
+.formComponentAmination-enter,
+.formComponentAmination-leave-to {
+  opacity: 0;
+}
+.formNavAnim-enter-active,
+.formNavAnim-leave-active {
+  transition: all 600ms;
+}
+.formNavAnim-enter,
+.formNavAnim-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}

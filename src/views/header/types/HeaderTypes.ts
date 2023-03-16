@@ -1,5 +1,5 @@
 export interface ILink {
-  to: string
-  text: string
+  en: string
+  ru: string
   id: string
 }

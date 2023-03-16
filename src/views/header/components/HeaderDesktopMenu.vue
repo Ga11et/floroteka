@@ -1,52 +1,47 @@
 <template>
   <nav class="headerDesktopMenu">
-    <router-link class="link" @click.native="$emit('scroll')" to="/">Каталог</router-link>
-    <router-link class="link" @click.native="$emit('scroll')" to="/news">Новости</router-link>
-    <HeaderDesktopMenuDropdown @scroll="$emit('scroll')" />
-    <router-link class="link" @click.native="$emit('scroll')" to="/galery">Галерея</router-link>
-    <router-link v-if="!isAuth" class="link" to="/login">Логин</router-link>
-    <router-link v-if="isAuth" class="link" @click.native="$emit('scroll')" to="/admin">Админская</router-link>
+    <template v-for="link in nav">
+      <DesctopMenuLink v-if="!link.children" :text="link.ru" :to="link.en" />
+      <HeaderDesktopMenuDropdown
+        v-else
+        :content="link.children"
+        :text="link.ru"
+        @scroll="$root.$emit('scroll')"
+      />
+    </template>
+    <DesctopMenuLink v-if="!isAuth" text="Логин" to="/login" :not-action="true" />
+    <DesctopMenuLink v-if="isAuth" text="Админская" to="/admin" />
   </nav>
 </template>
-<script lang='ts'>
+<script lang="ts">
 import Vue from 'vue'
 import HeaderDesktopMenuDropdown from './HeaderDesktopMenuDropdown.vue'
+import DesctopMenuLink from './DesctopMenuLink.vue'
 
 export default Vue.extend({
   name: 'HeaderDesktopMenu',
-  components: { HeaderDesktopMenuDropdown },
+  components: { HeaderDesktopMenuDropdown, DesctopMenuLink },
   computed: {
-    isAuth () {
-      return this.$store.state.isAuth
-    }
-  }
+    isAuth() {
+      return this.$store.getters.isAuth
+    },
+    nav() {
+      return this.$store.getters.getHeaderNav
+    },
+  },
 })
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/variables';
 .headerDesktopMenu {
   @include flex(row, center, space-between);
   width: 55%;
-  .link {
-    @include font(16px, 19px, 500);
-    color: inherit;
-    text-decoration: none;
-    padding: 5px 20px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  .router-link-exact-active {
-    text-decoration: underline;
-  }
 }
 @media screen and (max-width: 1200px) {
   .headerDesktopMenu {
     width: 70%;
   }
 }
-
 @media screen and (max-width: 1000px) {
   .headerDesktopMenu {
     display: none;

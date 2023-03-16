@@ -2,21 +2,29 @@
   <transition name="loginForm" appear>
     <div class="loginContainer">
       <form class="form">
-        <base-input-text :errorMessage="errorMessages.login" v-model="data.login" text="Логин" type="normal" />
-        <base-input-text :errorMessage="errorMessages.pass" v-model="data.pass" text="Пароль" type="normal"
-          inputType="password" />
-        <span class="originError" v-if="error">
-          {{ error }}
+        <base-input-text :errorMessage="errorMessages.login" v-model="data.login" text="Логин" />
+        <base-input-text
+          :errorMessage="errorMessages.pass"
+          v-model="data.pass"
+          text="Пароль"
+          type="password"
+        />
+        <span class="originError" v-if="errorMessages.origin">
+          {{ errorMessages.origin }}
         </span>
-        <base-svg v-if="sumbitLoading" type="loading" class="suspense" />
-        <base-button :style="{ width: '100%' }" :disabled="sumbitLoading" @click.prevent="submitHandler" content="Войти" />
+        <base-svg v-if="isLoading" type="loading" class="suspense" />
+        <base-button
+          :style="{ width: '100%' }"
+          :disabled="isLoading"
+          @click.prevent="submitHandler"
+          content="Войти"
+        />
       </form>
     </div>
   </transition>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { loginErrorMessages } from '@/store/models/formTypes'
 
 export default Vue.extend({
   name: 'HeaderLoginForm',
@@ -24,36 +32,27 @@ export default Vue.extend({
     return {
       data: {
         login: '',
-        pass: ''
+        pass: '',
       },
-      errorMessages: {} as loginErrorMessages,
-      error: '',
-      sumbitLoading: false
     }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.getLoginLoading
+    },
+    errorMessages() {
+      return this.$store.getters.getLoginErrorMessages
+    },
   },
   methods: {
     submitHandler: async function () {
-      this.sumbitLoading = true
-      this.error = ''
-      this.errorMessages = {} as loginErrorMessages
-      const resp = await this.$store.dispatch('getAuth', this.data)
-      if (resp !== 'ok') {
-        if (resp.error) {
-          this.error = resp.error
-        } else {
-          resp.forEach((el: { param: string, msg: string }) => {
-            const location = el.param.slice(5) as string
-            this.errorMessages[location] = el.msg
-          })
-        }
-        this.sumbitLoading = false
-      } else {
-        this.sumbitLoading = false
+      const isOk = await this.$store.dispatch('getAuth', this.data)
+      if (isOk === 'ok') {
         this.$router.push('/admin')
         this.$root.$emit('scroll')
       }
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>
@@ -96,7 +95,7 @@ export default Vue.extend({
 @media screen and (max-width: 750px) {
   .loginContainer {
     width: 100%;
-    .form{
+    .form {
       width: 100%;
     }
   }

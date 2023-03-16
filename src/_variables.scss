@@ -1,22 +1,22 @@
 @mixin flex($direction, $items, $content) {
-    display: flex;
-    flex-direction: $direction;
-    align-items: $items;
-    justify-content: $content;
+  display: flex;
+  flex-direction: $direction;
+  align-items: $items;
+  justify-content: $content;
 }
 @mixin font($size, $lineHeight, $weight) {
-    font-size: $size;
-    line-height: $lineHeight;
-    font-weight: $weight;
+  font-size: $size;
+  line-height: $lineHeight;
+  font-weight: $weight;
 }
 
 $mainWhite: #fff;
-$mainBackGreen: rgba(168, 192, 175, 0.3);
-$mainBackGreenTight: rgb(168, 192, 175);
+$mainBackGreen: rgba(169, 193, 176, 0.3);
+$mainBackGreenTight: #a8c0af;
 $mainBackDarkGreen: rgba(94, 110, 99, 0.7);
-$mainDarkGreen: #8BAB94;
+$mainDarkGreen: #8bab94;
 $mainVeryDarkGreen: #47574b;
-$mainDarkGreenHover: #8BAB9433;
+$mainDarkGreenHover: #8bab9433;
 $mainRed: rgb(214, 93, 93);
 $mainRedHover: rgb(172, 47, 47);
 $secondaryRed: rgb(168, 50, 50);
@@ -25,3 +25,11 @@ $mainBlue: rgb(100, 120, 211);
 $mainBlueHover: rgb(48, 69, 165);
 $mainGreen: #627968;
 $mainGreenHover: #425247;
+
+$primaryGreen: #c2d6c8;
+$secondaryGreen: #8bab94;
+
+$primaryBlue: #3c33c4;
+
+$backgroundRed: #ffa6a6;
+$backgroundLightRed: #e6dede;
