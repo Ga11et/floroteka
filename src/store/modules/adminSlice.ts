@@ -17,7 +17,6 @@ import {
 } from '../types/admin'
 import { storeServises } from '../servises/storeServises'
 import { AdminFormAPI } from '../api/adminFormAPI'
-import { IPost } from '@/views/admin/components/forms/components/table/types/fetchTypes'
 
 interface IAdminSlice {
   errorMessages: IErrorMessages
@@ -82,6 +81,9 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     },
     setActivePostFormDescription(state, payload: string) {
       state.activePostForm.description = payload
+    },
+    setActivePostFormShowing(state, payload: boolean) {
+      state.activePostForm.shouldShow = payload
     },
     setFormLoading(state, payload: boolean) {
       state.isFormLoading = payload

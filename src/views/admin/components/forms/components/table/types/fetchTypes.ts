@@ -8,6 +8,7 @@ export interface IPost {
   after: ImageType
   images: ImageType[]
   type: postType
+  shouldShow: boolean
 }
 
 export type postType =

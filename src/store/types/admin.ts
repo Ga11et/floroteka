@@ -41,6 +41,7 @@ export interface IPlantForm {
   having: boolean
   type: PlantType
   img: string[]
+  shouldShow: boolean
 }
 // Before and After form
 export interface IBeforeAfterPostForm {
@@ -48,6 +49,7 @@ export interface IBeforeAfterPostForm {
   description: string
   before: string
   after: string
+  shouldShow: boolean
 }
 export interface IBeforeAfterPostErrorMessages {
   [unit: string]: string
@@ -62,12 +64,14 @@ export interface ITechnologiesPostForm {
   description: string
   stepPhotos: string[]
   stepTexts: string[]
+  shouldShow: boolean
 }
 // Things Form
 export interface IThingsPostForm {
   heading: string
   description: string
   photos: string[]
+  shouldShow: boolean
 }
 // Project Form
 export interface IProjectPostForm {
@@ -75,12 +79,14 @@ export interface IProjectPostForm {
   description: string
   stepPhotos: string[]
   stepTexts: string[]
+  shouldShow: boolean
 }
 // Science Activity Form
 export interface IScienceActivityPostForm {
   heading: string
   description: string
   img: string
+  shouldShow: boolean
 }
 // Login Form
 export interface ILoginForm {

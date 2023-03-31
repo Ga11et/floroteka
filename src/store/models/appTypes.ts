@@ -50,6 +50,7 @@ export type postPropsType = {
   after: imageType
   images: imageType[]
   type: postType
+  shouldShow: boolean
 }
 export type LoginData = {
   login: string

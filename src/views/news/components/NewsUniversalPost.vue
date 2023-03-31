@@ -1,9 +1,24 @@
 <template>
-  <PostBeforeAfter v-if="content.type === 'beforeAfter'" :content="content" />
-  <PostScienceActivity v-else-if="content.type === 'scienceActivity'" :content="content" />
-  <PostTechnologies v-else-if="content.type === 'technologies'" :content="content" />
-  <PostThing v-else-if="content.type === 'things'" :content="content" />
-  <PostProject v-else-if="content.type === 'studyProject'" :content="content" />
+  <PostBeforeAfter
+    v-if="content.type === 'beforeAfter' && content.shouldShow === true"
+    :content="content"
+  />
+  <PostScienceActivity
+    v-else-if="content.type === 'scienceActivity' && content.shouldShow === true"
+    :content="content"
+  />
+  <PostTechnologies
+    v-else-if="content.type === 'technologies' && content.shouldShow === true"
+    :content="content"
+  />
+  <PostThing
+    v-else-if="content.type === 'things' && content.shouldShow === true"
+    :content="content"
+  />
+  <PostProject
+    v-else-if="content.type === 'studyProject' && content.shouldShow === true"
+    :content="content"
+  />
 </template>
 <script lang="ts">
 import Vue, { PropType } from 'vue'
@@ -19,11 +34,10 @@ export default Vue.extend({
   props: {
     content: {
       type: Object as PropType<postPropsType>,
-      required: true
-    }
+      required: true,
+    },
   },
-  components: { PostThing, PostBeforeAfter, PostScienceActivity, PostTechnologies, PostProject }
+  components: { PostThing, PostBeforeAfter, PostScienceActivity, PostTechnologies, PostProject },
 })
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

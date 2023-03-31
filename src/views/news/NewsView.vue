@@ -9,19 +9,13 @@ import NewsLayout from './components/NewsLayout.vue'
 export default Vue.extend({
   name: 'news-container',
   computed: {
-    posts () {
+    posts() {
       return store.getters.filteredPosts
-    }
+    },
   },
-  components: { NewsLayout }
+  components: { NewsLayout },
 })
-
 </script>
 <style lang="scss">
 @import '@/variables';
-
-.container {
-  @include flex(column, center, unset);
-  position: relative;
-}
 </style>
