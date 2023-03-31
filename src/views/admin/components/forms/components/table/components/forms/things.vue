@@ -10,7 +10,7 @@
       @change="changePhotoHandler"
     />
     <AdminTableThingsFormAdditional
-      :isShowing="formValues.isShowing"
+      :isShowing="activePost.shouldShow"
       @toggle="toggleShowingHandler"
     />
     <AdminTableFormButtons />
@@ -65,7 +65,7 @@ export default defineComponent({
       this.formValues.photos = photos
     },
     toggleShowingHandler() {
-      this.formValues.isShowing = !this.formValues.isShowing
+      this.$store.commit('setActivePostFormShowing', !this.activePost.shouldShow)
     },
   },
   mounted() {
