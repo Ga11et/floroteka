@@ -7,7 +7,7 @@
       </filter-text>
     </base-adaptive>
     <base-loading v-if="!isPostsLoaded" />
-    <found-nothing-placeholder v-else-if="posts.length === 0" />
+    <found-nothing-placeholder v-else-if="posts.length === 0 || isAllPostsInvisible" />
     <NewsUniversalPost v-for="post in posts.slice(0, page * 5)" :key="post.id" :content="post" />
     <NewsMoreButton v-if="posts.slice(0, page * 5).length % 5 === 0" @click="pageUp" />
   </main>
@@ -38,6 +38,9 @@ export default Vue.extend({
     },
     filterValue () {
       return store.getters.postsFilterValue
+    },
+    isAllPostsInvisible () {
+      return this.$props.posts.every((el: postPropsType) => !el.shouldShow)
     }
   },
   data () {
@@ -71,4 +74,5 @@ export default Vue.extend({
     @include flex(column, center, unset);
     position: relative;
   }
+  
 </style>

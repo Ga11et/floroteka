@@ -35,7 +35,7 @@ const AdminSlice: Module<IAdminSlice, IRootStore> = {
     navLinks: [
       { rus: 'Было / Стало', en: 'beforeAfterPostForm', id: '1' },
       { rus: 'Технологии', en: 'technologiesForm', id: '2' },
-      { rus: 'Научная деятельность', en: 'scienceForm', id: '3' },
+      { rus: 'Экспериментальная деятельность', en: 'scienceForm', id: '3' },
       { rus: 'Проект', en: 'studyProject', id: '4' },
       { rus: 'Дела', en: 'thingsForm', id: '5' },
       { rus: 'Растения', en: 'plantForm', id: '6' },

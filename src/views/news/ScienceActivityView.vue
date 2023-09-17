@@ -1,5 +1,5 @@
 <template>
-  <NewsLayout :posts="posts" name="Научная деятельность" />
+  <NewsLayout :posts="posts" name="Экспериментальная деятельность" />
 </template>
 <script lang="ts">
 import Vue from 'vue'

@@ -1,7 +1,7 @@
 <template>
   <NewsPostLayout :content="content">
     <div class="onePhotoContainer">
-      <base-image class="images" :image="content.images[0]" alt="Научная активность" title="Научная деятельность" />
+      <base-image class="images" :image="content.images[0]" alt="Экспериментальная активность" title="Экспериментальная деятельность" />
       <div>
         <p class="paragraph" v-for="(part, index) in content.text.split('\n')" :key="index">{{ part }}</p>
       </div>
